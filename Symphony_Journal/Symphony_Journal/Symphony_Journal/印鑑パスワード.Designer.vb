@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class passwordForm
+Partial Class 印鑑パスワード
     Inherits System.Windows.Forms.Form
 
     'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
@@ -40,7 +40,7 @@ Partial Class passwordForm
         Me.errorLabel.Location = New System.Drawing.Point(48, 140)
         Me.errorLabel.Name = "errorLabel"
         Me.errorLabel.Size = New System.Drawing.Size(38, 12)
-        Me.errorLabel.TabIndex = 26
+        Me.errorLabel.TabIndex = 35
         Me.errorLabel.Text = "Label4"
         Me.errorLabel.Visible = False
         '
@@ -49,21 +49,21 @@ Partial Class passwordForm
         Me.newPassBox.Location = New System.Drawing.Point(128, 69)
         Me.newPassBox.Name = "newPassBox"
         Me.newPassBox.Size = New System.Drawing.Size(130, 19)
-        Me.newPassBox.TabIndex = 19
+        Me.newPassBox.TabIndex = 28
         '
         'confirmPassBox
         '
         Me.confirmPassBox.Location = New System.Drawing.Point(128, 103)
         Me.confirmPassBox.Name = "confirmPassBox"
         Me.confirmPassBox.Size = New System.Drawing.Size(130, 19)
-        Me.confirmPassBox.TabIndex = 20
+        Me.confirmPassBox.TabIndex = 29
         '
         'passBox
         '
         Me.passBox.Location = New System.Drawing.Point(128, 26)
         Me.passBox.Name = "passBox"
         Me.passBox.Size = New System.Drawing.Size(130, 19)
-        Me.passBox.TabIndex = 18
+        Me.passBox.TabIndex = 27
         '
         'btnCancel
         '
@@ -71,7 +71,7 @@ Partial Class passwordForm
         Me.btnCancel.Location = New System.Drawing.Point(184, 174)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(75, 32)
-        Me.btnCancel.TabIndex = 22
+        Me.btnCancel.TabIndex = 31
         Me.btnCancel.Text = "キャンセル"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
@@ -81,7 +81,7 @@ Partial Class passwordForm
         Me.btnOk.Location = New System.Drawing.Point(100, 174)
         Me.btnOk.Name = "btnOk"
         Me.btnOk.Size = New System.Drawing.Size(75, 32)
-        Me.btnOk.TabIndex = 21
+        Me.btnOk.TabIndex = 30
         Me.btnOk.Text = "OK"
         Me.btnOk.UseVisualStyleBackColor = True
         '
@@ -91,7 +91,7 @@ Partial Class passwordForm
         Me.Label3.Location = New System.Drawing.Point(48, 72)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(64, 12)
-        Me.Label3.TabIndex = 24
+        Me.Label3.TabIndex = 33
         Me.Label3.Text = "新パスワード"
         '
         'Label2
@@ -100,7 +100,7 @@ Partial Class passwordForm
         Me.Label2.Location = New System.Drawing.Point(48, 108)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(53, 12)
-        Me.Label2.TabIndex = 25
+        Me.Label2.TabIndex = 34
         Me.Label2.Text = "変更確認"
         '
         'Label1
@@ -109,10 +109,10 @@ Partial Class passwordForm
         Me.Label1.Location = New System.Drawing.Point(48, 29)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(52, 12)
-        Me.Label1.TabIndex = 23
+        Me.Label1.TabIndex = 32
         Me.Label1.Text = "パスワード"
         '
-        'passwordForm
+        '印鑑パスワード
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -126,8 +126,8 @@ Partial Class passwordForm
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Name = "passwordForm"
-        Me.Text = "管理者パスワード"
+        Me.Name = "印鑑パスワード"
+        Me.Text = "印鑑パスワード"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

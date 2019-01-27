@@ -71,6 +71,179 @@ Symphony_Journal
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="M:Symphony_Journal.印鑑パスワード.#ctor(System.String)">
+	<summary>
+ コンストラクタ
+ </summary>
+	<param name="mdbFilePass">データベースファイルパス</param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑パスワード.印鑑パスワード_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+	<summary>
+ keyDownイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑パスワード.印鑑パスワード_Load(System.Object,System.EventArgs)">
+	<summary>
+ Loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑パスワード.settingTextBox">
+	<summary>
+ テキストボックス設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑パスワード.checkPassword(System.String)">
+	<summary>
+ パスワード照合
+ </summary>
+	<param name="inputPass">入力パスワード</param>
+	<returns>パスワード登録済みの有無</returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑パスワード.changePassword(System.String,System.String)">
+	<summary>
+ 登録パスワード変更
+ </summary>
+	<param name="oldPass">旧パスワード</param>
+	<param name="newPass">新パスワード</param>
+	<returns>変更の有無</returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑パスワード.btnOk_Click(System.Object,System.EventArgs)">
+	<summary>
+ OKボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑パスワード.btnCancel_Click(System.Object,System.EventArgs)">
+	<summary>
+ キャンセルボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="T:Symphony_Journal.印鑑登録.dgvRowHeaderCell">
+	<summary>
+ 行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.#ctor">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.印鑑登録_Load(System.Object,System.EventArgs)">
+	<summary>
+ Loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.印鑑登録_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+	<summary>
+ keyDownイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.initTextBox">
+	<summary>
+ テキストボックス等初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.initDgvSeal">
+	<summary>
+ データグリッドビュー初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.displayDgvSeal">
+	<summary>
+ データグリッドビュー表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.settingDgvSeal">
+	<summary>
+ dgv表示設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.dgvSeal_CellMouseClick(System.Object,System.Windows.Forms.DataGridViewCellMouseEventArgs)">
+	<summary>
+ dgvセルマウスクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.dgvSeal_CellPainting(System.Object,System.Windows.Forms.DataGridViewCellPaintingEventArgs)">
+	<summary>
+ CellPaintingイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.dgvSeal_ColumnHeaderMouseDoubleClick(System.Object,System.Windows.Forms.DataGridViewCellMouseEventArgs)">
+	<summary>
+ 列ヘッダーダブルクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.inputClear">
+	<summary>
+ 入力内容クリア
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.existsClass(System.String)">
+	<summary>
+ 職制が登録済みかチェック(1,2,3,4,5,6のみ)
+ </summary>
+	<param name="className">職制</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.existsPassword(System.String)">
+	<summary>
+ ﾊﾟｽﾜｰﾄﾞが登録済みかチェック
+ </summary>
+	<param name="inputPass">ﾊﾟｽﾜｰﾄﾞ</param>
+	<returns>登録済みの有無</returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.existsSealFile(System.String)">
+	<summary>
+ 印影ファイルがSealBoxに存在するかチェック
+ </summary>
+	<param name="sealFileName">印影ファイル名</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.btnDelete_Click(System.Object,System.EventArgs)">
+	<summary>
+ 削除ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.btnPrint_Click(System.Object,System.EventArgs)">
+	<summary>
+ 印刷ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.btnPrintSealM_Click(System.Object,System.EventArgs)">
+	<summary>
+ プリントボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
 </member>
 </members>
 </doc>

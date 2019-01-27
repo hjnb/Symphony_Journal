@@ -78,6 +78,12 @@
     <Compile Include="passwordForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SS生活の様子.Designer.vb">
+      <DependentUpon>SS生活の様子.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SS生活の様子.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TopForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -101,10 +107,49 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Util.vb" />
+    <Compile Include="ユニット日誌.Designer.vb">
+      <DependentUpon>ユニット日誌.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ユニット日誌.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="入居者登録.Designer.vb">
+      <DependentUpon>入居者登録.vb</DependentUpon>
+    </Compile>
+    <Compile Include="入居者登録.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="印鑑パスワード.Designer.vb">
+      <DependentUpon>印鑑パスワード.vb</DependentUpon>
+    </Compile>
+    <Compile Include="印鑑パスワード.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="印鑑登録.Designer.vb">
+      <DependentUpon>印鑑登録.vb</DependentUpon>
+    </Compile>
+    <Compile Include="印鑑登録.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="施設介護支援経過表.Designer.vb">
+      <DependentUpon>施設介護支援経過表.vb</DependentUpon>
+    </Compile>
+    <Compile Include="施設介護支援経過表.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="申し送り.Designer.vb">
+      <DependentUpon>申し送り.vb</DependentUpon>
+    </Compile>
+    <Compile Include="申し送り.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="passwordForm.resx">
       <DependentUpon>passwordForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SS生活の様子.resx">
+      <DependentUpon>SS生活の様子.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TopForm.resx">
       <DependentUpon>TopForm.vb</DependentUpon>
@@ -114,6 +159,12 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="印鑑パスワード.resx">
+      <DependentUpon>印鑑パスワード.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="印鑑登録.resx">
+      <DependentUpon>印鑑登録.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +177,54 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{2A75196C-D9EB-4129-B803-931327F72D5C}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Office">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

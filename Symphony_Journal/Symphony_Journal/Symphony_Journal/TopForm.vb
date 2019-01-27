@@ -12,6 +12,14 @@
     '画像パス
     Public imageFilePath As String = My.Application.Info.DirectoryPath & "\Div1.wmf"
 
+    'フォーム
+    Private unitDiary As ユニット日誌
+    Private handover As 申し送り
+    Private registSeal As 印鑑登録
+    Private registResident As 入居者登録
+    Private progressTable As 施設介護支援経過表
+    Private ssLife As SS生活の様子
+
     Private Sub TopForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'データベース、エクセル、構成ファイルの存在チェック
         If Not System.IO.File.Exists(dbFilePath) Then
@@ -44,7 +52,7 @@
         Me.MaximizeBox = False
 
         '画像の配置処理
-        topPicture.ImageLocation = imageFilePath
+        topPicture.Image = System.Drawing.Image.FromFile(imageFilePath)
 
         '印刷ラジオボタンの初期設定
         initPrintState()
@@ -73,5 +81,65 @@
 
     Private Sub topPicture_Click(sender As System.Object, e As System.EventArgs) Handles topPicture.Click
         Me.Close()
+    End Sub
+
+    Private Sub btnUnit_Click(sender As System.Object, e As System.EventArgs) Handles btnUnit.Click
+        '印鑑パスワードフォーム表示
+        Dim passForm As Form = New 印鑑パスワード(DB_Journal)
+        If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+            Return
+        End If
+
+        If IsNothing(unitDiary) OrElse unitDiary.IsDisposed Then
+            unitDiary = New ユニット日誌()
+            unitDiary.Owner = Me
+            unitDiary.Show()
+        End If
+    End Sub
+
+    Private Sub btnHandover_Click(sender As System.Object, e As System.EventArgs) Handles btnHandover.Click
+        If IsNothing(handover) OrElse handover.IsDisposed Then
+            handover = New 申し送り()
+            handover.Owner = Me
+            handover.Show()
+        End If
+    End Sub
+
+    Private Sub btnSeal_Click(sender As System.Object, e As System.EventArgs) Handles btnSeal.Click
+        '管理者パスワードフォーム表示
+        Dim passForm As Form = New passwordForm(iniFilePath, 3)
+        If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+            Return
+        End If
+
+        If IsNothing(registSeal) OrElse registSeal.IsDisposed Then
+            registSeal = New 印鑑登録()
+            registSeal.Owner = Me
+            registSeal.Show()
+        End If
+    End Sub
+
+    Private Sub btnResident_Click(sender As System.Object, e As System.EventArgs) Handles btnResident.Click
+        If IsNothing(registResident) OrElse registResident.IsDisposed Then
+            registResident = New 入居者登録()
+            registResident.Owner = Me
+            registResident.Show()
+        End If
+    End Sub
+
+    Private Sub btnProgress_Click(sender As System.Object, e As System.EventArgs) Handles btnProgress.Click
+        If IsNothing(progressTable) OrElse progressTable.IsDisposed Then
+            progressTable = New 施設介護支援経過表()
+            progressTable.Owner = Me
+            progressTable.Show()
+        End If
+    End Sub
+
+    Private Sub btnSSLife_Click(sender As System.Object, e As System.EventArgs) Handles btnSSLife.Click
+        If IsNothing(ssLife) OrElse ssLife.IsDisposed Then
+            ssLife = New SS生活の様子()
+            ssLife.Owner = Me
+            ssLife.Show()
+        End If
     End Sub
 End Class
