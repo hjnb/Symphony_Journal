@@ -160,6 +160,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="入居者登録.resx">
+      <DependentUpon>入居者登録.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="印鑑パスワード.resx">
       <DependentUpon>印鑑パスワード.vb</DependentUpon>
     </EmbeddedResource>

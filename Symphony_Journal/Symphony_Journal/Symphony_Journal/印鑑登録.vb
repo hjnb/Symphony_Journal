@@ -5,7 +5,9 @@ Imports Microsoft.Office.Interop
 Public Class 印鑑登録
 
     'SealBoxのパス
-    Private sealBoxDirPath As String
+    Private sealBoxDirPath As String = Util.getIniString("System", "SealBoxDir", TopForm.iniFilePath)
+    'テスト用パス
+    'sealBoxDirPath = "C:\Users\yoshi\Desktop\シンフォニーのプログラム関係\PRIMERGYTX100S1\SealBox (PRIMERGYTX100S1)"
 
     ''' <summary>
     ''' 行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
@@ -40,13 +42,7 @@ Public Class 印鑑登録
         Me.StartPosition = FormStartPosition.CenterScreen
         Me.KeyPreview = True
         Me.MaximizeBox = False
-        Me.FormBorderStyle = FormBorderStyle.FixedSingle
-
-        'SealBoxのパス
-        sealBoxDirPath = Util.getIniString("System", "SealBoxDir", TopForm.iniFilePath)
-
-        'テスト用パス
-        'sealBoxDirPath = "C:\Users\yoshi\Desktop\シンフォニーのプログラム関係\PRIMERGYTX100S1\SealBox (PRIMERGYTX100S1)"
+        Me.FormBorderStyle = FormBorderStyle.FixedSingle        
     End Sub
 
     ''' <summary>
