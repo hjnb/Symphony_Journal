@@ -456,12 +456,7 @@ Public Class 入居者登録
         Dim nowTime As String = DateTime.Now.ToString("HH:mm")
         oSheet.range("E2").value = dateStr & " " & nowTime
 
-        Dim cn As New ADODB.Connection()
-        cn.Open(TopForm.DB_Journal)
-        Dim rs As New ADODB.Recordset()
-        Dim sql As String = "select Autono, Unt, Nam, Kana, Dsp from UsrM order by Unt, Kana"
-        rs.Open(sql, cn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockReadOnly)
-        Dim rCount As Integer = rs.RecordCount 'レコード数
+        Dim rCount As Integer = dgvResident.Rows.Count 'レコード数
         Dim loopCount As Integer = rCount \ 60
 
         '2枚目以降の枠準備
@@ -473,25 +468,26 @@ Public Class 入居者登録
         End If
 
         'データ配列作成
+        Dim rowIndex As Integer = 0
         Dim dataArrayList As New List(Of String(,))
         For i As Integer = 0 To loopCount
             Dim count As Integer = 0
             Dim no As Integer = 60 * i
             Dim dataArray(59, 4) As String
-            While Not rs.EOF
+            While rowIndex <> rCount
                 dataArray(count, 0) = (count + 1 + no).ToString() 'No.
-                dataArray(count, 1) = Util.checkDBNullValue(rs.Fields("Unt").Value) 'ユニット
-                dataArray(count, 2) = Util.checkDBNullValue(rs.Fields("Nam").Value) '入居者
-                dataArray(count, 3) = Util.checkDBNullValue(rs.Fields("Kana").Value) 'カナ
-                dataArray(count, 4) = If(Util.checkDBNullValue(rs.Fields("Dsp").Value) = 1, "○", "") '表示
+                dataArray(count, 1) = Util.checkDBNullValue(dgvResident("Unt", rowIndex).Value) 'ユニット
+                dataArray(count, 2) = Util.checkDBNullValue(dgvResident("Nam", rowIndex).Value) '入居者
+                dataArray(count, 3) = Util.checkDBNullValue(dgvResident("Kana", rowIndex).Value) 'カナ
+                dataArray(count, 4) = If(Util.checkDBNullValue(dgvResident("Dsp", rowIndex).Value) = 1, "○", "") '表示
 
                 If count = 59 Then
                     dataArrayList.Add(dataArray)
-                    rs.MoveNext()
+                    rowIndex += 1
                     Continue For
                 End If
                 count += 1
-                rs.MoveNext()
+                rowIndex += 1
             End While
             dataArrayList.Add(dataArray)
         Next
@@ -500,9 +496,6 @@ Public Class 入居者登録
         For i As Integer = 0 To dataArrayList.Count - 1
             oSheet.range("B" & ((64 * i) + 4), "F" & ((64 * i) + 63)).value = dataArrayList(i)
         Next
-
-        rs.Close()
-        cn.Close()
 
         '変更保存確認ダイアログ非表示
         objExcel.DisplayAlerts = False
