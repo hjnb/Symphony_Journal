@@ -6,7 +6,14 @@ Symphony_Journal
 </name>
 </assembly>
 <members>
-<member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
+<member name="M:Symphony_Journal.ExDataGridView.ExDataGridView_CellPainting(System.Object,System.Windows.Forms.DataGridViewCellPaintingEventArgs)">
+	<summary>
+ CellPaintingイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
 	<summary>
  コントロールのDoubleBufferedプロパティをTrueにする
  </summary>
@@ -57,6 +64,54 @@ Symphony_Journal
 	<param name="lpValue">書き込む値</param>
 	<param name="lpFileName">iniファイルパス</param>
 	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.#ctor(System.String)">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.ユニット日誌_Load(System.Object,System.EventArgs)">
+	<summary>
+ Loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.createCellStyles">
+	<summary>
+ セルスタイル作成
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.initDgvUnitDiary">
+	<summary>
+ dgv初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.initTextBox">
+	<summary>
+ テキストボックス初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.getResidentList(System.String)">
+	<summary>
+ 入居者リスト取得
+ </summary>
+	<param name="unitName">ユニット名</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.unitListBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ ユニット値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.residentListBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ 入居者名リスト値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
 	<remarks></remarks>
 </member><member name="T:Symphony_Journal.入居者登録.dgvRowHeaderCell">
 	<summary>

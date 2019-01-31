@@ -4,11 +4,6 @@ Imports Microsoft.Office.Interop
 
 Public Class 印鑑登録
 
-    'SealBoxのパス
-    Private sealBoxDirPath As String = Util.getIniString("System", "SealBoxDir", TopForm.iniFilePath)
-    'テスト用パス
-    'sealBoxDirPath = "C:\Users\yoshi\Desktop\シンフォニーのプログラム関係\PRIMERGYTX100S1\SealBox (PRIMERGYTX100S1)"
-
     ''' <summary>
     ''' 行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
     ''' </summary>
@@ -187,7 +182,7 @@ Public Class 印鑑登録
             Dim nam As String = Util.checkDBNullValue(dgvSeal("Nam", e.RowIndex).Value) '職員名
             Dim pwd As String = Util.checkDBNullValue(dgvSeal("Pwd", e.RowIndex).Value) 'パスワード
             Dim fileNam As String = Util.checkDBNullValue(dgvSeal("File", e.RowIndex).Value) '印影ファイル名
-            Dim sealFilePath As String = sealBoxDirPath & "\" & fileNam & ".wmf" '印影ファイルパス
+            Dim sealFilePath As String = TopForm.sealBoxDirPath & "\" & fileNam & ".wmf" '印影ファイルパス
 
             '各ボックスへセット
             classBox.Text = className
@@ -307,7 +302,7 @@ Public Class 印鑑登録
     ''' <remarks></remarks>
     Private Function existsSealFile(sealFileName As String) As Boolean
         '印影ファイルパス
-        Dim sealFilePath As String = sealBoxDirPath & "\" & sealFileName & ".wmf"
+        Dim sealFilePath As String = TopForm.sealBoxDirPath & "\" & sealFileName & ".wmf"
 
         'ファイルが存在している場合はtrue
         If System.IO.File.Exists(sealFilePath) Then
@@ -477,7 +472,7 @@ Public Class 印鑑登録
             '書き込み列
             Dim columnStr As String = columnStrArray(rowCount Mod arrayLength)
             '印影ファイルが存在する場合のみ表示
-            Dim filePath As String = sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("File").Value) & ".wmf"
+            Dim filePath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("File").Value) & ".wmf"
             If System.IO.File.Exists(filePath) Then
                 xlPicture = DirectCast(xlPictures.Insert(filePath), Excel.Picture)
                 xlPicture.Left = DirectCast(oSheet.Cells(excelRowIndex, columnStr), Excel.Range).Left + 10

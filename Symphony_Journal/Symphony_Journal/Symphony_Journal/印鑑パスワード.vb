@@ -198,6 +198,10 @@ Public Class 印鑑パスワード
         Me.Close()
     End Sub
 
+    Public Function getSealFileName() As String
+        Return sealFileName
+    End Function
+
     Private Sub textBox_Enter(sender As Object, e As System.EventArgs) Handles passBox.Enter, newPassBox.Enter, confirmPassBox.Enter
         Dim tb As TextBox = CType(sender, TextBox)
         tb.SelectAll()

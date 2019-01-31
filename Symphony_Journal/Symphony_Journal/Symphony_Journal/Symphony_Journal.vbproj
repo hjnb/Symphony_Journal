@@ -58,6 +58,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="ymdBox">
+      <HintPath>\\primergytx100s1\Hakojun\事務\さかもと\Visual Studio 2010\Projects\ymdBox\ymdBox\ymdBox\bin\Release\ymdBox.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -72,6 +75,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExDataGridView.Designer.vb">
+      <DependentUpon>ExDataGridView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ExDataGridView.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="passwordForm.Designer.vb">
       <DependentUpon>passwordForm.vb</DependentUpon>
     </Compile>
@@ -159,6 +168,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ユニット日誌.resx">
+      <DependentUpon>ユニット日誌.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="入居者登録.resx">
       <DependentUpon>入居者登録.vb</DependentUpon>
