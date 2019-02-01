@@ -95,7 +95,7 @@ Partial Class ユニット日誌
         Me.YmdBox.EraLabelText = "H31"
         Me.YmdBox.EraText = ""
         Me.YmdBox.Location = New System.Drawing.Point(134, 12)
-        Me.YmdBox.MonthLabelText = "01"
+        Me.YmdBox.MonthLabelText = "02"
         Me.YmdBox.MonthText = ""
         Me.YmdBox.Name = "YmdBox"
         Me.YmdBox.Size = New System.Drawing.Size(174, 46)
@@ -370,18 +370,18 @@ Partial Class ユニット日誌
         'dayWorkPic
         '
         Me.dayWorkPic.BackColor = System.Drawing.SystemColors.Window
-        Me.dayWorkPic.Location = New System.Drawing.Point(623, 73)
+        Me.dayWorkPic.Location = New System.Drawing.Point(626, 73)
         Me.dayWorkPic.Name = "dayWorkPic"
-        Me.dayWorkPic.Size = New System.Drawing.Size(44, 44)
+        Me.dayWorkPic.Size = New System.Drawing.Size(39, 42)
         Me.dayWorkPic.TabIndex = 30
         Me.dayWorkPic.TabStop = False
         '
         'nightWorkPic
         '
         Me.nightWorkPic.BackColor = System.Drawing.SystemColors.Window
-        Me.nightWorkPic.Location = New System.Drawing.Point(677, 73)
+        Me.nightWorkPic.Location = New System.Drawing.Point(680, 73)
         Me.nightWorkPic.Name = "nightWorkPic"
-        Me.nightWorkPic.Size = New System.Drawing.Size(44, 44)
+        Me.nightWorkPic.Size = New System.Drawing.Size(39, 42)
         Me.nightWorkPic.TabIndex = 31
         Me.nightWorkPic.TabStop = False
         '

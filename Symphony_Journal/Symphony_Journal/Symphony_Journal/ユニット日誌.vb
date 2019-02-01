@@ -5,6 +5,9 @@
     'ユニット
     Private unitArray() As String = {"星", "森", "空", "月", "花", "海"}
 
+    'フォントカラー
+    Private fontColorTable As New Dictionary(Of Integer, Color) From {{0, Color.Black}, {1, Color.Blue}, {2, Color.Red}}
+
     '編集不可部分のセルスタイル
     Private readOnlyCellStyle As DataGridViewCellStyle
 
@@ -29,9 +32,6 @@
         'ユニットリスト初期値
         unitListBox.Items.AddRange(unitArray)
 
-        '現在日付を初期値に
-        YmdBox.setADStr(Today.ToString("yyyy/MM/dd"))
-
         'テキストボックス初期設定
         initTextBox()
 
@@ -40,6 +40,9 @@
 
         'dgv初期設定
         initDgvUnitDiary()
+
+        '現在日付を初期値に
+        YmdBox.setADStr(Today.ToString("yyyy/MM/dd"))
     End Sub
 
     ''' <summary>
@@ -52,6 +55,87 @@
         readOnlyCellStyle.SelectionBackColor = Color.FromKnownColor(KnownColor.Control)
         readOnlyCellStyle.SelectionForeColor = Color.Black
         readOnlyCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+    End Sub
+
+    ''' <summary>
+    ''' 対象ユニット、日付の日誌データ表示
+    ''' </summary>
+    ''' <param name="unitName">ユニット名</param>
+    ''' <param name="ymd">日付(yyyy/MM/dd)</param>
+    ''' <remarks></remarks>
+    Private Sub displayUnitDiary(unitName As String, ymd As String)
+        'データ表示部分クリア
+        inputClear()
+
+        '表示処理
+        Dim cnn As New ADODB.Connection
+        cnn.Open(TopForm.DB_Journal)
+        Dim rs As New ADODB.Recordset
+        Dim sql As String = "select Ymd, Unit, Gyo, Nyu1, Nyu2, Nyu3, Gai1, Gai2, Gai3, Kyo1, Kyo2, Kyo3, Sign6, Sign7, Nam, NClr, Text, TClr from UNis where Ymd='" & ymd & "' And Unit='" & unitName & "' order by Gyo"
+        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+        While Not rs.EOF
+            Dim gyo As Integer = Util.checkDBNullValue(rs.Fields("Gyo").Value)
+            If gyo = 0 Then
+                'テキスト
+                Nyu1Box.Text = If(Util.checkDBNullValue(rs.Fields("Nyu1").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Nyu1").Value)) '入院者数 男
+                Nyu2Box.Text = If(Util.checkDBNullValue(rs.Fields("Nyu2").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Nyu2").Value)) '入院者数 女
+                Nyu3Box.Text = If(Util.checkDBNullValue(rs.Fields("Nyu3").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Nyu3").Value)) '入院者数 計
+                Gai1Box.Text = If(Util.checkDBNullValue(rs.Fields("Gai1").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Gai1").Value)) '外泊者数 男
+                Gai2Box.Text = If(Util.checkDBNullValue(rs.Fields("Gai2").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Gai2").Value)) '外泊者数 女
+                Gai3Box.Text = If(Util.checkDBNullValue(rs.Fields("Gai3").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Gai3").Value)) '外泊者数 計
+                Kyo1Box.Text = If(Util.checkDBNullValue(rs.Fields("Kyo1").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Kyo1").Value)) '入居者数 男
+                Kyo2Box.Text = If(Util.checkDBNullValue(rs.Fields("Kyo2").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Kyo2").Value)) '入居者数 女
+                Kyo3Box.Text = If(Util.checkDBNullValue(rs.Fields("Kyo3").Value) = 0, "", Util.checkDBNullValue(rs.Fields("Kyo3").Value)) '入居者数 計
+
+                '印影画像
+                Dim dayWorkSealPath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("Sign6").Value) & ".wmf"
+                Dim nightWorkSealPath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("Sign7").Value) & ".wmf"
+                If System.IO.File.Exists(dayWorkSealPath) Then
+                    dayWorkPic.ImageLocation = dayWorkSealPath
+                End If
+                If System.IO.File.Exists(nightWorkSealPath) Then
+                    nightWorkPic.ImageLocation = nightWorkSealPath
+                End If
+            Else
+                '入居者名列
+                dgvUnitDiary("Nam", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Nam").Value)
+                dgvUnitDiary("Nam", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
+
+                '経過内容列
+                dgvUnitDiary("Text", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Text").Value)
+                dgvUnitDiary("Text", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("TClr").Value)))
+            End If
+            rs.MoveNext()
+        End While
+
+        rs.Close()
+        cnn.Close()
+    End Sub
+
+    ''' <summary>
+    ''' 入力内容クリア
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub inputClear()
+        Nyu1Box.Text = ""
+        Nyu2Box.Text = ""
+        Nyu3Box.Text = ""
+        Gai1Box.Text = ""
+        Gai2Box.Text = ""
+        Gai3Box.Text = ""
+        Kyo1Box.Text = ""
+        Kyo2Box.Text = ""
+        Kyo3Box.Text = ""
+        dayWorkPic.ImageLocation = Nothing
+        nightWorkPic.ImageLocation = Nothing
+        For i As Integer = 1 To 34
+            If i <> 18 Then
+                dgvUnitDiary("Nam", i).Value = ""
+                dgvUnitDiary("Nam", i).Style.ForeColor = Color.Black
+                dgvUnitDiary("Text", i).Value = ""
+                dgvUnitDiary("Text", i).Style.ForeColor = Color.Black
+            End If
+        Next
     End Sub
 
     ''' <summary>
@@ -79,6 +163,7 @@
             .ShowCellToolTips = False
             .EnableHeadersVisualStyles = False
             .ScrollBars = ScrollBars.None
+            .ImeMode = Windows.Forms.ImeMode.Hiragana
         End With
 
         '列追加、空の行追加
@@ -129,6 +214,15 @@
         dgvUnitDiary("Nam", 18).ReadOnly = True
         dgvUnitDiary("Text", 18).Style = readOnlyCellStyle
         dgvUnitDiary("Text", 18).ReadOnly = True
+        '使用しないセル
+        dgvUnitDiary("Nam", 31).Style = readOnlyCellStyle
+        dgvUnitDiary("Nam", 31).ReadOnly = True
+        dgvUnitDiary("Nam", 32).Style = readOnlyCellStyle
+        dgvUnitDiary("Nam", 32).ReadOnly = True
+        dgvUnitDiary("Nam", 33).Style = readOnlyCellStyle
+        dgvUnitDiary("Nam", 33).ReadOnly = True
+        dgvUnitDiary("Nam", 34).Style = readOnlyCellStyle
+        dgvUnitDiary("Nam", 34).ReadOnly = True
 
         '並び替えができないようにする
         For Each c As DataGridViewColumn In dgvUnitDiary.Columns
@@ -225,6 +319,10 @@
         '対象のユニットの入居者リストをセット
         residentListBox.Items.Clear()
         residentListBox.Items.AddRange(getResidentList(unitName).ToArray())
+
+        '日誌データ表示
+        Dim ymdStr As String = YmdBox.getADStr()
+        displayUnitDiary(unitName, ymdStr)
     End Sub
 
     ''' <summary>
@@ -234,12 +332,21 @@
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub residentListBox_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles residentListBox.SelectedValueChanged
+        '選択氏名
+        Dim selectedName As String = residentListBox.SelectedItem
+
         '選択した氏名をdgvのセルへ反映
-        '
-        '
-        '
+        If Not IsNothing(dgvUnitDiary.CurrentCell) AndAlso dgvUnitDiary.CurrentCell.ReadOnly = False AndAlso selectedName <> "" Then
+            dgvUnitDiary.CurrentCell.Value = selectedName
+        End If
     End Sub
 
+    ''' <summary>
+    ''' テキストボックス部分のkeyDownイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub textBox_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Nyu1Box.KeyDown, Nyu2Box.KeyDown, Nyu3Box.KeyDown, Gai1Box.KeyDown, Gai2Box.KeyDown, Gai3Box.KeyDown, Kyo1Box.KeyDown, Kyo2Box.KeyDown, Kyo3Box.KeyDown
         Dim tb As TextBox = CType(sender, TextBox)
         Dim tbName As String = tb.Name
@@ -256,5 +363,65 @@
             Dim targetName = tbType & tbNum & "Box"
             Controls(targetName).Focus()
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 日付ボックス変更イベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub YmdBox_YmdTextChange(sender As Object, e As System.EventArgs) Handles YmdBox.YmdTextChange
+        Dim unitName As String = unitListBox.SelectedItem
+        Dim ymdStr As String = YmdBox.getADStr()
+        displayUnitDiary(unitName, ymdStr)
+    End Sub
+
+    ''' <summary>
+    ''' 日勤ラジオボタン変更イベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub rbtnDayWork_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbtnDayWork.CheckedChanged
+        If rbtnDayWork.Checked AndAlso System.IO.File.Exists(userSealFilePath) Then
+            'ログイン者の印影画像セット
+            dayWorkPic.ImageLocation = userSealFilePath
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 夜勤ラジオボタン変更イベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub rbtnNightWork_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbtnNightWork.CheckedChanged
+        If rbtnNightWork.Checked AndAlso System.IO.File.Exists(userSealFilePath) Then
+            'ログイン者の印影画像セット
+            nightWorkPic.ImageLocation = userSealFilePath
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 日勤印影画像ダブルクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub dayWorkPic_DoubleClick(sender As Object, e As System.EventArgs) Handles dayWorkPic.DoubleClick
+        '画像を空白に
+        dayWorkPic.ImageLocation = Nothing
+    End Sub
+
+    ''' <summary>
+    ''' 夜勤印影画像ダブルクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub nightWorkPic_DoubleClick(sender As Object, e As System.EventArgs) Handles nightWorkPic.DoubleClick
+        '画像を空白に
+        nightWorkPic.ImageLocation = Nothing
     End Sub
 End Class

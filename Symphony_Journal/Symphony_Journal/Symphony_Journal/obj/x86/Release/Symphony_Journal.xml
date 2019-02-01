@@ -6,14 +6,7 @@ Symphony_Journal
 </name>
 </assembly>
 <members>
-<member name="M:Symphony_Journal.ExDataGridView.ExDataGridView_CellPainting(System.Object,System.Windows.Forms.DataGridViewCellPaintingEventArgs)">
-	<summary>
- CellPaintingイベント
- </summary>
-	<param name="sender"></param>
-	<param name="e"></param>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
+<member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
 	<summary>
  コントロールのDoubleBufferedプロパティをTrueにする
  </summary>
@@ -82,6 +75,18 @@ Symphony_Journal
  セルスタイル作成
  </summary>
 	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.displayUnitDiary(System.String,System.String)">
+	<summary>
+ 対象ユニット、日付の日誌データ表示
+ </summary>
+	<param name="unitName">ユニット名</param>
+	<param name="ymd">日付(yyyy/MM/dd)</param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.inputClear">
+	<summary>
+ 入力内容クリア
+ </summary>
+	<remarks></remarks>
 </member><member name="M:Symphony_Journal.ユニット日誌.initDgvUnitDiary">
 	<summary>
  dgv初期設定
@@ -109,6 +114,55 @@ Symphony_Journal
 </member><member name="M:Symphony_Journal.ユニット日誌.residentListBox_SelectedValueChanged(System.Object,System.EventArgs)">
 	<summary>
  入居者名リスト値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.textBox_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+	<summary>
+ テキストボックス部分のkeyDownイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.YmdBox_YmdTextChange(System.Object,System.EventArgs)">
+	<summary>
+ 日付ボックス変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.rbtnDayWork_CheckedChanged(System.Object,System.EventArgs)">
+	<summary>
+ 日勤ラジオボタン変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.rbtnNightWork_CheckedChanged(System.Object,System.EventArgs)">
+	<summary>
+ 夜勤ラジオボタン変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.dayWorkPic_DoubleClick(System.Object,System.EventArgs)">
+	<summary>
+ 日勤印影画像ダブルクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.nightWorkPic_DoubleClick(System.Object,System.EventArgs)">
+	<summary>
+ 夜勤印影画像ダブルクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ExDataGridView.ExDataGridView_CellPainting(System.Object,System.Windows.Forms.DataGridViewCellPaintingEventArgs)">
+	<summary>
+ CellPaintingイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>

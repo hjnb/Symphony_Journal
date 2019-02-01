@@ -39,7 +39,12 @@
                 e.Graphics.DrawRectangle(New Pen(Color.Black, 2I), e.CellBounds.X + 1I, e.CellBounds.Y + 1I, e.CellBounds.Width - 3I, e.CellBounds.Height - 3I)
             End If
 
-            Dim pParts As DataGridViewPaintParts = e.PaintParts And Not DataGridViewPaintParts.Background
+            Dim pParts As DataGridViewPaintParts
+            If e.RowIndex = 0 OrElse e.RowIndex = 18 OrElse (e.RowIndex >= 31 AndAlso e.ColumnIndex = 0) Then
+                pParts = e.PaintParts And (Not DataGridViewPaintParts.Background And Not DataGridViewPaintParts.Border)
+            Else
+                pParts = e.PaintParts And Not DataGridViewPaintParts.Background
+            End If
             e.Paint(e.ClipBounds, pParts)
             e.Handled = True
         End If
