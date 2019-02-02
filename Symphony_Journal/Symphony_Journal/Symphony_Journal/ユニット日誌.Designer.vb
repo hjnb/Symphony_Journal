@@ -58,12 +58,17 @@ Partial Class ユニット日誌
         Me.rbtnNightWork = New System.Windows.Forms.RadioButton()
         Me.dayWorkPic = New System.Windows.Forms.PictureBox()
         Me.nightWorkPic = New System.Windows.Forms.PictureBox()
+        Me.colorContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.paintBlack = New System.Windows.Forms.ToolStripMenuItem()
+        Me.paintBlue = New System.Windows.Forms.ToolStripMenuItem()
+        Me.paintRed = New System.Windows.Forms.ToolStripMenuItem()
         Me.dgvUnitDiary = New Symphony_Journal.ExDataGridView(Me.components)
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.Panel3.SuspendLayout()
         CType(Me.dayWorkPic, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.nightWorkPic, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.colorContextMenu.SuspendLayout()
         CType(Me.dgvUnitDiary, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -385,6 +390,30 @@ Partial Class ユニット日誌
         Me.nightWorkPic.TabIndex = 31
         Me.nightWorkPic.TabStop = False
         '
+        'colorContextMenu
+        '
+        Me.colorContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.paintBlack, Me.paintBlue, Me.paintRed})
+        Me.colorContextMenu.Name = "colorContextMenu"
+        Me.colorContextMenu.Size = New System.Drawing.Size(147, 70)
+        '
+        'paintBlack
+        '
+        Me.paintBlack.Name = "paintBlack"
+        Me.paintBlack.Size = New System.Drawing.Size(146, 22)
+        Me.paintBlack.Text = "黒"
+        '
+        'paintBlue
+        '
+        Me.paintBlue.Name = "paintBlue"
+        Me.paintBlue.Size = New System.Drawing.Size(146, 22)
+        Me.paintBlue.Text = "青（相談員）"
+        '
+        'paintRed
+        '
+        Me.paintRed.Name = "paintRed"
+        Me.paintRed.Size = New System.Drawing.Size(146, 22)
+        Me.paintRed.Text = "赤（看護師）"
+        '
         'dgvUnitDiary
         '
         Me.dgvUnitDiary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -442,6 +471,7 @@ Partial Class ユニット日誌
         Me.Panel3.PerformLayout()
         CType(Me.dayWorkPic, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.nightWorkPic, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.colorContextMenu.ResumeLayout(False)
         CType(Me.dgvUnitDiary, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -483,4 +513,8 @@ Partial Class ユニット日誌
     Friend WithEvents dayWorkPic As System.Windows.Forms.PictureBox
     Friend WithEvents nightWorkPic As System.Windows.Forms.PictureBox
     Friend WithEvents dgvUnitDiary As Symphony_Journal.ExDataGridView
+    Friend WithEvents colorContextMenu As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents paintBlack As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents paintBlue As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents paintRed As System.Windows.Forms.ToolStripMenuItem
 End Class

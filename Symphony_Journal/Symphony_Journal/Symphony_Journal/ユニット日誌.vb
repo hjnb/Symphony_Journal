@@ -100,10 +100,12 @@
                 '入居者名列
                 dgvUnitDiary("Nam", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Nam").Value)
                 dgvUnitDiary("Nam", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
+                dgvUnitDiary("Nam", gyo - 1).Style.SelectionForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
 
                 '経過内容列
                 dgvUnitDiary("Text", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Text").Value)
                 dgvUnitDiary("Text", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("TClr").Value)))
+                dgvUnitDiary("Text", gyo - 1).Style.SelectionForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("TClr").Value)))
             End If
             rs.MoveNext()
         End While
@@ -132,8 +134,10 @@
             If i <> 18 Then
                 dgvUnitDiary("Nam", i).Value = ""
                 dgvUnitDiary("Nam", i).Style.ForeColor = Color.Black
+                dgvUnitDiary("Nam", i).Style.SelectionForeColor = Color.Black
                 dgvUnitDiary("Text", i).Value = ""
                 dgvUnitDiary("Text", i).Style.ForeColor = Color.Black
+                dgvUnitDiary("Text", i).Style.SelectionForeColor = Color.Black
             End If
         Next
     End Sub
@@ -164,6 +168,7 @@
             .EnableHeadersVisualStyles = False
             .ScrollBars = ScrollBars.None
             .ImeMode = Windows.Forms.ImeMode.Hiragana
+            .ContextMenuStrip = Me.colorContextMenu
         End With
 
         '列追加、空の行追加
@@ -423,5 +428,26 @@
     Private Sub nightWorkPic_DoubleClick(sender As Object, e As System.EventArgs) Handles nightWorkPic.DoubleClick
         '画像を空白に
         nightWorkPic.ImageLocation = Nothing
+    End Sub
+
+    Private Sub paintBlack_Click(sender As System.Object, e As System.EventArgs) Handles paintBlack.Click
+        If Not IsNothing(dgvUnitDiary.CurrentCell) Then
+            dgvUnitDiary.CurrentCell.Style.ForeColor = Color.Black
+            dgvUnitDiary.CurrentCell.Style.SelectionForeColor = Color.Black
+        End If
+    End Sub
+
+    Private Sub paintBlue_Click(sender As System.Object, e As System.EventArgs) Handles paintBlue.Click
+        If Not IsNothing(dgvUnitDiary.CurrentCell) Then
+            dgvUnitDiary.CurrentCell.Style.ForeColor = Color.Blue
+            dgvUnitDiary.CurrentCell.Style.SelectionForeColor = Color.Blue
+        End If
+    End Sub
+
+    Private Sub paintRed_Click(sender As System.Object, e As System.EventArgs) Handles paintRed.Click
+        If Not IsNothing(dgvUnitDiary.CurrentCell) Then
+            dgvUnitDiary.CurrentCell.Style.ForeColor = Color.Red
+            dgvUnitDiary.CurrentCell.Style.SelectionForeColor = Color.Red
+        End If
     End Sub
 End Class
