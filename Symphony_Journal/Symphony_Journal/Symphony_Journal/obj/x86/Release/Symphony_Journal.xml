@@ -58,7 +58,7 @@ Symphony_Journal
 	<param name="lpFileName">iniファイルパス</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:Symphony_Journal.ユニット日誌.#ctor(System.String)">
+</member><member name="M:Symphony_Journal.ユニット日誌.#ctor(System.String,System.String)">
 	<summary>
  コンストラクタ
  </summary>
@@ -156,6 +156,27 @@ Symphony_Journal
 </member><member name="M:Symphony_Journal.ユニット日誌.nightWorkPic_DoubleClick(System.Object,System.EventArgs)">
 	<summary>
  夜勤印影画像ダブルクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.paintBlack_Click(System.Object,System.EventArgs)">
+	<summary>
+ 右クリックメニューで黒選択時のイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.paintBlue_Click(System.Object,System.EventArgs)">
+	<summary>
+ 右クリックメニューで青選択時のイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.paintRed_Click(System.Object,System.EventArgs)">
+	<summary>
+ 右クリックメニューで赤選択時のイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>

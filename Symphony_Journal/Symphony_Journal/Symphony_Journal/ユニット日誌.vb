@@ -2,6 +2,9 @@
     'ログインユーザーの印影ファイルパス
     Private userSealFilePath As String
 
+    '右クリック色付け可否
+    Private canPaintFontColor As Boolean = False
+
     'ユニット
     Private unitArray() As String = {"星", "森", "空", "月", "花", "海"}
 
@@ -15,11 +18,20 @@
     ''' コンストラクタ
     ''' </summary>
     ''' <remarks></remarks>
-    Public Sub New(sealFileName As String)
+    Public Sub New(sealFileName As String, className As String)
         InitializeComponent()
-
         Me.WindowState = FormWindowState.Maximized
+
+        '印影ファイルパス
         userSealFilePath = TopForm.sealBoxDirPath & "\" & sealFileName & ".wmf"
+
+        '右クリック色付け可否
+        Dim classNum As String = className.Substring(0, 1)
+        If classNum = "5" OrElse classNum = "8" Then
+            canPaintFontColor = True
+        Else
+            paintColorLabel.Visible = False
+        End If
     End Sub
 
     ''' <summary>
@@ -98,10 +110,12 @@
                 End If
             Else
                 '入居者名列
-                dgvUnitDiary("Nam", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Nam").Value)
-                dgvUnitDiary("Nam", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
-                dgvUnitDiary("Nam", gyo - 1).Style.SelectionForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
-
+                If gyo <= 30 Then
+                    dgvUnitDiary("Nam", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Nam").Value)
+                    dgvUnitDiary("Nam", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
+                    dgvUnitDiary("Nam", gyo - 1).Style.SelectionForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
+                End If
+                
                 '経過内容列
                 dgvUnitDiary("Text", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Text").Value)
                 dgvUnitDiary("Text", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("TClr").Value)))
@@ -132,12 +146,18 @@
         nightWorkPic.ImageLocation = Nothing
         For i As Integer = 1 To 34
             If i <> 18 Then
-                dgvUnitDiary("Nam", i).Value = ""
-                dgvUnitDiary("Nam", i).Style.ForeColor = Color.Black
-                dgvUnitDiary("Nam", i).Style.SelectionForeColor = Color.Black
-                dgvUnitDiary("Text", i).Value = ""
-                dgvUnitDiary("Text", i).Style.ForeColor = Color.Black
-                dgvUnitDiary("Text", i).Style.SelectionForeColor = Color.Black
+                If i = 31 Then
+                    dgvUnitDiary("Text", i).Value = ""
+                    dgvUnitDiary("Text", i).Style.ForeColor = Color.Black
+                    dgvUnitDiary("Text", i).Style.SelectionForeColor = Color.Black
+                Else
+                    dgvUnitDiary("Nam", i).Value = ""
+                    dgvUnitDiary("Nam", i).Style.ForeColor = Color.Black
+                    dgvUnitDiary("Nam", i).Style.SelectionForeColor = Color.Black
+                    dgvUnitDiary("Text", i).Value = ""
+                    dgvUnitDiary("Text", i).Style.ForeColor = Color.Black
+                    dgvUnitDiary("Text", i).Style.SelectionForeColor = Color.Black
+                End If
             End If
         Next
     End Sub
@@ -168,7 +188,9 @@
             .EnableHeadersVisualStyles = False
             .ScrollBars = ScrollBars.None
             .ImeMode = Windows.Forms.ImeMode.Hiragana
-            .ContextMenuStrip = Me.colorContextMenu
+            If canPaintFontColor Then
+                .ContextMenuStrip = Me.colorContextMenu
+            End If
         End With
 
         '列追加、空の行追加
@@ -194,6 +216,7 @@
             row(1) = ""
             dgvUnitDiary.dt.Rows.Add(row)
         Next
+        dgvUnitDiary.dt.Rows(31)(0) = "特記事項"
 
         '表示
         dgvUnitDiary.DataSource = dgvUnitDiary.dt
@@ -430,22 +453,40 @@
         nightWorkPic.ImageLocation = Nothing
     End Sub
 
+    ''' <summary>
+    ''' 右クリックメニューで黒選択時のイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub paintBlack_Click(sender As System.Object, e As System.EventArgs) Handles paintBlack.Click
-        If Not IsNothing(dgvUnitDiary.CurrentCell) Then
+        If Not IsNothing(dgvUnitDiary.CurrentCell) AndAlso dgvUnitDiary.CurrentCell.ReadOnly = False Then
             dgvUnitDiary.CurrentCell.Style.ForeColor = Color.Black
             dgvUnitDiary.CurrentCell.Style.SelectionForeColor = Color.Black
         End If
     End Sub
 
+    ''' <summary>
+    ''' 右クリックメニューで青選択時のイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub paintBlue_Click(sender As System.Object, e As System.EventArgs) Handles paintBlue.Click
-        If Not IsNothing(dgvUnitDiary.CurrentCell) Then
+        If Not IsNothing(dgvUnitDiary.CurrentCell) AndAlso dgvUnitDiary.CurrentCell.ReadOnly = False Then
             dgvUnitDiary.CurrentCell.Style.ForeColor = Color.Blue
             dgvUnitDiary.CurrentCell.Style.SelectionForeColor = Color.Blue
         End If
     End Sub
 
+    ''' <summary>
+    ''' 右クリックメニューで赤選択時のイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub paintRed_Click(sender As System.Object, e As System.EventArgs) Handles paintRed.Click
-        If Not IsNothing(dgvUnitDiary.CurrentCell) Then
+        If Not IsNothing(dgvUnitDiary.CurrentCell) AndAlso dgvUnitDiary.CurrentCell.ReadOnly = False Then
             dgvUnitDiary.CurrentCell.Style.ForeColor = Color.Red
             dgvUnitDiary.CurrentCell.Style.SelectionForeColor = Color.Red
         End If

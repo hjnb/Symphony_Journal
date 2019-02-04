@@ -8,6 +8,9 @@ Public Class 印鑑パスワード
     '印鑑ファイル名
     Private sealFileName As String
 
+    '職制
+    Private className As String
+
     'テキストボックスのマウスダウンイベント制御用
     Private mdFlag As Boolean = False
 
@@ -87,13 +90,14 @@ Public Class 印鑑パスワード
         Dim cnn As New ADODB.Connection
         cnn.Open(mdbFilePass)
         Dim rs As New ADODB.Recordset
-        Dim sql = "SELECT File FROM SealM WHERE Pwd='" & inputPass & "'"
+        Dim sql = "SELECT Class, File FROM SealM WHERE Pwd='" & inputPass & "'"
         rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockPessimistic)
         If rs.RecordCount <= 0 Then
             rs.Close()
             cnn.Close()
             Return False
         Else
+            className = Util.checkDBNullValue(rs.Fields("Class").Value) '職制名を保持
             sealFileName = Util.checkDBNullValue(rs.Fields("File").Value) '印鑑ファイル名を保持
             rs.Close()
             cnn.Close()
@@ -130,6 +134,7 @@ Public Class 印鑑パスワード
                 Return False
             Else
                 rs.Fields("Pwd").Value = newPass
+                className = Util.checkDBNullValue(rs.Fields("Class").Value) '職制名を保持
                 sealFileName = Util.checkDBNullValue(rs.Fields("File").Value) '印鑑ファイル名を保持
                 rs.Update()
                 rs.Close()
@@ -200,6 +205,10 @@ Public Class 印鑑パスワード
 
     Public Function getSealFileName() As String
         Return sealFileName
+    End Function
+
+    Public Function getClassName() As String
+        Return className
     End Function
 
     Private Sub textBox_Enter(sender As Object, e As System.EventArgs) Handles passBox.Enter, newPassBox.Enter, confirmPassBox.Enter

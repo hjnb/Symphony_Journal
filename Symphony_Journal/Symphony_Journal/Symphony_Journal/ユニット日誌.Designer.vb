@@ -44,7 +44,7 @@ Partial Class ユニット日誌
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.paintColorLabel = New System.Windows.Forms.Label()
         Me.Nyu1Box = New System.Windows.Forms.TextBox()
         Me.Gai1Box = New System.Windows.Forms.TextBox()
         Me.Kyo1Box = New System.Windows.Forms.TextBox()
@@ -268,15 +268,15 @@ Partial Class ユニット日誌
         Me.Label12.TabIndex = 15
         Me.Label12.Text = "計"
         '
-        'Label13
+        'paintColorLabel
         '
-        Me.Label13.AutoSize = True
-        Me.Label13.ForeColor = System.Drawing.Color.Blue
-        Me.Label13.Location = New System.Drawing.Point(474, 92)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(71, 12)
-        Me.Label13.TabIndex = 18
-        Me.Label13.Text = "着色：右ｸﾘｯｸ"
+        Me.paintColorLabel.AutoSize = True
+        Me.paintColorLabel.ForeColor = System.Drawing.Color.Blue
+        Me.paintColorLabel.Location = New System.Drawing.Point(474, 92)
+        Me.paintColorLabel.Name = "paintColorLabel"
+        Me.paintColorLabel.Size = New System.Drawing.Size(71, 12)
+        Me.paintColorLabel.TabIndex = 18
+        Me.paintColorLabel.Text = "着色：右ｸﾘｯｸ"
         '
         'Nyu1Box
         '
@@ -442,7 +442,7 @@ Partial Class ユニット日誌
         Me.Controls.Add(Me.Kyo1Box)
         Me.Controls.Add(Me.Gai1Box)
         Me.Controls.Add(Me.Nyu1Box)
-        Me.Controls.Add(Me.Label13)
+        Me.Controls.Add(Me.paintColorLabel)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.Label12)
@@ -498,7 +498,7 @@ Partial Class ユニット日誌
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents paintColorLabel As System.Windows.Forms.Label
     Friend WithEvents Nyu1Box As System.Windows.Forms.TextBox
     Friend WithEvents Gai1Box As System.Windows.Forms.TextBox
     Friend WithEvents Kyo1Box As System.Windows.Forms.TextBox

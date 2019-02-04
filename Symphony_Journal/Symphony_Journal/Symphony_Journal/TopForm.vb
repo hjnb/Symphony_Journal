@@ -94,7 +94,7 @@
         End If
 
         If IsNothing(unitDiary) OrElse unitDiary.IsDisposed Then
-            unitDiary = New ユニット日誌(passForm.getSealFileName())
+            unitDiary = New ユニット日誌(passForm.getSealFileName(), passForm.getClassName())
             unitDiary.Owner = Me
             unitDiary.Show()
         End If
