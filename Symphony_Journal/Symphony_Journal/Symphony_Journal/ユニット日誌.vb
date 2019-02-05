@@ -14,6 +14,9 @@
     '編集不可部分のセルスタイル
     Private readOnlyCellStyle As DataGridViewCellStyle
 
+    '印刷条件フォーム
+    Private printForm As 印刷条件
+
     ''' <summary>
     ''' コンストラクタ
     ''' </summary>
@@ -489,6 +492,21 @@
         If Not IsNothing(dgvUnitDiary.CurrentCell) AndAlso dgvUnitDiary.CurrentCell.ReadOnly = False Then
             dgvUnitDiary.CurrentCell.Style.ForeColor = Color.Red
             dgvUnitDiary.CurrentCell.Style.SelectionForeColor = Color.Red
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 印刷ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
+        If IsNothing(printForm) OrElse printForm.IsDisposed Then
+            printForm = New 印刷条件()
+            printForm.Owner = Me
+            printForm.ShowDialog()
+            printForm.Dispose()
         End If
     End Sub
 End Class
