@@ -17,6 +17,9 @@
     '印刷条件フォーム
     Private printForm As 印刷条件
 
+    '便観察フォーム
+    Private benForm As 便観察
+
     ''' <summary>
     ''' コンストラクタ
     ''' </summary>
@@ -73,7 +76,7 @@
     End Sub
 
     ''' <summary>
-    ''' 対象ユニット、日付の日誌データ表示
+    ''' 対象日付、ユニットの日誌データ表示
     ''' </summary>
     ''' <param name="unitName">ユニット名</param>
     ''' <param name="ymd">日付(yyyy/MM/dd)</param>
@@ -118,7 +121,7 @@
                     dgvUnitDiary("Nam", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
                     dgvUnitDiary("Nam", gyo - 1).Style.SelectionForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("NClr").Value)))
                 End If
-                
+
                 '経過内容列
                 dgvUnitDiary("Text", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Text").Value)
                 dgvUnitDiary("Text", gyo - 1).Style.ForeColor = fontColorTable(CInt(Util.checkDBNullValue(rs.Fields("TClr").Value)))
@@ -145,8 +148,8 @@
         Kyo1Box.Text = ""
         Kyo2Box.Text = ""
         Kyo3Box.Text = ""
-        dayWorkPic.ImageLocation = Nothing
-        nightWorkPic.ImageLocation = Nothing
+        dayWorkPic.ImageLocation = ""
+        nightWorkPic.ImageLocation = ""
         For i As Integer = 1 To 34
             If i <> 18 Then
                 If i = 31 Then
@@ -442,7 +445,7 @@
     ''' <remarks></remarks>
     Private Sub dayWorkPic_DoubleClick(sender As Object, e As System.EventArgs) Handles dayWorkPic.DoubleClick
         '画像を空白に
-        dayWorkPic.ImageLocation = Nothing
+        dayWorkPic.ImageLocation = ""
     End Sub
 
     ''' <summary>
@@ -453,7 +456,7 @@
     ''' <remarks></remarks>
     Private Sub nightWorkPic_DoubleClick(sender As Object, e As System.EventArgs) Handles nightWorkPic.DoubleClick
         '画像を空白に
-        nightWorkPic.ImageLocation = Nothing
+        nightWorkPic.ImageLocation = ""
     End Sub
 
     ''' <summary>
@@ -496,6 +499,24 @@
     End Sub
 
     ''' <summary>
+    ''' 登録用数値に変換
+    ''' </summary>
+    ''' <param name="inputStr"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function convNum(inputStr As String) As Integer
+        If inputStr = "" Then
+            Return 0
+        Else
+            If IsNumeric(inputStr) Then
+                Return CInt(inputStr)
+            Else
+                Return -1
+            End If
+        End If
+    End Function
+
+    ''' <summary>
     ''' 印刷ボタンクリックイベント
     ''' </summary>
     ''' <param name="sender"></param>
@@ -507,6 +528,144 @@
             printForm.Owner = Me
             printForm.ShowDialog()
             printForm.Dispose()
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 登録ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        '入力内容取得
+        Dim ymd As String = YmdBox.getADStr() '日付
+        Dim unit As String = If(IsNothing(unitListBox.SelectedItem), "", unitListBox.SelectedItem.ToString()) 'ユニット
+        Dim sign6 As String = System.IO.Path.GetFileNameWithoutExtension(dayWorkPic.ImageLocation) '日勤印影
+        Dim sign7 As String = System.IO.Path.GetFileNameWithoutExtension(nightWorkPic.ImageLocation) '夜勤印影
+        Dim nyu1 As Integer = convNum(Nyu1Box.Text) '入院者数　男
+        Dim nyu2 As Integer = convNum(Nyu2Box.Text) '入院者数　女
+        Dim nyu3 As Integer = convNum(Nyu3Box.Text) '入院者数　計
+        Dim gai1 As Integer = convNum(Gai1Box.Text) '外泊者数　男
+        Dim gai2 As Integer = convNum(Gai2Box.Text) '外泊者数　女
+        Dim gai3 As Integer = convNum(Gai3Box.Text) '外泊者数　計
+        Dim kyo1 As Integer = convNum(Kyo1Box.Text) '入居者数　男
+        Dim kyo2 As Integer = convNum(Kyo2Box.Text) '入居者数　女
+        Dim kyo3 As Integer = convNum(Kyo3Box.Text) '入居者数　計
+
+        '入力チェック
+        If unit = "" Then
+            MsgBox("ユニットを選択して下さい。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+        If rbtnDayWork.Checked = False AndAlso rbtnNightWork.Checked = False Then
+            MsgBox("日勤/夜勤が選択されていません。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+        If nyu1 = -1 OrElse nyu2 = -1 OrElse nyu3 = -1 OrElse gai1 = -1 OrElse gai2 = -1 OrElse gai3 = -1 OrElse kyo1 = -1 OrElse kyo2 = -1 OrElse kyo3 = -1 Then
+            MsgBox("入院者数、外泊者数、入居者数は数値で入力して下さい。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
+        '既存データ削除
+        Dim cnn As New ADODB.Connection
+        cnn.Open(TopForm.DB_Journal)
+        Dim cmd As New ADODB.Command()
+        cmd.ActiveConnection = cnn
+        cmd.CommandText = "delete from UNis where Ymd='" & ymd & "' and Unit='" & unit & "'"
+        cmd.Execute()
+
+        '登録
+        Dim rs As New ADODB.Recordset()
+        rs.Open("UNis", cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockOptimistic)
+        'Gyo = 0 のみ
+        rs.AddNew()
+        rs.Fields("Div").Value = TopForm.DIV 'Div
+        rs.Fields("Ymd").Value = ymd '日付
+        rs.Fields("Unit").Value = unit 'ユニット
+        rs.Fields("Gyo").Value = 0 'Gyo
+        rs.Fields("Nyu1").Value = nyu1 '入院者数　男
+        rs.Fields("Nyu2").Value = nyu2 '入院者数　女
+        rs.Fields("Nyu3").Value = nyu3 '入院者数　計
+        rs.Fields("Gai1").Value = gai1 '外泊者数　男
+        rs.Fields("Gai2").Value = gai2 '外泊者数　女
+        rs.Fields("Gai3").Value = gai3 '外泊者数　計
+        rs.Fields("Kyo1").Value = kyo1 '入院者数　男
+        rs.Fields("Kyo2").Value = kyo2 '入院者数　女
+        rs.Fields("Kyo3").Value = kyo3 '入院者数　計
+        rs.Fields("Sign6").Value = sign6 '日勤印影ファイル名
+        rs.Fields("Sign7").Value = sign7 '夜勤印影ファイル名
+        rs.Fields("Nam").Value = ""
+        rs.Fields("NClr").Value = 0
+        rs.Fields("Text").Value = ""
+        rs.Fields("TClr").Value = 0
+        'Gyo = 0 以外
+        For i As Integer = 0 To 34
+            If i = 0 OrElse i = 18 Then
+                Continue For
+            End If
+
+            Dim inputNam As String = Util.checkDBNullValue(dgvUnitDiary("Nam", i).Value) '名前
+            Dim inputText As String = Util.checkDBNullValue(dgvUnitDiary("Text", i).Value) '内容
+
+            If inputNam = "" AndAlso inputText = "" Then
+                Continue For
+            End If
+
+            Dim gyo As Integer = i + 1 'Gyo
+            Dim nClr As Color = dgvUnitDiary("Nam", i).Style.ForeColor
+            Dim nClrNum As Integer = If(nClr = Color.Black, 0, If(nClr = Color.Blue, 1, 2)) 'NClr
+            Dim tClr As Color = dgvUnitDiary("Text", i).Style.ForeColor
+            Dim tClrNum As Integer = If(tClr = Color.Black, 0, If(tClr = Color.Blue, 1, 2)) 'TClr
+
+            rs.AddNew()
+            rs.Fields("Div").Value = TopForm.DIV 'Div
+            rs.Fields("Ymd").Value = ymd '日付
+            rs.Fields("Unit").Value = unit 'ユニット
+            rs.Fields("Gyo").Value = gyo 'Gyo
+            rs.Fields("Nyu1").Value = 0
+            rs.Fields("Nyu2").Value = 0
+            rs.Fields("Nyu3").Value = 0
+            rs.Fields("Gai1").Value = 0
+            rs.Fields("Gai2").Value = 0
+            rs.Fields("Gai3").Value = 0
+            rs.Fields("Kyo1").Value = 0
+            rs.Fields("Kyo2").Value = 0
+            rs.Fields("Kyo3").Value = 0
+            rs.Fields("Sign6").Value = ""
+            rs.Fields("Sign7").Value = ""
+            rs.Fields("Nam").Value = inputNam '名前
+            rs.Fields("NClr").Value = nClrNum '名前色番号
+            rs.Fields("Text").Value = inputText '内容
+            rs.Fields("TClr").Value = tClrNum '内容色番号
+        Next
+        rs.Update()
+        rs.Close()
+        cnn.Close()
+
+        MsgBox("登録しました。", MsgBoxStyle.Information)
+
+    End Sub
+
+    ''' <summary>
+    ''' 便観察ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnObserve_Click(sender As System.Object, e As System.EventArgs) Handles btnObserve.Click
+        If IsNothing(benForm) OrElse benForm.IsDisposed Then
+            Dim unit As String = If(IsNothing(unitListBox.SelectedItem), "", unitListBox.SelectedItem.ToString())
+            Dim ad As String = YmdBox.getADStr()
+            Dim wareki As String = YmdBox.getWarekiStr()
+            If unit = "" Then
+                MsgBox("ユニットを選択して下さい。", MsgBoxStyle.Exclamation)
+                Return
+            End If
+            benForm = New 便観察(unit, ad, wareki)
+            benForm.Owner = Me
+            benForm.ShowDialog()
+            benForm.Dispose()
         End If
     End Sub
 End Class

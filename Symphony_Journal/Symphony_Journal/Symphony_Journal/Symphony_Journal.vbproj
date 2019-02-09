@@ -122,6 +122,12 @@
     <Compile Include="ユニット日誌.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="便観察.Designer.vb">
+      <DependentUpon>便観察.vb</DependentUpon>
+    </Compile>
+    <Compile Include="便観察.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="入居者登録.Designer.vb">
       <DependentUpon>入居者登録.vb</DependentUpon>
     </Compile>
@@ -177,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ユニット日誌.resx">
       <DependentUpon>ユニット日誌.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="便観察.resx">
+      <DependentUpon>便観察.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="入居者登録.resx">
       <DependentUpon>入居者登録.vb</DependentUpon>

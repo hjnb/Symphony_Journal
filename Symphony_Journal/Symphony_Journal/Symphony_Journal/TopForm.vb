@@ -23,6 +23,9 @@
     Private progressTable As 施設介護支援経過表
     Private ssLife As SS生活の様子
 
+    'Div
+    Public Const DIV As Integer = 1
+
     Private Sub TopForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'データベース、エクセル、構成ファイルの存在チェック
         If Not System.IO.File.Exists(dbFilePath) Then

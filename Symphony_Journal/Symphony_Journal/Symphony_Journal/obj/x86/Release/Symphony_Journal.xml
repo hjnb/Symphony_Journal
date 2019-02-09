@@ -6,7 +6,40 @@ Symphony_Journal
 </name>
 </assembly>
 <members>
-<member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
+<member name="M:Symphony_Journal.便観察.#ctor(System.String,System.String,System.String)">
+	<summary>
+ コンストラクタ
+ </summary>
+	<param name="unitName">ユニット名</param>
+	<param name="warekiStr">和暦</param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.便観察_Load(System.Object,System.EventArgs)">
+	<summary>
+ loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.initDgvBen">
+	<summary>
+ データグリッドビュー初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.dgvBen_CellEnter(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+	<summary>
+ セルエンターイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
 	<summary>
  コントロールのDoubleBufferedプロパティをTrueにする
  </summary>
@@ -77,7 +110,7 @@ Symphony_Journal
 	<remarks></remarks>
 </member><member name="M:Symphony_Journal.ユニット日誌.displayUnitDiary(System.String,System.String)">
 	<summary>
- 対象ユニット、日付の日誌データ表示
+ 対象日付、ユニットの日誌データ表示
  </summary>
 	<param name="unitName">ユニット名</param>
 	<param name="ymd">日付(yyyy/MM/dd)</param>
@@ -181,9 +214,30 @@ Symphony_Journal
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.convNum(System.String)">
+	<summary>
+ 登録用数値に変換
+ </summary>
+	<param name="inputStr"></param>
+	<returns></returns>
+	<remarks></remarks>
 </member><member name="M:Symphony_Journal.ユニット日誌.btnPrint_Click(System.Object,System.EventArgs)">
 	<summary>
  印刷ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.ユニット日誌.btnObserve_Click(System.Object,System.EventArgs)">
+	<summary>
+ 便観察ボタンクリックイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>
