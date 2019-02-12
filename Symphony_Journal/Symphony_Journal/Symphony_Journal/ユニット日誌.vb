@@ -1,9 +1,14 @@
-﻿Public Class ユニット日誌
+﻿Imports System.Text
+
+Public Class ユニット日誌
     'ログインユーザーの印影ファイルパス
     Private userSealFilePath As String
 
     '右クリック色付け可否
     Private canPaintFontColor As Boolean = False
+
+    '内容文字数制限用
+    Private Const LIMIT_LENGTH_BYTE As Integer = 90
 
     'ユニット
     Private unitArray() As String = {"星", "森", "空", "月", "花", "海"}
@@ -668,6 +673,32 @@
             benForm.Owner = Me
             benForm.ShowDialog()
             benForm.Dispose()
+        End If
+    End Sub
+
+    Private Sub dgvUnitDiary_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgvUnitDiary.EditingControlShowing
+        Dim editTextBox As DataGridViewTextBoxEditingControl = CType(e.Control, DataGridViewTextBoxEditingControl)
+        Dim columnName As String = dgvUnitDiary.Columns(dgvUnitDiary.CurrentCell.ColumnIndex).Name
+
+        If columnName = "Text" Then
+            'イベントハンドラを削除、追加
+            RemoveHandler editTextBox.KeyPress, AddressOf dgvTextBox_KeyPress
+            AddHandler editTextBox.KeyPress, AddressOf dgvTextBox_KeyPress
+        End If
+    End Sub
+
+    Private Sub dgvTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
+        Dim text As String = CType(sender, DataGridViewTextBoxEditingControl).Text
+        Dim lengthByte As Integer = Encoding.GetEncoding("Shift_JIS").GetByteCount(text)
+
+        If lengthByte >= LIMIT_LENGTH_BYTE Then '設定されているバイト数以上の時
+            If e.KeyChar = ChrW(Keys.Back) Then
+                'Backspaceは入力可能
+                e.Handled = False
+            Else
+                '入力できなくする
+                e.Handled = True
+            End If
         End If
     End Sub
 End Class
