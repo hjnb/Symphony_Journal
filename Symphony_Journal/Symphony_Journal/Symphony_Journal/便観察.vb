@@ -9,6 +9,9 @@
     '日付(和暦)
     Private warekiStr As String
 
+    '曜日
+    Private dayOfWeek As String
+
     'cellEnterフラグ
     Private canEnter As Boolean = False
 
@@ -18,16 +21,18 @@
     ''' <param name="unitName">ユニット名</param>
     ''' <param name="warekiStr">和暦</param>
     ''' <remarks></remarks>
-    Public Sub New(unitName As String, adStr As String, warekiStr As String)
+    Public Sub New(unitName As String, adStr As String, warekiStr As String, dayOfWeek As String, parentX As Integer, parentY As Integer)
         InitializeComponent()
+
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
+
         '位置設定
-        '
-        '
+        Me.Location = New Point(parentX + 295, parentY + 40)
 
         Me.unitName = unitName
         Me.adStr = adStr
         Me.warekiStr = warekiStr
+        Me.dayOfWeek = dayOfWeek
     End Sub
 
     ''' <summary>
@@ -39,7 +44,7 @@
     Private Sub 便観察_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'ラベル設定
         unitLabel.Text = unitName & unitLabel.Text
-        dateLabel.Text = warekiStr
+        dateLabel.Text = warekiStr & "(" & dayOfWeek & ")"
 
         'dgv初期設定
         initDgvBen()
@@ -100,8 +105,23 @@
         canEnter = True
     End Sub
 
+    ''' <summary>
+    ''' 便観察データ表示
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub displayDgvBen()
-
+        Dim cnn As New ADODB.Connection
+        cnn.Open(TopForm.DB_Journal)
+        Dim rs As New ADODB.Recordset
+        Dim sql As String = "select Gyo, Text from Ben where Ymd='" & adStr & "' And Unit='" & unitName & "' order by Gyo"
+        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+        While Not rs.EOF
+            Dim gyo As Integer = rs.Fields("Gyo").Value
+            dgvBen("Text", gyo - 1).Value = Util.checkDBNullValue(rs.Fields("Text").Value)
+            rs.MoveNext()
+        End While
+        rs.Close()
+        cnn.Close()
     End Sub
 
     ''' <summary>
@@ -140,8 +160,37 @@
             benLabel.Visible = False
         End If
 
+        '既存データ削除
+        Dim cnn As New ADODB.Connection
+        cnn.Open(TopForm.DB_Journal)
+        Dim cmd As New ADODB.Command()
+        cmd.ActiveConnection = cnn
+        cmd.CommandText = "delete from Ben where Ymd='" & adStr & "' and Unit='" & unitName & "'"
+        cmd.Execute()
+
         '登録
+        Dim rs As New ADODB.Recordset()
+        rs.Open("Ben", cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockOptimistic)
+        For i As Integer = 4 To 0 Step -1
+            Dim inputText As String = Util.checkDBNullValue(dgvBen("Text", i).Value)
+            If inputText = "" Then
+                Continue For
+            End If
+            Dim gyo As Integer = i + 1
+            rs.AddNew()
+            rs.Fields("Div").Value = TopForm.DIV
+            rs.Fields("Ymd").Value = adStr
+            rs.Fields("Unit").Value = unitName
+            rs.Fields("Gyo").Value = gyo
+            rs.Fields("Text").Value = inputText
+        Next
+        rs.Update()
+        rs.Close()
+        cnn.Close()
 
-
+        'クリア
+        For i As Integer = 0 To 4
+            dgvBen("Text", i).Value = ""
+        Next
     End Sub
 End Class

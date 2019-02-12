@@ -6,40 +6,7 @@ Symphony_Journal
 </name>
 </assembly>
 <members>
-<member name="M:Symphony_Journal.便観察.#ctor(System.String,System.String,System.String)">
-	<summary>
- コンストラクタ
- </summary>
-	<param name="unitName">ユニット名</param>
-	<param name="warekiStr">和暦</param>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.便観察.便観察_Load(System.Object,System.EventArgs)">
-	<summary>
- loadイベント
- </summary>
-	<param name="sender"></param>
-	<param name="e"></param>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.便観察.initDgvBen">
-	<summary>
- データグリッドビュー初期設定
- </summary>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.便観察.dgvBen_CellEnter(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
-	<summary>
- セルエンターイベント
- </summary>
-	<param name="sender"></param>
-	<param name="e"></param>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.便観察.btnRegist_Click(System.Object,System.EventArgs)">
-	<summary>
- 登録ボタンクリックイベント
- </summary>
-	<param name="sender"></param>
-	<param name="e"></param>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
+<member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
 	<summary>
  コントロールのDoubleBufferedプロパティをTrueにする
  </summary>
@@ -238,6 +205,44 @@ Symphony_Journal
 </member><member name="M:Symphony_Journal.ユニット日誌.btnObserve_Click(System.Object,System.EventArgs)">
 	<summary>
  便観察ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.#ctor(System.String,System.String,System.String,System.String,System.Int32,System.Int32)">
+	<summary>
+ コンストラクタ
+ </summary>
+	<param name="unitName">ユニット名</param>
+	<param name="warekiStr">和暦</param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.便観察_Load(System.Object,System.EventArgs)">
+	<summary>
+ loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.initDgvBen">
+	<summary>
+ データグリッドビュー初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.displayDgvBen">
+	<summary>
+ 便観察データ表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.dgvBen_CellEnter(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+	<summary>
+ セルエンターイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.便観察.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>
