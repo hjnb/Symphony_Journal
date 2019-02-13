@@ -33,17 +33,18 @@ Partial Class 印刷条件
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.facilityManagerTextBox = New System.Windows.Forms.TextBox()
-        Me.consulteeTextBox = New System.Windows.Forms.TextBox()
-        Me.specialistTextBox = New System.Windows.Forms.TextBox()
-        Me.consensual2TextBox = New System.Windows.Forms.TextBox()
-        Me.consensual1TextBox = New System.Windows.Forms.TextBox()
+        Me.sign1Box = New System.Windows.Forms.TextBox()
+        Me.sign2Box = New System.Windows.Forms.TextBox()
+        Me.sign3Box = New System.Windows.Forms.TextBox()
+        Me.sign5Box = New System.Windows.Forms.TextBox()
+        Me.sign4Box = New System.Windows.Forms.TextBox()
         Me.rbtnPreview = New System.Windows.Forms.RadioButton()
         Me.rbtnPrint = New System.Windows.Forms.RadioButton()
         Me.btnExcute = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.unitLabel = New System.Windows.Forms.Label()
+        Me.errorLabel = New System.Windows.Forms.Label()
         CType(Me.dgvUnit, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -160,40 +161,40 @@ Partial Class 印刷条件
         Me.Label6.TabIndex = 9
         Me.Label6.Text = "合議"
         '
-        'facilityManagerTextBox
+        'sign1Box
         '
-        Me.facilityManagerTextBox.Location = New System.Drawing.Point(70, 179)
-        Me.facilityManagerTextBox.Name = "facilityManagerTextBox"
-        Me.facilityManagerTextBox.Size = New System.Drawing.Size(100, 19)
-        Me.facilityManagerTextBox.TabIndex = 11
+        Me.sign1Box.Location = New System.Drawing.Point(70, 179)
+        Me.sign1Box.Name = "sign1Box"
+        Me.sign1Box.Size = New System.Drawing.Size(100, 19)
+        Me.sign1Box.TabIndex = 11
         '
-        'consulteeTextBox
+        'sign2Box
         '
-        Me.consulteeTextBox.Location = New System.Drawing.Point(70, 201)
-        Me.consulteeTextBox.Name = "consulteeTextBox"
-        Me.consulteeTextBox.Size = New System.Drawing.Size(100, 19)
-        Me.consulteeTextBox.TabIndex = 12
+        Me.sign2Box.Location = New System.Drawing.Point(70, 201)
+        Me.sign2Box.Name = "sign2Box"
+        Me.sign2Box.Size = New System.Drawing.Size(100, 19)
+        Me.sign2Box.TabIndex = 12
         '
-        'specialistTextBox
+        'sign3Box
         '
-        Me.specialistTextBox.Location = New System.Drawing.Point(70, 223)
-        Me.specialistTextBox.Name = "specialistTextBox"
-        Me.specialistTextBox.Size = New System.Drawing.Size(100, 19)
-        Me.specialistTextBox.TabIndex = 13
+        Me.sign3Box.Location = New System.Drawing.Point(70, 223)
+        Me.sign3Box.Name = "sign3Box"
+        Me.sign3Box.Size = New System.Drawing.Size(100, 19)
+        Me.sign3Box.TabIndex = 13
         '
-        'consensual2TextBox
+        'sign5Box
         '
-        Me.consensual2TextBox.Location = New System.Drawing.Point(70, 267)
-        Me.consensual2TextBox.Name = "consensual2TextBox"
-        Me.consensual2TextBox.Size = New System.Drawing.Size(100, 19)
-        Me.consensual2TextBox.TabIndex = 15
+        Me.sign5Box.Location = New System.Drawing.Point(70, 267)
+        Me.sign5Box.Name = "sign5Box"
+        Me.sign5Box.Size = New System.Drawing.Size(100, 19)
+        Me.sign5Box.TabIndex = 15
         '
-        'consensual1TextBox
+        'sign4Box
         '
-        Me.consensual1TextBox.Location = New System.Drawing.Point(70, 245)
-        Me.consensual1TextBox.Name = "consensual1TextBox"
-        Me.consensual1TextBox.Size = New System.Drawing.Size(100, 19)
-        Me.consensual1TextBox.TabIndex = 14
+        Me.sign4Box.Location = New System.Drawing.Point(70, 245)
+        Me.sign4Box.Name = "sign4Box"
+        Me.sign4Box.Size = New System.Drawing.Size(100, 19)
+        Me.sign4Box.TabIndex = 14
         '
         'rbtnPreview
         '
@@ -254,20 +255,32 @@ Partial Class 印刷条件
         Me.unitLabel.Size = New System.Drawing.Size(0, 16)
         Me.unitLabel.TabIndex = 35
         '
+        'errorLabel
+        '
+        Me.errorLabel.AutoSize = True
+        Me.errorLabel.ForeColor = System.Drawing.Color.Red
+        Me.errorLabel.Location = New System.Drawing.Point(15, 354)
+        Me.errorLabel.Name = "errorLabel"
+        Me.errorLabel.Size = New System.Drawing.Size(99, 12)
+        Me.errorLabel.TabIndex = 36
+        Me.errorLabel.Text = "印影ファイル未登録"
+        Me.errorLabel.Visible = False
+        '
         '印刷条件
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(285, 392)
+        Me.Controls.Add(Me.errorLabel)
         Me.Controls.Add(Me.unitLabel)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnExcute)
-        Me.Controls.Add(Me.consensual2TextBox)
-        Me.Controls.Add(Me.consensual1TextBox)
-        Me.Controls.Add(Me.specialistTextBox)
-        Me.Controls.Add(Me.consulteeTextBox)
-        Me.Controls.Add(Me.facilityManagerTextBox)
+        Me.Controls.Add(Me.sign5Box)
+        Me.Controls.Add(Me.sign4Box)
+        Me.Controls.Add(Me.sign3Box)
+        Me.Controls.Add(Me.sign2Box)
+        Me.Controls.Add(Me.sign1Box)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label4)
@@ -299,15 +312,16 @@ Partial Class 印刷条件
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents facilityManagerTextBox As System.Windows.Forms.TextBox
-    Friend WithEvents consulteeTextBox As System.Windows.Forms.TextBox
-    Friend WithEvents specialistTextBox As System.Windows.Forms.TextBox
-    Friend WithEvents consensual2TextBox As System.Windows.Forms.TextBox
-    Friend WithEvents consensual1TextBox As System.Windows.Forms.TextBox
+    Friend WithEvents sign1Box As System.Windows.Forms.TextBox
+    Friend WithEvents sign2Box As System.Windows.Forms.TextBox
+    Friend WithEvents sign3Box As System.Windows.Forms.TextBox
+    Friend WithEvents sign5Box As System.Windows.Forms.TextBox
+    Friend WithEvents sign4Box As System.Windows.Forms.TextBox
     Friend WithEvents rbtnPreview As System.Windows.Forms.RadioButton
     Friend WithEvents rbtnPrint As System.Windows.Forms.RadioButton
     Friend WithEvents btnExcute As System.Windows.Forms.Button
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents unitLabel As System.Windows.Forms.Label
+    Friend WithEvents errorLabel As System.Windows.Forms.Label
 End Class

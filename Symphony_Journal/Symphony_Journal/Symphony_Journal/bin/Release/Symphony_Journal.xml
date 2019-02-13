@@ -456,6 +456,7 @@ Symphony_Journal
  便観察印刷書き込み
  </summary>
 	<param name="oSheet"></param>
+	<param name="rs"></param>
 	<remarks></remarks>
 </member><member name="M:Symphony_Journal.印鑑パスワード.#ctor(System.String)">
 	<summary>

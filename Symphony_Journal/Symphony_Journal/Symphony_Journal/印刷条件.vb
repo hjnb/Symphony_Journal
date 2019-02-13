@@ -48,11 +48,11 @@ Public Class 印刷条件
         endYmdBox.setADStr(todayStr)
 
         '印影ファイル名、印刷ラジオボタンの設定読み込み
-        facilityManagerTextBox.Text = Util.getIniString("System", "Sign1", TopForm.iniFilePath)
-        consulteeTextBox.Text = Util.getIniString("System", "Sign2", TopForm.iniFilePath)
-        specialistTextBox.Text = Util.getIniString("System", "Sign3", TopForm.iniFilePath)
-        consensual1TextBox.Text = Util.getIniString("System", "Sign4", TopForm.iniFilePath)
-        consensual2TextBox.Text = Util.getIniString("System", "Sign5", TopForm.iniFilePath)
+        sign1Box.Text = Util.getIniString("System", "Sign1", TopForm.iniFilePath)
+        sign2Box.Text = Util.getIniString("System", "Sign2", TopForm.iniFilePath)
+        sign3Box.Text = Util.getIniString("System", "Sign3", TopForm.iniFilePath)
+        sign4Box.Text = Util.getIniString("System", "Sign4", TopForm.iniFilePath)
+        sign5Box.Text = Util.getIniString("System", "Sign5", TopForm.iniFilePath)
         Dim printState As String = Util.getIniString("System", "Printer", TopForm.iniFilePath)
         If printState = "Y" Then
             rbtnPrint.Checked = True
@@ -130,7 +130,7 @@ Public Class 印刷条件
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     ''' <remarks></remarks>
-    Private Sub consensual2TextBox_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles consensual2TextBox.KeyDown
+    Private Sub consensual2TextBox_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles sign5Box.KeyDown
         If e.KeyCode = Keys.Enter Then
             btnExcute.Focus()
         End If
@@ -142,7 +142,7 @@ Public Class 印刷条件
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     ''' <remarks></remarks>
-    Private Sub TextBox_Enter(sender As Object, e As System.EventArgs) Handles facilityManagerTextBox.Enter, consulteeTextBox.Enter, specialistTextBox.Enter, consensual1TextBox.Enter, consensual2TextBox.Enter
+    Private Sub TextBox_Enter(sender As Object, e As System.EventArgs) Handles sign1Box.Enter, sign2Box.Enter, sign3Box.Enter, sign4Box.Enter, sign5Box.Enter
         Dim tb As TextBox = CType(sender, TextBox)
         tb.SelectAll()
         mdFlag = True
@@ -154,7 +154,7 @@ Public Class 印刷条件
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     ''' <remarks></remarks>
-    Private Sub TextBox_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles facilityManagerTextBox.MouseDown, consulteeTextBox.MouseDown, specialistTextBox.MouseDown, consensual1TextBox.MouseDown, consensual2TextBox.MouseDown
+    Private Sub TextBox_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles sign1Box.MouseDown, sign2Box.MouseDown, sign3Box.MouseDown, sign4Box.MouseDown, sign5Box.MouseDown
         If mdFlag = True Then
             Dim tb As TextBox = CType(sender, TextBox)
             tb.SelectAll()
@@ -227,6 +227,22 @@ Public Class 印刷条件
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub btnExcute_Click(sender As System.Object, e As System.EventArgs) Handles btnExcute.Click
+        '印影ファイルが存在しているかチェック
+        For i As Integer = 1 To 5
+            Dim tb As TextBox = CType(Controls("sign" & i & "Box"), TextBox)
+            Dim fileName As String = tb.Text
+            If fileName = "" Then
+                Continue For
+            End If
+            Dim sealFilePath As String = TopForm.sealBoxDirPath & "\" & fileName & ".wmf"
+            If Not System.IO.File.Exists(sealFilePath) Then
+                tb.Focus()
+                errorLabel.Visible = True
+                Return
+            End If
+        Next
+        errorLabel.Visible = False
+        
         Dim targetUnit As String = unitLabel.Text '対象のユニット名
         Dim targetContent As Integer = If(rbtnDiary.Checked, 0, 1) '印刷対象内容(0:日誌, 1:便観察)
         Dim fromYmd As String = startYmdBox.getADStr() 'from日付
@@ -267,7 +283,7 @@ Public Class 印刷条件
 
         '書き込み
         If targetContent = 0 Then
-            oSheet = objWorkBook.Worksheets("ユニット日誌")
+            oSheet = objWorkBook.Worksheets("ユニット日誌改")
             writeUnitDiarySheet(oSheet, rs)
         Else
             oSheet = objWorkBook.Worksheets("便観察")
@@ -302,31 +318,41 @@ Public Class 印刷条件
     ''' <param name="oSheet"></param>
     ''' <remarks></remarks>
     Private Sub writeUnitDiarySheet(oSheet As Object, rs As ADODB.Recordset)
-        '既存文字削除
-        oSheet.range("B3").value = ""
-        oSheet.range("J4").value = ""
-        oSheet.range("K4").value = ""
-        oSheet.range("L4").value = ""
-        oSheet.range("M4").value = ""
-        oSheet.range("N4").value = ""
-        oSheet.range("O4").value = ""
-        oSheet.range("P4").value = ""
-        oSheet.range("B6").value = ""
-        oSheet.range("D8").value = ""
-        oSheet.range("F8").value = ""
-        oSheet.range("H8").value = ""
-        oSheet.range("D9").value = ""
-        oSheet.range("F9").value = ""
-        oSheet.range("H9").value = ""
-        oSheet.range("D10").value = ""
-        oSheet.range("F10").value = ""
-        oSheet.range("H10").value = ""
-        oSheet.range("B14").value = ""
-        oSheet.range("E14").value = ""
+        '共通の印影画像セット(施設長、相談員、専門員、合議)
+        Dim xlPictures As Excel.Pictures = DirectCast(oSheet.Pictures, Excel.Pictures)
+        Dim columnStrArray() As String = {"J", "K", "L", "M", "N"}
+        Dim fileNameArray() As String = {sign1Box.Text, sign2Box.Text, sign3Box.Text, sign4Box.Text, sign5Box.Text}
+        For i As Integer = 0 To 4
+            Dim xlPicture As Excel.Picture
+            Dim sealFilePath As String = TopForm.sealBoxDirPath & "\" & fileNameArray(i) & ".wmf"
+            If System.IO.File.Exists(sealFilePath) Then
+                xlPicture = DirectCast(xlPictures.Insert(sealFilePath), Excel.Picture)
+                xlPicture.Left = DirectCast(oSheet.Cells(4, columnStrArray(i)), Excel.Range).Left + 10
+                xlPicture.Top = DirectCast(oSheet.Cells(4, columnStrArray(i)), Excel.Range).Top + 6
+            End If
+        Next
 
-        '
+        '必要ページ準備
+        Dim count As Integer = 1
         Dim ymdTemp As String = Util.checkDBNullValue(rs.Fields("Ymd").Value)
         Dim unitTemp As String = Util.checkDBNullValue(rs.Fields("Unit").Value)
+        While Not rs.EOF
+            Dim ymd As String = Util.checkDBNullValue(rs.Fields("Ymd").Value)
+            Dim unit As String = Util.checkDBNullValue(rs.Fields("Unit").Value)
+            If (ymd <> ymdTemp) OrElse (unit <> unitTemp) Then
+                Dim xlPasteRange As Excel.Range = oSheet.Range("A" & (1 + 50 * count)) 'ペースト先
+                oSheet.rows("1:50").copy(xlPasteRange)
+                count += 1
+                ymdTemp = ymd
+                unitTemp = unit
+            End If
+            rs.MoveNext()
+        End While
+
+        'データ作成、書き込み
+        rs.MoveFirst()
+        ymdTemp = Util.checkDBNullValue(rs.Fields("Ymd").Value)
+        unitTemp = Util.checkDBNullValue(rs.Fields("Unit").Value)
         Dim pageCount As Integer = 1
         Dim dayData(16, 3) As String
         Dim nightData(11, 3) As String
@@ -339,10 +365,6 @@ Public Class 印刷条件
                 oSheet.range("B" & (14 + 50 * (pageCount - 1)), "E" & (30 + 50 * (pageCount - 1))).value = dayData
                 oSheet.range("B" & (33 + 50 * (pageCount - 1)), "E" & (44 + 50 * (pageCount - 1))).value = nightData
                 oSheet.range("E" & (46 + 50 * (pageCount - 1)), "E" & (49 + 50 * (pageCount - 1))).value = spData
-
-                '次のページ準備
-                Dim xlPasteRange As Excel.Range = oSheet.Range("A" & (1 + 50 * pageCount)) 'ペースト先
-                oSheet.rows("1:50").copy(xlPasteRange)
 
                 '配列内容クリア
                 Array.Clear(dayData, 0, dayData.Length)
@@ -357,37 +379,78 @@ Public Class 印刷条件
 
             Dim gyo As Integer = rs.Fields("Gyo").Value
             If gyo = 0 Then
-                oSheet.range("B" & (3 + 50 * (pageCount - 1))).value = unit & "のいえ" 'ユニット名
-
-
-                '日付途中
-                '
-                '
-                oSheet.range("B" & (6 + 50 * (pageCount - 1))).value = ymd.Substring(0, 4) & "年" & ymd.Substring(5, 2) & "月" & ymd.Substring(8, 2) & "日" '日付
-
-
+                'ユニット名
+                oSheet.range("B" & (3 + 50 * (pageCount - 1))).value = unit & "のいえ"
+                '日付
+                Dim wareki As String = Util.convADStrToWarekiStr(ymd)
+                Dim warekiKanji As String = Util.getKanji(wareki)
+                Dim warekiNum As Integer = CInt(wareki.Substring(1, 2))
+                Dim yyyy As Integer = CInt(ymd.Substring(0, 4))
+                Dim MM As Integer = CInt(ymd.Substring(5, 2))
+                Dim dd As Integer = CInt(ymd.Substring(8, 2))
+                Dim youbi As String = New DateTime(yyyy, MM, dd).ToString("ddd")
+                oSheet.range("B" & (6 + 50 * (pageCount - 1))).value = warekiKanji & " " & warekiNum & " 年 " & MM & " 月 " & dd & " 日 ( " & youbi & " )"
                 '日勤印影
+                Dim xlPicture As Excel.Picture
+                Dim daySealFilePath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("Sign6").Value) & ".wmf"
+                If System.IO.File.Exists(daySealFilePath) Then
+                    xlPicture = DirectCast(xlPictures.Insert(daySealFilePath), Excel.Picture)
+                    xlPicture.Left = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "O"), Excel.Range).Left + 10
+                    xlPicture.Top = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "O"), Excel.Range).Top + 6
+                End If
                 '夜勤印影
-                oSheet.range("D" & (8 + 50 * (pageCount - 1))).value = If(rs.Fields("Nyu1").Value = 0, "", rs.Fields("Nyu1").Value) '入院者数　男
-                oSheet.range("F" & (8 + 50 * (pageCount - 1))).value = If(rs.Fields("Nyu2").Value = 0, "", rs.Fields("Nyu2").Value) '入院者数　女
-                oSheet.range("H" & (8 + 50 * (pageCount - 1))).value = If(rs.Fields("Nyu3").Value = 0, "", rs.Fields("Nyu3").Value) '入院者数　計
-                oSheet.range("D" & (9 + 50 * (pageCount - 1))).value = If(rs.Fields("Gai1").Value = 0, "", rs.Fields("Gai1").Value) '外泊者数　男
-                oSheet.range("F" & (9 + 50 * (pageCount - 1))).value = If(rs.Fields("Gai2").Value = 0, "", rs.Fields("Gai2").Value) '外泊者数　女
-                oSheet.range("H" & (9 + 50 * (pageCount - 1))).value = If(rs.Fields("Gai3").Value = 0, "", rs.Fields("Gai3").Value) '外泊者数　計
-                oSheet.range("D" & (10 + 50 * (pageCount - 1))).value = If(rs.Fields("Kyo1").Value = 0, "", rs.Fields("Kyo1").Value) '入居者数　男
-                oSheet.range("F" & (10 + 50 * (pageCount - 1))).value = If(rs.Fields("Kyo2").Value = 0, "", rs.Fields("Kyo2").Value) '入居者数　女
-                oSheet.range("H" & (10 + 50 * (pageCount - 1))).value = If(rs.Fields("Kyo3").Value = 0, "", rs.Fields("Kyo3").Value) '入居者数　計
-            ElseIf 2 <= gyo AndAlso gyo <= 19 Then
-                '日勤日誌データ作成
-                dayData(gyo - 2, 0) = Util.checkDBNullValue(rs.Fields("Nam").Value)
-                dayData(gyo - 2, 3) = Util.checkDBNullValue(rs.Fields("Text").Value)
-            ElseIf 20 <= gyo AndAlso gyo <= 31 Then
-                '夜勤日誌データ作成
-                nightData(gyo - 20, 0) = Util.checkDBNullValue(rs.Fields("Nam").Value)
-                nightData(gyo - 20, 3) = Util.checkDBNullValue(rs.Fields("Text").Value)
-            ElseIf 32 <= gyo Then
-                '特記事項データ作成
-                spData(gyo - 32, 0) = Util.checkDBNullValue(rs.Fields("Text").Value)
+                Dim nightSealFilePath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("Sign7").Value) & ".wmf"
+                If System.IO.File.Exists(nightSealFilePath) Then
+                    xlPicture = DirectCast(xlPictures.Insert(nightSealFilePath), Excel.Picture)
+                    xlPicture.Left = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "P"), Excel.Range).Left + 10
+                    xlPicture.Top = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "P"), Excel.Range).Top + 6
+                End If
+                '入院者数　男
+                oSheet.range("D" & (8 + 50 * (pageCount - 1))).value = If(rs.Fields("Nyu1").Value = 0, "", rs.Fields("Nyu1").Value)
+                '入院者数　女
+                oSheet.range("F" & (8 + 50 * (pageCount - 1))).value = If(rs.Fields("Nyu2").Value = 0, "", rs.Fields("Nyu2").Value)
+                '入院者数　計
+                oSheet.range("H" & (8 + 50 * (pageCount - 1))).value = If(rs.Fields("Nyu3").Value = 0, "", rs.Fields("Nyu3").Value)
+                '外泊者数　男
+                oSheet.range("D" & (9 + 50 * (pageCount - 1))).value = If(rs.Fields("Gai1").Value = 0, "", rs.Fields("Gai1").Value)
+                '外泊者数　女
+                oSheet.range("F" & (9 + 50 * (pageCount - 1))).value = If(rs.Fields("Gai2").Value = 0, "", rs.Fields("Gai2").Value)
+                '外泊者数　計
+                oSheet.range("H" & (9 + 50 * (pageCount - 1))).value = If(rs.Fields("Gai3").Value = 0, "", rs.Fields("Gai3").Value)
+                '入居者数　男
+                oSheet.range("D" & (10 + 50 * (pageCount - 1))).value = If(rs.Fields("Kyo1").Value = 0, "", rs.Fields("Kyo1").Value)
+                '入居者数　女
+                oSheet.range("F" & (10 + 50 * (pageCount - 1))).value = If(rs.Fields("Kyo2").Value = 0, "", rs.Fields("Kyo2").Value)
+                '入居者数　計
+                oSheet.range("H" & (10 + 50 * (pageCount - 1))).value = If(rs.Fields("Kyo3").Value = 0, "", rs.Fields("Kyo3").Value)
+            Else
+                Dim nClrNum As Integer = rs.Fields("NClr").Value
+                Dim tClrNum As Integer = rs.Fields("TClr").Value
+                Dim nClr As Integer = If(nClrNum = 0, 1, If(nClrNum = 1, 5, 3))
+                Dim tClr As Integer = If(tClrNum = 0, 1, If(tClrNum = 1, 5, 3))
+                If 2 <= gyo AndAlso gyo <= 19 Then
+                    '日勤日誌データ作成
+                    dayData(gyo - 2, 0) = Util.checkDBNullValue(rs.Fields("Nam").Value)
+                    dayData(gyo - 2, 3) = Util.checkDBNullValue(rs.Fields("Text").Value)
+
+                    '該当セルの文字色設定
+                    oSheet.range("B" & (gyo - 2 + 14 + 50 * (pageCount - 1))).Font.ColorIndex = nClr
+                    oSheet.range("E" & (gyo - 2 + 14 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                ElseIf 20 <= gyo AndAlso gyo <= 31 Then
+                    '夜勤日誌データ作成
+                    nightData(gyo - 20, 0) = Util.checkDBNullValue(rs.Fields("Nam").Value)
+                    nightData(gyo - 20, 3) = Util.checkDBNullValue(rs.Fields("Text").Value)
+
+                    '該当セルの文字色設定
+                    oSheet.range("B" & (gyo - 20 + 33 + 50 * (pageCount - 1))).Font.ColorIndex = nClr
+                    oSheet.range("E" & (gyo - 20 + 33 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                ElseIf 32 <= gyo Then
+                    '特記事項データ作成
+                    spData(gyo - 32, 0) = Util.checkDBNullValue(rs.Fields("Text").Value)
+
+                    '該当セルの文字色設定
+                    oSheet.range("E" & (gyo - 32 + 46 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                End If
             End If
             rs.MoveNext()
         End While
@@ -402,6 +465,7 @@ Public Class 印刷条件
     ''' 便観察印刷書き込み
     ''' </summary>
     ''' <param name="oSheet"></param>
+    ''' <param name="rs"></param>
     ''' <remarks></remarks>
     Private Sub writeBenSheet(oSheet As Object, rs As ADODB.Recordset)
         '既存文字削除
