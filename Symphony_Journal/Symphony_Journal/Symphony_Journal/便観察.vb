@@ -1,4 +1,6 @@
-﻿Public Class 便観察
+﻿Imports System.Text
+
+Public Class 便観察
 
     'ユニット名
     Private unitName As String
@@ -14,6 +16,9 @@
 
     'cellEnterフラグ
     Private canEnter As Boolean = False
+
+    '文字数制限用
+    Private Const LIMIT_LENGTH_BYTE As Integer = 90
 
     ''' <summary>
     ''' コンストラクタ
@@ -192,5 +197,28 @@
         For i As Integer = 0 To 4
             dgvBen("Text", i).Value = ""
         Next
+    End Sub
+
+    Private Sub dgvBen_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgvBen.EditingControlShowing
+        Dim editTextBox As DataGridViewTextBoxEditingControl = CType(e.Control, DataGridViewTextBoxEditingControl)
+
+        'イベントハンドラを削除、追加
+        RemoveHandler editTextBox.KeyPress, AddressOf dgvTextBox_KeyPress
+        AddHandler editTextBox.KeyPress, AddressOf dgvTextBox_KeyPress
+    End Sub
+
+    Private Sub dgvTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
+        Dim text As String = CType(sender, DataGridViewTextBoxEditingControl).Text
+        Dim lengthByte As Integer = Encoding.GetEncoding("Shift_JIS").GetByteCount(text)
+
+        If lengthByte >= LIMIT_LENGTH_BYTE Then '設定されているバイト数以上の時
+            If e.KeyChar = ChrW(Keys.Back) Then
+                'Backspaceは入力可能
+                e.Handled = False
+            Else
+                '入力できなくする
+                e.Handled = True
+            End If
+        End If
     End Sub
 End Class
