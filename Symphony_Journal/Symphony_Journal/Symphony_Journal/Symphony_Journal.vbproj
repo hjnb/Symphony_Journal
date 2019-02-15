@@ -49,6 +49,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="hmBox">
+      <HintPath>..\..\..\..\..\..\Documents\Visual Studio 2010\Projects\hmBox\hmBox\bin\Release\hmBox.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -198,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="印刷条件.resx">
       <DependentUpon>印刷条件.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="申し送り.resx">
+      <DependentUpon>申し送り.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

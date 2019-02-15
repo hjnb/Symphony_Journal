@@ -359,6 +359,40 @@ Symphony_Journal
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.申し送り_Load(System.Object,System.EventArgs)">
+	<summary>
+ loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.initWriterList">
+	<summary>
+ 記入者リストボックス初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.writerListBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ 記入者リストボックス値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.initDgvInput">
+	<summary>
+ dgv(上)初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.initDgvRead">
+	<summary>
+ dgv(下)初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.displayDgvRead">
+	<summary>
+ データ表示
+ </summary>
+	<remarks></remarks>
 </member><member name="P:Symphony_Journal.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
