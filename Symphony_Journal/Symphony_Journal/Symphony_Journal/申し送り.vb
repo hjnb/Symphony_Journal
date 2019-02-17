@@ -1,6 +1,10 @@
 ﻿Imports System.Data.OleDb
+Imports System.Text
 
 Public Class 申し送り
+
+    '入力文字数制限用
+    Private Const LIMIT_LENGTH_BYTE As Integer = 80
 
     ''' <summary>
     ''' loadイベント
@@ -9,6 +13,12 @@ Public Class 申し送り
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub 申し送り_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        If Not System.IO.File.Exists(TopForm.dbWorkFilePath) Then
+            MsgBox(TopForm.dbWorkFilePath & "が存在しません。ファイルを配置して下さい。")
+            Me.Close()
+            Exit Sub
+        End If
+
         Me.WindowState = FormWindowState.Maximized
 
         '現在日付セット
@@ -36,9 +46,24 @@ Public Class 申し送り
     ''' <remarks></remarks>
     Private Sub initWriterList()
         Dim cnn As New ADODB.Connection
-        cnn.Open(TopForm.DB_Journal)
         Dim rs As New ADODB.Recordset
-        Dim sql As String = "select Nam from EtcM order by Num"
+        Dim sql As String
+
+        'workの勤務表から当月の勤務者（パート除く）の名前取得
+        Dim ym As String = Today.ToString("yyyy/MM")
+        cnn.Open(TopForm.DB_Work)
+        sql = "select Nam from KinD where Ym='" & ym & "' And Rdr<>'' order by Seq2, Seq"
+        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
+        While Not rs.EOF
+            writerListBox.Items.Add(Util.checkDBNullValue(rs.Fields("Nam").Value))
+            rs.MoveNext()
+        End While
+        rs.Close()
+        cnn.Close()
+
+        'EtcMから名前取得
+        cnn.Open(TopForm.DB_Journal)
+        sql = "select Nam from EtcM order by Num"
         rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
         While Not rs.EOF
             writerListBox.Items.Add(Util.checkDBNullValue(rs.Fields("Nam").Value))
@@ -66,7 +91,45 @@ Public Class 申し送り
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub initDgvInput()
+        Util.EnableDoubleBuffering(dgvInput)
 
+        With dgvInput
+            .AllowUserToAddRows = False '行追加禁止
+            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+            .AllowUserToDeleteRows = False '行削除禁止
+            .BorderStyle = BorderStyle.None
+            .MultiSelect = False
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+            .RowHeadersVisible = False
+            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+            .ColumnHeadersVisible = False
+            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+            .RowTemplate.Height = 15.5
+            .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
+            .DefaultCellStyle.SelectionBackColor = Color.White
+            .DefaultCellStyle.SelectionForeColor = Color.Black
+            .ShowCellToolTips = False
+            .EnableHeadersVisualStyles = False
+            .ImeMode = Windows.Forms.ImeMode.Hiragana
+        End With
+
+        '空行追加等
+        Dim dt As New DataTable()
+        dt.Columns.Add("Text", Type.GetType("System.String"))
+        For i = 0 To 29
+            Dim row As DataRow = dt.NewRow()
+            row(0) = ""
+            dt.Rows.Add(row)
+        Next
+        dgvInput.DataSource = dt
+
+        '幅設定等
+        With dgvInput
+            With .Columns("Text")
+                .Width = 478
+            End With
+        End With
     End Sub
 
     ''' <summary>
@@ -97,6 +160,7 @@ Public Class 申し送り
             .DefaultCellStyle.SelectionForeColor = Color.White
             .ShowCellToolTips = False
             .EnableHeadersVisualStyles = False
+            .ImeMode = Windows.Forms.ImeMode.Hiragana
         End With
     End Sub
 
@@ -114,8 +178,15 @@ Public Class 申し送り
         Dim da As OleDbDataAdapter = New OleDbDataAdapter()
         Dim ds As DataSet = New DataSet()
         da.Fill(ds, rs, "Rprt")
-        dgvRead.DataSource = ds.Tables("Rprt")
         cnn.Close()
+
+        '西暦を和暦に変換
+        For Each row As DataRow In ds.Tables("Rprt").Rows
+            row("Ymd") = Util.convADStrToWarekiStr(row("Ymd"))
+        Next
+
+        '表示
+        dgvRead.DataSource = ds.Tables("Rprt")
 
         '列設定等
         With dgvRead
@@ -152,6 +223,12 @@ Public Class 申し送り
         End With
     End Sub
 
+    ''' <summary>
+    ''' dgv(下)CellFormattingイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvRead_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvRead.CellFormatting
         If dgvRead.Columns(e.ColumnIndex).Name = "Ymd" Then
             '年月日のグループ化
@@ -160,11 +237,98 @@ Public Class 申し送り
                 e.FormattingApplied = True
             End If
         ElseIf dgvRead.Columns(e.ColumnIndex).Name = "Hm" Then
-            '曜日の表示設定,グループ化
-            If e.RowIndex > 0 AndAlso dgvRead(e.ColumnIndex, e.RowIndex - 1).Value = e.Value Then
+            '時間のグループ化
+            If e.RowIndex > 0 AndAlso dgvRead("Ymd", e.RowIndex - 1).Value = dgvRead("Ymd", e.RowIndex).Value AndAlso dgvRead(e.ColumnIndex, e.RowIndex - 1).Value = e.Value Then
                 e.Value = ""
                 e.FormattingApplied = True
             End If
         End If
+    End Sub
+
+    Private Sub dgvInput_CellPainting(sender As Object, e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles dgvInput.CellPainting
+        '選択したセルに枠を付ける
+        If e.ColumnIndex >= 0 AndAlso e.RowIndex >= 0 AndAlso (e.PaintParts And DataGridViewPaintParts.Background) = DataGridViewPaintParts.Background Then
+            e.Graphics.FillRectangle(New SolidBrush(e.CellStyle.BackColor), e.CellBounds)
+
+            If (e.PaintParts And DataGridViewPaintParts.SelectionBackground) = DataGridViewPaintParts.SelectionBackground AndAlso (e.State And DataGridViewElementStates.Selected) = DataGridViewElementStates.Selected Then
+                e.Graphics.DrawRectangle(New Pen(Color.Black, 2I), e.CellBounds.X + 1I, e.CellBounds.Y + 1I, e.CellBounds.Width - 3I, e.CellBounds.Height - 3I)
+            End If
+
+            Dim pParts As DataGridViewPaintParts = e.PaintParts And Not DataGridViewPaintParts.Background
+            e.Paint(e.ClipBounds, pParts)
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub dgvInput_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgvInput.EditingControlShowing
+        Dim editTextBox As DataGridViewTextBoxEditingControl = CType(e.Control, DataGridViewTextBoxEditingControl)
+
+        'イベントハンドラを削除、追加
+        RemoveHandler editTextBox.KeyPress, AddressOf dgvInputTextBox_KeyPress
+        AddHandler editTextBox.KeyPress, AddressOf dgvInputTextBox_KeyPress
+    End Sub
+
+    Private Sub dgvInputTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
+        Dim text As String = CType(sender, DataGridViewTextBoxEditingControl).Text
+        Dim lengthByte As Integer = Encoding.GetEncoding("Shift_JIS").GetByteCount(text)
+
+        If lengthByte >= LIMIT_LENGTH_BYTE Then '設定されているバイト数以上の時
+            If e.KeyChar = ChrW(Keys.Back) Then
+                'Backspaceは入力可能
+                e.Handled = False
+            Else
+                '入力できなくする
+                e.Handled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub dgvRead_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvRead.CellMouseClick
+        If e.RowIndex >= 0 Then
+            Dim hm As String = Util.checkDBNullValue(dgvRead("Hm", e.RowIndex).FormattedValue)
+            Dim readRowIndex As Integer = e.RowIndex
+            While hm = ""
+                readRowIndex -= 1
+                hm = Util.checkDBNullValue(dgvRead("Hm", readRowIndex).FormattedValue)
+            End While
+            Dim wareki As String = Util.checkDBNullValue(dgvRead("Ymd", readRowIndex).Value)
+            Dim writer As String = Util.checkDBNullValue(dgvRead("Tanto", readRowIndex).Value)
+
+            '内容クリア
+            For Each row As DataGridViewRow In dgvInput.Rows
+                row.Cells("Text").Value = ""
+            Next
+
+            '値セット
+            Dim inputRowIndex As Integer
+            While (wareki = Util.checkDBNullValue(dgvRead("Ymd", readRowIndex).Value)) AndAlso (hm = Util.checkDBNullValue(dgvRead("Hm", readRowIndex).Value))
+                dgvInput("Text", inputRowIndex).Value = Util.checkDBNullValue(dgvRead("Text", readRowIndex).Value)
+                inputRowIndex += 1
+                readRowIndex += 1
+            End While
+            YmdBox.setWarekiStr(wareki)
+            HmBox.setTime(hm.Substring(0, 2), hm.Substring(3, 2))
+            writerLabel.Text = writer
+
+            '
+            dgvInput.FirstDisplayedScrollingRowIndex = 0
+            dgvInput(0, 0).Selected = True
+            dgvInput.Focus()
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 登録ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        Dim writer As String = writerLabel.Text '記載者
+        If writer = "" Then
+            MsgBox("記載者を選択して下さい。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
     End Sub
 End Class

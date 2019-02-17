@@ -39,10 +39,10 @@ Partial Class 申し送り
         'dgvInput
         '
         Me.dgvInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvInput.Location = New System.Drawing.Point(218, 42)
+        Me.dgvInput.Location = New System.Drawing.Point(218, 44)
         Me.dgvInput.Name = "dgvInput"
         Me.dgvInput.RowTemplate.Height = 21
-        Me.dgvInput.Size = New System.Drawing.Size(500, 216)
+        Me.dgvInput.Size = New System.Drawing.Size(496, 209)
         Me.dgvInput.TabIndex = 0
         '
         'YmdBox

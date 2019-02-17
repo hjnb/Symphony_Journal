@@ -15,6 +15,10 @@
     'SealBoxフォルダパス
     Public sealBoxDirPath As String = Util.getIniString("System", "SealBoxDir", iniFilePath)
 
+    'workのデータベースパス
+    Public dbWorkFilePath As String = Util.getIniString("System", "DB2Dir", iniFilePath) & "\Work.mdb"
+    Public DB_Work As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & dbWorkFilePath
+
     'フォーム
     Private unitDiary As ユニット日誌
     Private handover As 申し送り
