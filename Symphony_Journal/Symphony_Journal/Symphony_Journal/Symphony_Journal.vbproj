@@ -202,6 +202,9 @@
     <EmbeddedResource Include="印刷条件.resx">
       <DependentUpon>印刷条件.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="施設介護支援経過表.resx">
+      <DependentUpon>施設介護支援経過表.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="申し送り.resx">
       <DependentUpon>申し送り.vb</DependentUpon>
     </EmbeddedResource>
