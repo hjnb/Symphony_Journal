@@ -400,9 +400,49 @@ Symphony_Journal
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.dgvInput_CellPainting(System.Object,System.Windows.Forms.DataGridViewCellPaintingEventArgs)">
+	<summary>
+ dgv(上)CellPaintingイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.dgvInput_EditingControlShowing(System.Object,System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)">
+	<summary>
+ dgv(上)EditingControlShowingイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.dgvInputTextBox_KeyPress(System.Object,System.Windows.Forms.KeyPressEventArgs)">
+	<summary>
+ dgv(上)KeyPressイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.dgvRead_CellMouseClick(System.Object,System.Windows.Forms.DataGridViewCellMouseEventArgs)">
+	<summary>
+ dgv(下)セルマウスクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.clearInput">
+	<summary>
+ 入力内容クリア
+ </summary>
+	<remarks></remarks>
 </member><member name="M:Symphony_Journal.申し送り.btnRegist_Click(System.Object,System.EventArgs)">
 	<summary>
  登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.申し送り.btnDelete_Click(System.Object,System.EventArgs)">
+	<summary>
+ 行削除ボタンクリックイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>

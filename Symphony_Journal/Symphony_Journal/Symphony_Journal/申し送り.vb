@@ -6,6 +6,9 @@ Public Class 申し送り
     '入力文字数制限用
     Private Const LIMIT_LENGTH_BYTE As Integer = 80
 
+    '行選択フラグ
+    Private selectedRowFlg As Boolean = False
+
     ''' <summary>
     ''' loadイベント
     ''' </summary>
@@ -221,6 +224,8 @@ Public Class 申し送り
                 .Width = 95
             End With
         End With
+
+        selectedRowFlg = False
     End Sub
 
     ''' <summary>
@@ -245,6 +250,12 @@ Public Class 申し送り
         End If
     End Sub
 
+    ''' <summary>
+    ''' dgv(上)CellPaintingイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvInput_CellPainting(sender As Object, e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles dgvInput.CellPainting
         '選択したセルに枠を付ける
         If e.ColumnIndex >= 0 AndAlso e.RowIndex >= 0 AndAlso (e.PaintParts And DataGridViewPaintParts.Background) = DataGridViewPaintParts.Background Then
@@ -260,6 +271,12 @@ Public Class 申し送り
         End If
     End Sub
 
+    ''' <summary>
+    ''' dgv(上)EditingControlShowingイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvInput_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgvInput.EditingControlShowing
         Dim editTextBox As DataGridViewTextBoxEditingControl = CType(e.Control, DataGridViewTextBoxEditingControl)
 
@@ -268,6 +285,12 @@ Public Class 申し送り
         AddHandler editTextBox.KeyPress, AddressOf dgvInputTextBox_KeyPress
     End Sub
 
+    ''' <summary>
+    ''' dgv(上)KeyPressイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvInputTextBox_KeyPress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
         Dim text As String = CType(sender, DataGridViewTextBoxEditingControl).Text
         Dim lengthByte As Integer = Encoding.GetEncoding("Shift_JIS").GetByteCount(text)
@@ -283,8 +306,15 @@ Public Class 申し送り
         End If
     End Sub
 
+    ''' <summary>
+    ''' dgv(下)セルマウスクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvRead_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvRead.CellMouseClick
         If e.RowIndex >= 0 Then
+            selectedRowFlg = True
             Dim hm As String = Util.checkDBNullValue(dgvRead("Hm", e.RowIndex).FormattedValue)
             Dim readRowIndex As Integer = e.RowIndex
             While hm = ""
@@ -318,6 +348,20 @@ Public Class 申し送り
     End Sub
 
     ''' <summary>
+    ''' 入力内容クリア
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub clearInput()
+        'dgv内容クリア
+        For i As Integer = 0 To dgvInput.Rows.Count - 1
+            dgvInput("Text", i).Value = ""
+        Next
+        dgvInput.FirstDisplayedScrollingRowIndex = 0
+        dgvInput(0, 0).Selected = True
+        dgvInput.Focus()
+    End Sub
+
+    ''' <summary>
     ''' 登録ボタンクリックイベント
     ''' </summary>
     ''' <param name="sender"></param>
@@ -330,5 +374,121 @@ Public Class 申し送り
             Return
         End If
 
+        '入力チェック
+        Dim emptyFlg As Boolean = True
+        Dim lastInputRowIndex As Integer '最終入力行
+        For i As Integer = dgvInput.Rows.Count - 1 To 0 Step -1
+            If dgvInput("Text", i).Value <> "" Then
+                lastInputRowIndex = i
+                emptyFlg = False
+                Exit For
+            End If
+        Next
+        If emptyFlg Then
+            MsgBox("登録内容が空です。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
+        Dim ymd As String = YmdBox.getADStr() '日付(yyyy/MM/dd)
+        Dim hm As String = HmBox.getTime() '時間(HH:mm)
+
+        Dim cnn As New ADODB.Connection
+        cnn.Open(TopForm.DB_Journal)
+        Dim rs As New ADODB.Recordset
+        Dim sql = "SELECT * FROM Rprt WHERE Div=" & TopForm.DIV & " and Ymd='" & ymd & "' and Hm='" & hm & "'"
+        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockPessimistic)
+        If rs.RecordCount = 0 Then
+            rs.Close()
+            '新規登録
+            rs.Open("Rprt", cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockPessimistic)
+            For i As Integer = 0 To lastInputRowIndex
+                rs.AddNew()
+                rs.Fields("Div").Value = TopForm.DIV
+                rs.Fields("Ymd").Value = ymd
+                rs.Fields("Hm").Value = hm
+                rs.Fields("Gyo").Value = i + 1
+                rs.Fields("Text").Value = Util.checkDBNullValue(dgvInput("Text", i).Value)
+                If i = 0 Then
+                    rs.Fields("Tanto").Value = writer
+                End If
+            Next
+            rs.Update()
+            rs.Close()
+            cnn.Close()
+
+            'クリア
+            clearInput()
+
+            '再表示
+            displayDgvRead()
+        Else
+            rs.Close()
+            '変更登録
+            Dim result As DialogResult = MessageBox.Show("変更登録してよろしいですか？", "登録", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If result = Windows.Forms.DialogResult.Yes Then
+                '既存データ削除
+                Dim cmd As New ADODB.Command()
+                cmd.ActiveConnection = cnn
+                cmd.CommandText = "delete from Rprt where Div=" & TopForm.DIV & " and Ymd='" & ymd & "' and Hm='" & hm & "'"
+                cmd.Execute()
+
+                '登録
+                rs.Open("Rprt", cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockPessimistic)
+                For i As Integer = 0 To lastInputRowIndex
+                    rs.AddNew()
+                    rs.Fields("Div").Value = TopForm.DIV
+                    rs.Fields("Ymd").Value = ymd
+                    rs.Fields("Hm").Value = hm
+                    rs.Fields("Gyo").Value = i + 1
+                    rs.Fields("Text").Value = Util.checkDBNullValue(dgvInput("Text", i).Value)
+                    If i = 0 Then
+                        rs.Fields("Tanto").Value = writer
+                    End If
+                Next
+                rs.Update()
+                rs.Close()
+                cnn.Close()
+
+                'クリア
+                clearInput()
+
+                '再表示
+                displayDgvRead()
+            Else
+                cnn.Close()
+            End If
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 行削除ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
+        If selectedRowFlg = False Then
+            MsgBox("削除データが選択されていません。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
+        Dim result As DialogResult = MessageBox.Show("削除してよろしいですか？", "削除", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = Windows.Forms.DialogResult.Yes Then
+            Dim ymd As String = YmdBox.getADStr() '日付
+            Dim hm As String = HmBox.getTime() '時間
+            Dim cnn As New ADODB.Connection
+            cnn.Open(TopForm.DB_Journal)
+            Dim cmd As New ADODB.Command()
+            cmd.ActiveConnection = cnn
+            cmd.CommandText = "delete from Rprt where Div=" & TopForm.DIV & " and Ymd='" & ymd & "' and Hm='" & hm & "'"
+            cmd.Execute()
+            cnn.Close()
+
+            'クリア
+            clearInput()
+
+            '再表示
+            displayDgvRead()
+        End If
     End Sub
 End Class
