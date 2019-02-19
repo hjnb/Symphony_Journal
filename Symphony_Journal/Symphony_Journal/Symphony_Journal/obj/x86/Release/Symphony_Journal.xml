@@ -6,7 +6,33 @@ Symphony_Journal
 </name>
 </assembly>
 <members>
-<member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
+<member name="M:Symphony_Journal.印刷範囲.#ctor(System.String,System.String,System.String)">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印刷範囲.印刷範囲_Load(System.Object,System.EventArgs)">
+	<summary>
+ loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印刷範囲.btnOk_Click(System.Object,System.EventArgs)">
+	<summary>
+ OKボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印刷範囲.btnCancel_Click(System.Object,System.EventArgs)">
+	<summary>
+ キャンセルボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.Util.EnableDoubleBuffering(System.Windows.Forms.Control)">
 	<summary>
  コントロールのDoubleBufferedプロパティをTrueにする
  </summary>
@@ -254,9 +280,24 @@ Symphony_Journal
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.initDgvSkei">
+	<summary>
+ データグリッドビュー初期設定
+ </summary>
+	<remarks></remarks>
 </member><member name="M:Symphony_Journal.施設介護支援経過表.initWriterList">
 	<summary>
  記入者リストボックス初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.displayDgvSkei(System.String,System.String)">
+	<summary>
+ 経過内容データ表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.clearInput">
+	<summary>
+ 入力内容クリア
  </summary>
 	<remarks></remarks>
 </member><member name="M:Symphony_Journal.施設介護支援経過表.writerListBox_SelectedValueChanged(System.Object,System.EventArgs)">
@@ -290,6 +331,76 @@ Symphony_Journal
 </member><member name="M:Symphony_Journal.施設介護支援経過表.residentListBox_SelectedValueChanged(System.Object,System.EventArgs)">
 	<summary>
  入居者リスト値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.historyListBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ 経過履歴リスト値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.YmdBox_YmdTextChange(System.Object,System.EventArgs)">
+	<summary>
+ 日付ボックス値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.dgvSkei_EditingControlShowing(System.Object,System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)">
+	<summary>
+ EditingControlShowingイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.dgvTextBox_KeyPress(System.Object,System.Windows.Forms.KeyPressEventArgs)">
+	<summary>
+ dgvのKeyPressイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.btnRowInsert_Click(System.Object,System.EventArgs)">
+	<summary>
+ 行挿入ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.btnRowDelete_Click(System.Object,System.EventArgs)">
+	<summary>
+ 行削除ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.btnClear_Click(System.Object,System.EventArgs)">
+	<summary>
+ クリアボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.btnDelete_Click(System.Object,System.EventArgs)">
+	<summary>
+ 削除ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.施設介護支援経過表.btnPrint_Click(System.Object,System.EventArgs)">
+	<summary>
+ 印刷ボタンクリックイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>

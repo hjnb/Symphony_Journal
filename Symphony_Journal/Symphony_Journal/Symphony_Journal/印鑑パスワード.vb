@@ -116,7 +116,7 @@ Public Class 印鑑パスワード
         Dim cnn As New ADODB.Connection
         cnn.Open(mdbFilePass)
         Dim rs As New ADODB.Recordset
-        Dim sql = "SELECT Pwd, File FROM SealM WHERE Pwd='" & oldPass & "'"
+        Dim sql = "SELECT Class, Pwd, File FROM SealM WHERE Pwd='" & oldPass & "'"
         rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockPessimistic)
         If rs.RecordCount <= 0 Then
             rs.Close()

@@ -137,6 +137,12 @@
     <Compile Include="入居者登録.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="印刷範囲.Designer.vb">
+      <DependentUpon>印刷範囲.vb</DependentUpon>
+    </Compile>
+    <Compile Include="印刷範囲.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="印鑑パスワード.Designer.vb">
       <DependentUpon>印鑑パスワード.vb</DependentUpon>
     </Compile>
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="入居者登録.resx">
       <DependentUpon>入居者登録.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="印刷範囲.resx">
+      <DependentUpon>印刷範囲.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="印鑑パスワード.resx">
       <DependentUpon>印鑑パスワード.vb</DependentUpon>
