@@ -198,6 +198,8 @@ Public Class 施設介護支援経過表
             resultList.Add(Util.checkDBNullValue(rs.Fields("Nam").Value))
             rs.MoveNext()
         End While
+        rs.Close()
+        cn.Close()
         Return resultList
     End Function
 
@@ -220,6 +222,8 @@ Public Class 施設介護支援経過表
             resultList.Add(wareki)
             rs.MoveNext()
         End While
+        rs.Close()
+        cn.Close()
         Return resultList
     End Function
 

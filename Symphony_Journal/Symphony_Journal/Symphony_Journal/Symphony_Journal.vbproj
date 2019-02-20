@@ -52,6 +52,9 @@
     <Reference Include="hmBox">
       <HintPath>..\..\..\..\..\..\Documents\Visual Studio 2010\Projects\hmBox\hmBox\bin\Release\hmBox.dll</HintPath>
     </Reference>
+    <Reference Include="Symphony_Journal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -89,6 +92,12 @@
     </Compile>
     <Compile Include="passwordForm.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SSDataGridView.Designer.vb">
+      <DependentUpon>SSDataGridView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SSDataGridView.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SS生活の様子.Designer.vb">
       <DependentUpon>SS生活の様子.vb</DependentUpon>

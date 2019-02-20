@@ -6,28 +6,9 @@ Symphony_Journal
 </name>
 </assembly>
 <members>
-<member name="M:Symphony_Journal.印刷範囲.#ctor(System.String,System.String,System.String)">
+<member name="M:Symphony_Journal.SSDataGridView.ExDataGridView_CellPainting(System.Object,System.Windows.Forms.DataGridViewCellPaintingEventArgs)">
 	<summary>
- コンストラクタ
- </summary>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.印刷範囲.印刷範囲_Load(System.Object,System.EventArgs)">
-	<summary>
- loadイベント
- </summary>
-	<param name="sender"></param>
-	<param name="e"></param>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.印刷範囲.btnOk_Click(System.Object,System.EventArgs)">
-	<summary>
- OKボタンクリックイベント
- </summary>
-	<param name="sender"></param>
-	<param name="e"></param>
-	<remarks></remarks>
-</member><member name="M:Symphony_Journal.印刷範囲.btnCancel_Click(System.Object,System.EventArgs)">
-	<summary>
- キャンセルボタンクリックイベント
+ CellPaintingイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>
@@ -754,6 +735,100 @@ Symphony_Journal
 </member><member name="M:Symphony_Journal.印鑑パスワード.btnCancel_Click(System.Object,System.EventArgs)">
 	<summary>
  キャンセルボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印刷範囲.#ctor(System.String,System.String,System.String)">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印刷範囲.印刷範囲_Load(System.Object,System.EventArgs)">
+	<summary>
+ loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印刷範囲.btnOk_Click(System.Object,System.EventArgs)">
+	<summary>
+ OKボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印刷範囲.btnCancel_Click(System.Object,System.EventArgs)">
+	<summary>
+ キャンセルボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.SS生活の様子_Load(System.Object,System.EventArgs)">
+	<summary>
+ loadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.initResidentListBox">
+	<summary>
+ 入居者リストボックス初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.initDgvShtM">
+	<summary>
+ データグリッドビュー初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.displayDgvShtM(System.String,System.String,System.String)">
+	<summary>
+ データ表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.clearInput">
+	<summary>
+ 入力内容クリア
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.getHistoryList(System.String)">
+	<summary>
+ 履歴リスト取得
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.residentListBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ 入居者リスト値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.historyListBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ 履歴リスト値変更イベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.btnTextClear_Click(System.Object,System.EventArgs)">
+	<summary>
+ テキストクリアボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.btnRowInsert_Click(System.Object,System.EventArgs)">
+	<summary>
+ 行挿入ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Journal.SS生活の様子.btnRowDelete_Click(System.Object,System.EventArgs)">
+	<summary>
+ 行削除ボタンクリックイベント
  </summary>
 	<param name="sender"></param>
 	<param name="e"></param>
