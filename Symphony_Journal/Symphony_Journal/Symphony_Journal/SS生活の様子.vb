@@ -1,4 +1,6 @@
-﻿Public Class SS生活の様子
+﻿Imports System.Runtime.InteropServices
+
+Public Class SS生活の様子
 
     'ショートステイのユニット名
     Private Const SS_UNIT_NAME As String = "海"
@@ -226,6 +228,24 @@
     End Sub
 
     ''' <summary>
+    ''' 和暦を変換
+    ''' </summary>
+    ''' <param name="warekiStr"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function formatDateStr(warekiStr As String) As String
+        If warekiStr = "" Then
+            Return ""
+        End If
+
+        Dim kanji As String = Util.getKanji(warekiStr)
+        Dim eraNum As String = CInt(warekiStr.Substring(1, 2))
+        Dim monthNum As String = CInt(warekiStr.Substring(4, 2))
+        Dim dateNum As String = CInt(warekiStr.Substring(7, 2))
+        Return kanji & " " & eraNum & " 年 " & monthNum & " 月 " & dateNum & " 日 "
+    End Function
+
+    ''' <summary>
     ''' テキストクリアボタンクリックイベント
     ''' </summary>
     ''' <param name="sender"></param>
@@ -330,8 +350,8 @@
         Dim cmd As New ADODB.Command()
         cmd.ActiveConnection = cnn
         If Not IsNothing(historyListBox.SelectedItem) Then
-            Dim firstD As String = historyListBox.Text.Split("～")(0)
-            Dim endD As String = If(IsNothing(historyListBox.Text.Split("～")(1)), "", historyListBox.Text.Split("～")(1))
+            Dim firstD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(0))
+            Dim endD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(1))
             cmd.CommandText = "delete from ShtM where Nam='" & residentName & "' and First='" & firstD & "' and End='" & endD & "'"
             cmd.Execute()
         End If
@@ -354,9 +374,9 @@
                 Exit For
             End If
         Next
-        If lastInputRowIndex <= 35 Then
+        If lastInputRowIndex <= 34 Then
             '35行目まで登録するため
-            lastInputRowIndex = 35
+            lastInputRowIndex = 34
         End If
 
         '登録
@@ -381,8 +401,176 @@
         cnn.Close()
 
         '再表示
+        Dim firstWareki As String = Util.convADStrToWarekiStr(firstDate)
+        Dim endWareki As String = Util.convADStrToWarekiStr(endDate)
         historyListBox.Items.Clear()
         historyListBox.Items.AddRange(getHistoryList(residentName).ToArray())
+        historyListBox.SelectedItem = firstWareki & "～" & endWareki
 
+    End Sub
+
+    ''' <summary>
+    ''' 削除ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
+        Dim result As DialogResult = MessageBox.Show("該当期間の記録を抹消しますか", "削除", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = Windows.Forms.DialogResult.Yes Then
+            If namLabel.Text <> "" AndAlso Not IsNothing(historyListBox.SelectedItem) Then
+                Dim firstD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(0))
+                Dim endD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(1))
+                Dim cnn As New ADODB.Connection
+                cnn.Open(TopForm.DB_Journal)
+                Dim cmd As New ADODB.Command()
+
+                cmd.ActiveConnection = cnn
+                cmd.CommandText = "delete from ShtM where Nam='" & namLabel.Text & "' and First='" & firstD & "' and End='" & endD & "'"
+                cmd.Execute()
+
+                clearInput()
+                historyListBox.Items.Clear()
+                historyListBox.Items.AddRange(getHistoryList(namLabel.Text).ToArray())
+            End If
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 印刷ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
+        Dim residentName As String = namLabel.Text '入居者名
+        '入居者名未選択の場合
+        If residentName = "" Then
+            MsgBox("利用者を選択して下さい。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+        '履歴リストが空の場合
+        If historyListBox.Items.Count = 0 Then
+            MsgBox("該当がありません。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+        '履歴リスト未選択の場合
+        If IsNothing(historyListBox.SelectedItem) Then
+            MsgBox("対象年月日を選択して下さい。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
+        'データ取得
+        Dim firstDate As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(0))
+        Dim endDate As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(1))
+        Dim cn As New ADODB.Connection()
+        cn.Open(TopForm.DB_Journal)
+        Dim sql As String = "select Gyo, [First], [End], Bath, Ben, Date, Tanto, Text from ShtM where Nam='" & residentName & "' And [First]='" & firstDate & "' And [End]='" & endDate & "' order by Gyo"
+        Dim rs As New ADODB.Recordset
+        rs.Open(sql, cn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic)
+        Dim recordCount As Integer = rs.RecordCount 'レコード数
+
+        '書き込みデータ作成
+        Dim bathDate As String = ""
+        Dim benDate As String = ""
+        Dim writeDate As String = ""
+        Dim tanto As String = ""
+        Dim dataArray1(34, 0) As String '1枚目用
+        Dim dataArray2(47, 0) As String '2枚目用
+        If recordCount <= 35 Then
+            '1枚目データのみ作成
+            While Not rs.EOF
+                Dim gyo As Integer = rs.Fields("Gyo").Value
+                If gyo = 1 Then
+                    bathDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Bath").Value))
+                    benDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Ben").Value))
+                    writeDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Date").Value))
+                    tanto = Util.checkDBNullValue(rs.Fields("Tanto").Value)
+                End If
+                dataArray1(gyo - 1, 0) = Util.checkDBNullValue(rs.Fields("Text").Value)
+                rs.MoveNext()
+            End While
+        Else
+            '1枚目、2枚目データ作成
+            While Not rs.EOF
+                Dim gyo As Integer = rs.Fields("Gyo").Value
+                '共通部分
+                If gyo = 1 Then
+                    bathDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Bath").Value))
+                    benDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Ben").Value))
+                    writeDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Date").Value))
+                    tanto = Util.checkDBNullValue(rs.Fields("Tanto").Value)
+                End If
+
+                If gyo <= 35 Then
+                    '1枚目データ
+                    dataArray1(gyo - 1, 0) = Util.checkDBNullValue(rs.Fields("Text").Value)
+                ElseIf gyo >= 36 Then
+                    '2枚目データ
+                    dataArray2(gyo - 1 - 35, 0) = Util.checkDBNullValue(rs.Fields("Text").Value)
+                End If
+                rs.MoveNext()
+            End While
+        End If
+
+        'エクセル準備
+        Dim objExcel As Object = CreateObject("Excel.Application")
+        Dim objWorkBooks As Object = objExcel.Workbooks
+        Dim objWorkBook As Object = objWorkBooks.Open(TopForm.excelFilePass)
+        Dim oSheet As Object
+
+        If recordCount <= 35 Then
+            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5")
+            oSheet.range("C4").value = residentName '氏名
+            oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
+            oSheet.range("C8").value = formatDateStr(bathDate) '最終入浴日
+            oSheet.range("G8").value = formatDateStr(benDate) '最終排便日
+            oSheet.range("C10").value = formatDateStr(writeDate) '記載日
+            oSheet.range("G10").value = tanto '記載者
+            oSheet.range("C13", "C47").value = dataArray1 '内容
+        Else
+            '1枚目
+            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-21")
+            oSheet.range("C4").value = residentName '氏名
+            oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
+            oSheet.range("C8").value = formatDateStr(bathDate) '最終入浴日
+            oSheet.range("G8").value = formatDateStr(benDate) '最終排便日
+            oSheet.range("C10").value = formatDateStr(writeDate) '記載日
+            oSheet.range("G10").value = tanto '記載者
+            oSheet.range("C13", "C47").value = dataArray1 '内容
+
+            '2枚目
+            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-22")
+            oSheet.range("C4").value = residentName '氏名
+            oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
+            oSheet.range("C8", "C55").value = dataArray2 '内容
+        End If
+
+        '変更保存確認ダイアログ非表示
+        objExcel.DisplayAlerts = False
+
+        '印刷
+        If TopForm.rbtnPrintout.Checked = True Then
+            If recordCount <= 35 Then
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5"}).printOut()
+            Else
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5-21", "ｼｮｰﾄｽﾃｲ5-22"}).printOut()
+            End If
+        ElseIf TopForm.rbtnPreview.Checked = True Then
+            objExcel.Visible = True
+            If recordCount <= 35 Then
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5"}).PrintPreview(1)
+            Else
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5-21", "ｼｮｰﾄｽﾃｲ5-22"}).PrintPreview(1)
+            End If
+        End If
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
     End Sub
 End Class

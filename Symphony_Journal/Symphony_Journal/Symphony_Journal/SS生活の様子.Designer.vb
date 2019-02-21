@@ -25,18 +25,22 @@ Partial Class SS生活の様子
         Me.components = New System.ComponentModel.Container()
         Me.residentListBox = New System.Windows.Forms.ListBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Panel5 = New System.Windows.Forms.Panel()
         Me.benYmdBox = New ymdBox.ymdBox()
+        Me.Panel4 = New System.Windows.Forms.Panel()
         Me.bathYmdBox = New ymdBox.ymdBox()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.endYmdBox = New ymdBox.ymdBox()
         Me.firstYmdBox = New ymdBox.ymdBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.dateYmdBox = New ymdBox.ymdBox()
         Me.tantoBox = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.dateYmdBox = New ymdBox.ymdBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.btnNew = New System.Windows.Forms.Button()
         Me.btnRegist = New System.Windows.Forms.Button()
@@ -48,16 +52,12 @@ Partial Class SS生活の様子
         Me.btnRowInsert = New System.Windows.Forms.Button()
         Me.btnRowDelete = New System.Windows.Forms.Button()
         Me.namLabel = New System.Windows.Forms.Label()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.Panel5 = New System.Windows.Forms.Panel()
-        Me.Panel6 = New System.Windows.Forms.Panel()
         Me.dgvShtM = New Symphony_Journal.SSDataGridView(Me.components)
         Me.Panel1.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        Me.Panel3.SuspendLayout()
-        Me.Panel4.SuspendLayout()
         Me.Panel5.SuspendLayout()
+        Me.Panel4.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.Panel6.SuspendLayout()
         CType(Me.dgvShtM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -86,14 +86,14 @@ Partial Class SS生活の様子
         Me.Panel1.Size = New System.Drawing.Size(312, 72)
         Me.Panel1.TabIndex = 18
         '
-        'Label7
+        'Panel5
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(94, 6)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(17, 12)
-        Me.Label7.TabIndex = 21
-        Me.Label7.Text = "～"
+        Me.Panel5.BackColor = System.Drawing.SystemColors.Window
+        Me.Panel5.Controls.Add(Me.benYmdBox)
+        Me.Panel5.Location = New System.Drawing.Point(90, 47)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(86, 23)
+        Me.Panel5.TabIndex = 23
         '
         'benYmdBox
         '
@@ -108,6 +108,15 @@ Partial Class SS生活の様子
         Me.benYmdBox.Size = New System.Drawing.Size(86, 20)
         Me.benYmdBox.TabIndex = 17
         '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.SystemColors.Window
+        Me.Panel4.Controls.Add(Me.bathYmdBox)
+        Me.Panel4.Location = New System.Drawing.Point(90, 23)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(86, 24)
+        Me.Panel4.TabIndex = 22
+        '
         'bathYmdBox
         '
         Me.bathYmdBox.boxType = 9
@@ -120,6 +129,26 @@ Partial Class SS生活の様子
         Me.bathYmdBox.Name = "bathYmdBox"
         Me.bathYmdBox.Size = New System.Drawing.Size(86, 20)
         Me.bathYmdBox.TabIndex = 16
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.SystemColors.Window
+        Me.Panel3.Controls.Add(Me.Label7)
+        Me.Panel3.Controls.Add(Me.endYmdBox)
+        Me.Panel3.Controls.Add(Me.firstYmdBox)
+        Me.Panel3.Location = New System.Drawing.Point(90, 0)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(221, 24)
+        Me.Panel3.TabIndex = 21
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(94, 6)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(17, 12)
+        Me.Label7.TabIndex = 21
+        Me.Label7.Text = "～"
         '
         'endYmdBox
         '
@@ -186,6 +215,28 @@ Partial Class SS生活の様子
         Me.Panel2.Size = New System.Drawing.Size(207, 46)
         Me.Panel2.TabIndex = 19
         '
+        'Panel6
+        '
+        Me.Panel6.BackColor = System.Drawing.SystemColors.Window
+        Me.Panel6.Controls.Add(Me.dateYmdBox)
+        Me.Panel6.Location = New System.Drawing.Point(77, 0)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(129, 24)
+        Me.Panel6.TabIndex = 22
+        '
+        'dateYmdBox
+        '
+        Me.dateYmdBox.boxType = 9
+        Me.dateYmdBox.DateText = ""
+        Me.dateYmdBox.EraLabelText = "H31"
+        Me.dateYmdBox.EraText = ""
+        Me.dateYmdBox.Location = New System.Drawing.Point(-1, 1)
+        Me.dateYmdBox.MonthLabelText = "02"
+        Me.dateYmdBox.MonthText = ""
+        Me.dateYmdBox.Name = "dateYmdBox"
+        Me.dateYmdBox.Size = New System.Drawing.Size(86, 20)
+        Me.dateYmdBox.TabIndex = 16
+        '
         'tantoBox
         '
         Me.tantoBox.ImeMode = System.Windows.Forms.ImeMode.Hiragana
@@ -203,19 +254,6 @@ Partial Class SS生活の様子
         Me.Label6.Size = New System.Drawing.Size(41, 12)
         Me.Label6.TabIndex = 17
         Me.Label6.Text = "記載者"
-        '
-        'dateYmdBox
-        '
-        Me.dateYmdBox.boxType = 9
-        Me.dateYmdBox.DateText = ""
-        Me.dateYmdBox.EraLabelText = "H31"
-        Me.dateYmdBox.EraText = ""
-        Me.dateYmdBox.Location = New System.Drawing.Point(-1, 1)
-        Me.dateYmdBox.MonthLabelText = "02"
-        Me.dateYmdBox.MonthText = ""
-        Me.dateYmdBox.Name = "dateYmdBox"
-        Me.dateYmdBox.Size = New System.Drawing.Size(86, 20)
-        Me.dateYmdBox.TabIndex = 16
         '
         'Label5
         '
@@ -319,44 +357,6 @@ Partial Class SS生活の様子
         Me.namLabel.Size = New System.Drawing.Size(0, 19)
         Me.namLabel.TabIndex = 13
         '
-        'Panel3
-        '
-        Me.Panel3.BackColor = System.Drawing.SystemColors.Window
-        Me.Panel3.Controls.Add(Me.Label7)
-        Me.Panel3.Controls.Add(Me.endYmdBox)
-        Me.Panel3.Controls.Add(Me.firstYmdBox)
-        Me.Panel3.Location = New System.Drawing.Point(90, 0)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(221, 24)
-        Me.Panel3.TabIndex = 21
-        '
-        'Panel4
-        '
-        Me.Panel4.BackColor = System.Drawing.SystemColors.Window
-        Me.Panel4.Controls.Add(Me.bathYmdBox)
-        Me.Panel4.Location = New System.Drawing.Point(90, 23)
-        Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(86, 24)
-        Me.Panel4.TabIndex = 22
-        '
-        'Panel5
-        '
-        Me.Panel5.BackColor = System.Drawing.SystemColors.Window
-        Me.Panel5.Controls.Add(Me.benYmdBox)
-        Me.Panel5.Location = New System.Drawing.Point(90, 47)
-        Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(86, 23)
-        Me.Panel5.TabIndex = 23
-        '
-        'Panel6
-        '
-        Me.Panel6.BackColor = System.Drawing.SystemColors.Window
-        Me.Panel6.Controls.Add(Me.dateYmdBox)
-        Me.Panel6.Location = New System.Drawing.Point(77, 0)
-        Me.Panel6.Name = "Panel6"
-        Me.Panel6.Size = New System.Drawing.Size(129, 24)
-        Me.Panel6.TabIndex = 22
-        '
         'dgvShtM
         '
         Me.dgvShtM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -389,12 +389,12 @@ Partial Class SS生活の様子
         Me.Text = "SS生活の様子_期間別_"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
+        Me.Panel5.ResumeLayout(False)
+        Me.Panel4.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
-        Me.Panel4.ResumeLayout(False)
-        Me.Panel5.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.Panel6.ResumeLayout(False)
         CType(Me.dgvShtM, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
