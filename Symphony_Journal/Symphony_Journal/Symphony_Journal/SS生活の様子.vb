@@ -124,6 +124,10 @@
         '入力クリア
         clearInput()
 
+        'スクロール等初期位置へ
+        dgvShtM.FirstDisplayedScrollingRowIndex = 0
+        dgvShtM(0, 0).Selected = True
+
         'データ取得、表示
         Dim cn As New ADODB.Connection()
         cn.Open(TopForm.DB_Journal)
@@ -202,6 +206,7 @@
             namLabel.Text = nam
             historyListBox.Items.Clear()
             historyListBox.Items.AddRange(getHistoryList(nam).ToArray())
+            clearInput()
         End If
     End Sub
 
@@ -287,5 +292,97 @@
             Next
             dt.Rows(loopEndCount).Item("Text") = ""
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 新規ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnNew_Click(sender As System.Object, e As System.EventArgs) Handles btnNew.Click
+        clearInput()
+        historyListBox.SelectedItem = Nothing
+    End Sub
+
+    ''' <summary>
+    ''' 登録ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        '入力チェック
+        Dim residentName As String = namLabel.Text '入居者名
+        Dim firstDate As String = firstYmdBox.getADStr() '利用開始日
+        If residentName = "" Then
+            MsgBox("利用者を選択して下さい。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+        If firstDate = "" Then
+            MsgBox("利用開始日を入力して下さい。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
+        '履歴リストが選択されている場合、選択されている日付の既存データ削除
+        Dim cnn As New ADODB.Connection
+        cnn.Open(TopForm.DB_Journal)
+        Dim cmd As New ADODB.Command()
+        cmd.ActiveConnection = cnn
+        If Not IsNothing(historyListBox.SelectedItem) Then
+            Dim firstD As String = historyListBox.Text.Split("～")(0)
+            Dim endD As String = If(IsNothing(historyListBox.Text.Split("～")(1)), "", historyListBox.Text.Split("～")(1))
+            cmd.CommandText = "delete from ShtM where Nam='" & residentName & "' and First='" & firstD & "' and End='" & endD & "'"
+            cmd.Execute()
+        End If
+
+        Dim endDate As String = endYmdBox.getADStr() '利用終了日
+        Dim bathDate As String = bathYmdBox.getADStr() '最終入浴日
+        Dim benDate As String = benYmdBox.getADStr() '最終排便日
+        Dim writeDate As String = dateYmdBox.getADStr() '記載日
+        Dim tanto As String = tantoBox.Text '記載者
+
+        '既存データ削除
+        cmd.CommandText = "delete from ShtM where Nam='" & residentName & "' and First='" & firstDate & "' and End='" & endDate & "'"
+        cmd.Execute()
+
+        '入力の最終行インデックスを取得
+        Dim lastInputRowIndex As Integer
+        For i As Integer = dgvShtM.Rows.Count - 1 To 0 Step -1
+            If dgvShtM("Text", i).Value <> "" Then
+                lastInputRowIndex = i
+                Exit For
+            End If
+        Next
+        If lastInputRowIndex <= 35 Then
+            '35行目まで登録するため
+            lastInputRowIndex = 35
+        End If
+
+        '登録
+        Dim rs As New ADODB.Recordset
+        rs.Open("ShtM", cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockOptimistic)
+        For i As Integer = 0 To lastInputRowIndex
+            rs.AddNew()
+            If i = 0 Then
+                rs.Fields("Bath").Value = bathDate
+                rs.Fields("Ben").Value = benDate
+                rs.Fields("Date").Value = writeDate
+                rs.Fields("Tanto").Value = tanto
+            End If
+            rs.Fields("Nam").Value = residentName
+            rs.Fields("Gyo").Value = i + 1
+            rs.Fields("First").Value = firstDate
+            rs.Fields("End").Value = endDate
+            rs.Fields("Text").Value = Util.checkDBNullValue(dgvShtM("Text", i).Value)
+        Next
+        rs.Update()
+        rs.Close()
+        cnn.Close()
+
+        '再表示
+        historyListBox.Items.Clear()
+        historyListBox.Items.AddRange(getHistoryList(residentName).ToArray())
+
     End Sub
 End Class
