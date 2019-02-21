@@ -443,6 +443,12 @@ Public Class SS生活の様子
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
+        '管理者パスワードフォーム表示
+        Dim passForm As Form = New passwordForm(TopForm.iniFilePath, 3)
+        If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+            Return
+        End If
+
         Dim residentName As String = namLabel.Text '入居者名
         '入居者名未選択の場合
         If residentName = "" Then
@@ -520,7 +526,7 @@ Public Class SS生活の様子
         Dim oSheet As Object
 
         If recordCount <= 35 Then
-            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5")
+            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5改")
             oSheet.range("C4").value = residentName '氏名
             oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
             oSheet.range("C8").value = formatDateStr(bathDate) '最終入浴日
@@ -530,7 +536,7 @@ Public Class SS生活の様子
             oSheet.range("C13", "C47").value = dataArray1 '内容
         Else
             '1枚目
-            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-21")
+            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-21改")
             oSheet.range("C4").value = residentName '氏名
             oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
             oSheet.range("C8").value = formatDateStr(bathDate) '最終入浴日
@@ -540,7 +546,7 @@ Public Class SS生活の様子
             oSheet.range("C13", "C47").value = dataArray1 '内容
 
             '2枚目
-            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-22")
+            oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-22改")
             oSheet.range("C4").value = residentName '氏名
             oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
             oSheet.range("C8", "C55").value = dataArray2 '内容
@@ -552,16 +558,16 @@ Public Class SS生活の様子
         '印刷
         If TopForm.rbtnPrintout.Checked = True Then
             If recordCount <= 35 Then
-                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5"}).printOut()
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5改"}).printOut()
             Else
-                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5-21", "ｼｮｰﾄｽﾃｲ5-22"}).printOut()
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5-21改", "ｼｮｰﾄｽﾃｲ5-22改"}).printOut()
             End If
         ElseIf TopForm.rbtnPreview.Checked = True Then
             objExcel.Visible = True
             If recordCount <= 35 Then
-                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5"}).PrintPreview(1)
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5改"}).PrintPreview(1)
             Else
-                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5-21", "ｼｮｰﾄｽﾃｲ5-22"}).PrintPreview(1)
+                objWorkBook.Worksheets({"ｼｮｰﾄｽﾃｲ5-21改", "ｼｮｰﾄｽﾃｲ5-22改"}).PrintPreview(1)
             End If
         End If
 
