@@ -99,7 +99,7 @@ Partial Class ユニット日誌
         Me.YmdBox.DateText = ""
         Me.YmdBox.EraLabelText = "H31"
         Me.YmdBox.EraText = ""
-        Me.YmdBox.Location = New System.Drawing.Point(134, 12)
+        Me.YmdBox.Location = New System.Drawing.Point(134, 8)
         Me.YmdBox.MonthLabelText = "02"
         Me.YmdBox.MonthText = ""
         Me.YmdBox.Name = "YmdBox"
@@ -108,7 +108,7 @@ Partial Class ユニット日誌
         '
         'btnRegist
         '
-        Me.btnRegist.Location = New System.Drawing.Point(401, 18)
+        Me.btnRegist.Location = New System.Drawing.Point(401, 14)
         Me.btnRegist.Name = "btnRegist"
         Me.btnRegist.Size = New System.Drawing.Size(65, 30)
         Me.btnRegist.TabIndex = 3
@@ -117,7 +117,7 @@ Partial Class ユニット日誌
         '
         'btnObserve
         '
-        Me.btnObserve.Location = New System.Drawing.Point(465, 18)
+        Me.btnObserve.Location = New System.Drawing.Point(465, 14)
         Me.btnObserve.Name = "btnObserve"
         Me.btnObserve.Size = New System.Drawing.Size(65, 30)
         Me.btnObserve.TabIndex = 4
@@ -126,7 +126,7 @@ Partial Class ユニット日誌
         '
         'btnPrint
         '
-        Me.btnPrint.Location = New System.Drawing.Point(529, 18)
+        Me.btnPrint.Location = New System.Drawing.Point(529, 14)
         Me.btnPrint.Name = "btnPrint"
         Me.btnPrint.Size = New System.Drawing.Size(65, 30)
         Me.btnPrint.TabIndex = 5
@@ -137,7 +137,7 @@ Partial Class ユニット日誌
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Location = New System.Drawing.Point(134, 75)
+        Me.Panel1.Location = New System.Drawing.Point(134, 64)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(70, 18)
         Me.Panel1.TabIndex = 6
@@ -155,7 +155,7 @@ Partial Class ユニット日誌
         '
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel2.Controls.Add(Me.Label2)
-        Me.Panel2.Location = New System.Drawing.Point(134, 93)
+        Me.Panel2.Location = New System.Drawing.Point(134, 82)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(70, 18)
         Me.Panel2.TabIndex = 7
@@ -173,7 +173,7 @@ Partial Class ユニット日誌
         '
         Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel3.Controls.Add(Me.Label3)
-        Me.Panel3.Location = New System.Drawing.Point(134, 111)
+        Me.Panel3.Location = New System.Drawing.Point(134, 100)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(70, 18)
         Me.Panel3.TabIndex = 8
@@ -190,7 +190,7 @@ Partial Class ユニット日誌
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(214, 78)
+        Me.Label4.Location = New System.Drawing.Point(214, 67)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(17, 12)
         Me.Label4.TabIndex = 9
@@ -199,7 +199,7 @@ Partial Class ユニット日誌
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(214, 96)
+        Me.Label5.Location = New System.Drawing.Point(214, 85)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(17, 12)
         Me.Label5.TabIndex = 10
@@ -208,7 +208,7 @@ Partial Class ユニット日誌
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(214, 114)
+        Me.Label6.Location = New System.Drawing.Point(214, 103)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(17, 12)
         Me.Label6.TabIndex = 11
@@ -217,7 +217,7 @@ Partial Class ユニット日誌
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(297, 114)
+        Me.Label7.Location = New System.Drawing.Point(297, 103)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(17, 12)
         Me.Label7.TabIndex = 14
@@ -226,7 +226,7 @@ Partial Class ユニット日誌
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(297, 96)
+        Me.Label8.Location = New System.Drawing.Point(297, 85)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(17, 12)
         Me.Label8.TabIndex = 13
@@ -235,7 +235,7 @@ Partial Class ユニット日誌
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(297, 78)
+        Me.Label9.Location = New System.Drawing.Point(297, 67)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(17, 12)
         Me.Label9.TabIndex = 12
@@ -244,7 +244,7 @@ Partial Class ユニット日誌
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(380, 114)
+        Me.Label10.Location = New System.Drawing.Point(380, 103)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(17, 12)
         Me.Label10.TabIndex = 17
@@ -253,7 +253,7 @@ Partial Class ユニット日誌
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(380, 96)
+        Me.Label11.Location = New System.Drawing.Point(380, 85)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(17, 12)
         Me.Label11.TabIndex = 16
@@ -262,7 +262,7 @@ Partial Class ユニット日誌
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(380, 78)
+        Me.Label12.Location = New System.Drawing.Point(380, 67)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(17, 12)
         Me.Label12.TabIndex = 15
@@ -272,7 +272,7 @@ Partial Class ユニット日誌
         '
         Me.paintColorLabel.AutoSize = True
         Me.paintColorLabel.ForeColor = System.Drawing.Color.Blue
-        Me.paintColorLabel.Location = New System.Drawing.Point(474, 92)
+        Me.paintColorLabel.Location = New System.Drawing.Point(474, 81)
         Me.paintColorLabel.Name = "paintColorLabel"
         Me.paintColorLabel.Size = New System.Drawing.Size(71, 12)
         Me.paintColorLabel.TabIndex = 18
@@ -280,7 +280,7 @@ Partial Class ユニット日誌
         '
         'Nyu1Box
         '
-        Me.Nyu1Box.Location = New System.Drawing.Point(237, 75)
+        Me.Nyu1Box.Location = New System.Drawing.Point(237, 64)
         Me.Nyu1Box.Name = "Nyu1Box"
         Me.Nyu1Box.Size = New System.Drawing.Size(52, 19)
         Me.Nyu1Box.TabIndex = 19
@@ -288,7 +288,7 @@ Partial Class ユニット日誌
         '
         'Gai1Box
         '
-        Me.Gai1Box.Location = New System.Drawing.Point(237, 93)
+        Me.Gai1Box.Location = New System.Drawing.Point(237, 82)
         Me.Gai1Box.Name = "Gai1Box"
         Me.Gai1Box.Size = New System.Drawing.Size(52, 19)
         Me.Gai1Box.TabIndex = 22
@@ -296,7 +296,7 @@ Partial Class ユニット日誌
         '
         'Kyo1Box
         '
-        Me.Kyo1Box.Location = New System.Drawing.Point(237, 111)
+        Me.Kyo1Box.Location = New System.Drawing.Point(237, 100)
         Me.Kyo1Box.Name = "Kyo1Box"
         Me.Kyo1Box.Size = New System.Drawing.Size(52, 19)
         Me.Kyo1Box.TabIndex = 25
@@ -304,7 +304,7 @@ Partial Class ユニット日誌
         '
         'Kyo2Box
         '
-        Me.Kyo2Box.Location = New System.Drawing.Point(320, 111)
+        Me.Kyo2Box.Location = New System.Drawing.Point(320, 100)
         Me.Kyo2Box.Name = "Kyo2Box"
         Me.Kyo2Box.Size = New System.Drawing.Size(52, 19)
         Me.Kyo2Box.TabIndex = 26
@@ -312,7 +312,7 @@ Partial Class ユニット日誌
         '
         'Gai2Box
         '
-        Me.Gai2Box.Location = New System.Drawing.Point(320, 93)
+        Me.Gai2Box.Location = New System.Drawing.Point(320, 82)
         Me.Gai2Box.Name = "Gai2Box"
         Me.Gai2Box.Size = New System.Drawing.Size(52, 19)
         Me.Gai2Box.TabIndex = 23
@@ -320,7 +320,7 @@ Partial Class ユニット日誌
         '
         'Nyu2Box
         '
-        Me.Nyu2Box.Location = New System.Drawing.Point(320, 75)
+        Me.Nyu2Box.Location = New System.Drawing.Point(320, 64)
         Me.Nyu2Box.Name = "Nyu2Box"
         Me.Nyu2Box.Size = New System.Drawing.Size(52, 19)
         Me.Nyu2Box.TabIndex = 20
@@ -328,7 +328,7 @@ Partial Class ユニット日誌
         '
         'Kyo3Box
         '
-        Me.Kyo3Box.Location = New System.Drawing.Point(403, 111)
+        Me.Kyo3Box.Location = New System.Drawing.Point(403, 100)
         Me.Kyo3Box.Name = "Kyo3Box"
         Me.Kyo3Box.Size = New System.Drawing.Size(52, 19)
         Me.Kyo3Box.TabIndex = 27
@@ -336,7 +336,7 @@ Partial Class ユニット日誌
         '
         'Gai3Box
         '
-        Me.Gai3Box.Location = New System.Drawing.Point(403, 93)
+        Me.Gai3Box.Location = New System.Drawing.Point(403, 82)
         Me.Gai3Box.Name = "Gai3Box"
         Me.Gai3Box.Size = New System.Drawing.Size(52, 19)
         Me.Gai3Box.TabIndex = 24
@@ -344,7 +344,7 @@ Partial Class ユニット日誌
         '
         'Nyu3Box
         '
-        Me.Nyu3Box.Location = New System.Drawing.Point(403, 75)
+        Me.Nyu3Box.Location = New System.Drawing.Point(403, 64)
         Me.Nyu3Box.Name = "Nyu3Box"
         Me.Nyu3Box.Size = New System.Drawing.Size(52, 19)
         Me.Nyu3Box.TabIndex = 21
@@ -353,7 +353,7 @@ Partial Class ユニット日誌
         'rbtnDayWork
         '
         Me.rbtnDayWork.AutoSize = True
-        Me.rbtnDayWork.Location = New System.Drawing.Point(623, 55)
+        Me.rbtnDayWork.Location = New System.Drawing.Point(596, 55)
         Me.rbtnDayWork.Name = "rbtnDayWork"
         Me.rbtnDayWork.Size = New System.Drawing.Size(47, 16)
         Me.rbtnDayWork.TabIndex = 28
@@ -364,7 +364,7 @@ Partial Class ユニット日誌
         'rbtnNightWork
         '
         Me.rbtnNightWork.AutoSize = True
-        Me.rbtnNightWork.Location = New System.Drawing.Point(677, 55)
+        Me.rbtnNightWork.Location = New System.Drawing.Point(650, 55)
         Me.rbtnNightWork.Name = "rbtnNightWork"
         Me.rbtnNightWork.Size = New System.Drawing.Size(47, 16)
         Me.rbtnNightWork.TabIndex = 29
@@ -375,7 +375,7 @@ Partial Class ユニット日誌
         'dayWorkPic
         '
         Me.dayWorkPic.BackColor = System.Drawing.SystemColors.Window
-        Me.dayWorkPic.Location = New System.Drawing.Point(626, 73)
+        Me.dayWorkPic.Location = New System.Drawing.Point(599, 73)
         Me.dayWorkPic.Name = "dayWorkPic"
         Me.dayWorkPic.Size = New System.Drawing.Size(39, 42)
         Me.dayWorkPic.TabIndex = 30
@@ -384,7 +384,7 @@ Partial Class ユニット日誌
         'nightWorkPic
         '
         Me.nightWorkPic.BackColor = System.Drawing.SystemColors.Window
-        Me.nightWorkPic.Location = New System.Drawing.Point(680, 73)
+        Me.nightWorkPic.Location = New System.Drawing.Point(653, 73)
         Me.nightWorkPic.Name = "nightWorkPic"
         Me.nightWorkPic.Size = New System.Drawing.Size(39, 42)
         Me.nightWorkPic.TabIndex = 31
@@ -417,17 +417,17 @@ Partial Class ユニット日誌
         'dgvUnitDiary
         '
         Me.dgvUnitDiary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUnitDiary.Location = New System.Drawing.Point(134, 147)
+        Me.dgvUnitDiary.Location = New System.Drawing.Point(134, 135)
         Me.dgvUnitDiary.Name = "dgvUnitDiary"
         Me.dgvUnitDiary.RowTemplate.Height = 21
-        Me.dgvUnitDiary.Size = New System.Drawing.Size(589, 598)
+        Me.dgvUnitDiary.Size = New System.Drawing.Size(558, 530)
         Me.dgvUnitDiary.TabIndex = 32
         '
         'ユニット日誌
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(775, 785)
+        Me.ClientSize = New System.Drawing.Size(775, 720)
         Me.Controls.Add(Me.dgvUnitDiary)
         Me.Controls.Add(Me.nightWorkPic)
         Me.Controls.Add(Me.dayWorkPic)

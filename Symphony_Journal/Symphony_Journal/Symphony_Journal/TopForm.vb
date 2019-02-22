@@ -10,7 +10,7 @@
     Public iniFilePath As String = My.Application.Info.DirectoryPath & "\Journal1.ini"
 
     '画像パス
-    Public imageFilePath As String = My.Application.Info.DirectoryPath & "\Div1.wmf"
+    Public imageFilePath As String = My.Application.Info.DirectoryPath & "\Div1.png"
 
     'SealBoxフォルダパス
     Public sealBoxDirPath As String = Util.getIniString("System", "SealBoxDir", iniFilePath)
@@ -62,7 +62,7 @@
         Me.MaximizeBox = False
 
         '画像の配置処理
-        topPicture.Image = System.Drawing.Image.FromFile(imageFilePath)
+        topPicture.ImageLocation = imageFilePath
 
         '印刷ラジオボタンの初期設定
         initPrintState()

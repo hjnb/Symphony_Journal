@@ -81,7 +81,7 @@ Partial Class SS生活の様子
         Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Location = New System.Drawing.Point(168, 50)
+        Me.Panel1.Location = New System.Drawing.Point(168, 46)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(312, 72)
         Me.Panel1.TabIndex = 18
@@ -210,9 +210,9 @@ Partial Class SS生活の様子
         Me.Panel2.Controls.Add(Me.tantoBox)
         Me.Panel2.Controls.Add(Me.Label6)
         Me.Panel2.Controls.Add(Me.Label5)
-        Me.Panel2.Location = New System.Drawing.Point(485, 50)
+        Me.Panel2.Location = New System.Drawing.Point(485, 46)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(207, 46)
+        Me.Panel2.Size = New System.Drawing.Size(207, 45)
         Me.Panel2.TabIndex = 19
         '
         'Panel6
@@ -266,7 +266,7 @@ Partial Class SS生活の様子
         '
         'btnNew
         '
-        Me.btnNew.Location = New System.Drawing.Point(379, 7)
+        Me.btnNew.Location = New System.Drawing.Point(379, 5)
         Me.btnNew.Name = "btnNew"
         Me.btnNew.Size = New System.Drawing.Size(66, 37)
         Me.btnNew.TabIndex = 3
@@ -275,7 +275,7 @@ Partial Class SS生活の様子
         '
         'btnRegist
         '
-        Me.btnRegist.Location = New System.Drawing.Point(444, 7)
+        Me.btnRegist.Location = New System.Drawing.Point(444, 5)
         Me.btnRegist.Name = "btnRegist"
         Me.btnRegist.Size = New System.Drawing.Size(66, 37)
         Me.btnRegist.TabIndex = 4
@@ -284,7 +284,7 @@ Partial Class SS生活の様子
         '
         'btnDelete
         '
-        Me.btnDelete.Location = New System.Drawing.Point(509, 7)
+        Me.btnDelete.Location = New System.Drawing.Point(509, 5)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(66, 37)
         Me.btnDelete.TabIndex = 5
@@ -293,7 +293,7 @@ Partial Class SS生活の様子
         '
         'btnPrint
         '
-        Me.btnPrint.Location = New System.Drawing.Point(574, 7)
+        Me.btnPrint.Location = New System.Drawing.Point(574, 5)
         Me.btnPrint.Name = "btnPrint"
         Me.btnPrint.Size = New System.Drawing.Size(66, 37)
         Me.btnPrint.TabIndex = 6
@@ -304,7 +304,7 @@ Partial Class SS生活の様子
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label1.Location = New System.Drawing.Point(159, 129)
+        Me.Label1.Location = New System.Drawing.Point(159, 125)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(106, 19)
         Me.Label1.TabIndex = 7
@@ -312,7 +312,7 @@ Partial Class SS生活の様子
         '
         'btnTextClear
         '
-        Me.btnTextClear.Location = New System.Drawing.Point(617, 107)
+        Me.btnTextClear.Location = New System.Drawing.Point(617, 103)
         Me.btnTextClear.Name = "btnTextClear"
         Me.btnTextClear.Size = New System.Drawing.Size(75, 23)
         Me.btnTextClear.TabIndex = 9
@@ -324,14 +324,14 @@ Partial Class SS生活の様子
         Me.historyListBox.BackColor = System.Drawing.SystemColors.Control
         Me.historyListBox.FormattingEnabled = True
         Me.historyListBox.ItemHeight = 12
-        Me.historyListBox.Location = New System.Drawing.Point(744, 77)
+        Me.historyListBox.Location = New System.Drawing.Point(764, 77)
         Me.historyListBox.Name = "historyListBox"
         Me.historyListBox.Size = New System.Drawing.Size(151, 460)
         Me.historyListBox.TabIndex = 10
         '
         'btnRowInsert
         '
-        Me.btnRowInsert.Location = New System.Drawing.Point(744, 574)
+        Me.btnRowInsert.Location = New System.Drawing.Point(764, 574)
         Me.btnRowInsert.Name = "btnRowInsert"
         Me.btnRowInsert.Size = New System.Drawing.Size(55, 29)
         Me.btnRowInsert.TabIndex = 11
@@ -340,7 +340,7 @@ Partial Class SS生活の様子
         '
         'btnRowDelete
         '
-        Me.btnRowDelete.Location = New System.Drawing.Point(798, 574)
+        Me.btnRowDelete.Location = New System.Drawing.Point(818, 574)
         Me.btnRowDelete.Name = "btnRowDelete"
         Me.btnRowDelete.Size = New System.Drawing.Size(55, 29)
         Me.btnRowDelete.TabIndex = 12
@@ -360,17 +360,17 @@ Partial Class SS生活の様子
         'dgvShtM
         '
         Me.dgvShtM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvShtM.Location = New System.Drawing.Point(168, 155)
+        Me.dgvShtM.Location = New System.Drawing.Point(168, 151)
         Me.dgvShtM.Name = "dgvShtM"
         Me.dgvShtM.RowTemplate.Height = 21
-        Me.dgvShtM.Size = New System.Drawing.Size(560, 541)
+        Me.dgvShtM.Size = New System.Drawing.Size(569, 543)
         Me.dgvShtM.TabIndex = 20
         '
         'SS生活の様子
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(925, 717)
+        Me.ClientSize = New System.Drawing.Size(953, 706)
         Me.Controls.Add(Me.dgvShtM)
         Me.Controls.Add(Me.namLabel)
         Me.Controls.Add(Me.btnRowDelete)

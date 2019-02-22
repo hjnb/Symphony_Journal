@@ -36,11 +36,30 @@ Public Class SSDataGridView
                 pParts = e.PaintParts And Not DataGridViewPaintParts.Background
             End If
 
-            'If e.RowIndex = 0 OrElse e.RowIndex = 18 OrElse (e.RowIndex >= 31 AndAlso e.ColumnIndex = 0) Then
-            '    pParts = e.PaintParts And (Not DataGridViewPaintParts.Background And Not DataGridViewPaintParts.Border)
-            'Else
-            '    pParts = e.PaintParts And Not DataGridViewPaintParts.Background
-            'End If
+            '区切りの縦黒線
+            If e.ColumnIndex = 1 Then
+                With e.CellBounds
+                    .Offset(-2, 0)
+                    e.Graphics.DrawLine(New Pen(Color.Black), .Left, .Top, .Left, .Bottom)
+                End With
+            End If
+
+            '項目区切りの横黒線
+            If e.ColumnIndex = 1 AndAlso (e.RowIndex = 4 OrElse e.RowIndex = 9 OrElse e.RowIndex = 14 OrElse e.RowIndex = 19) Then
+                With e.CellBounds
+                    .Offset(0, -2)
+                    e.Graphics.DrawLine(New Pen(Color.Black), .Left - 80, .Bottom, .Right, .Bottom)
+                End With
+            End If
+
+            'ページ区切りの横青線
+            If e.ColumnIndex = 1 AndAlso e.RowIndex = 35 Then
+                With e.CellBounds
+                    .Offset(0, -15)
+                    e.Graphics.DrawLine(New Pen(Color.Blue), .Left, .Bottom, .Right, .Bottom)
+                End With
+            End If
+            
             e.Paint(e.ClipBounds, pParts)
             e.Handled = True
         End If

@@ -36,9 +36,9 @@ Partial Class TopForm
         '
         'topPicture
         '
-        Me.topPicture.Location = New System.Drawing.Point(686, 27)
+        Me.topPicture.Location = New System.Drawing.Point(686, 69)
         Me.topPicture.Name = "topPicture"
-        Me.topPicture.Size = New System.Drawing.Size(149, 172)
+        Me.topPicture.Size = New System.Drawing.Size(149, 148)
         Me.topPicture.TabIndex = 0
         Me.topPicture.TabStop = False
         '

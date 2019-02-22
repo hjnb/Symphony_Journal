@@ -65,7 +65,7 @@ Public Class SS生活の様子
             .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
             .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
             .AllowUserToDeleteRows = False '行削除禁止
-            .BorderStyle = BorderStyle.None
+            .BorderStyle = BorderStyle.FixedSingle
             .MultiSelect = False
             .RowHeadersVisible = False
             .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
@@ -111,10 +111,12 @@ Public Class SS生活の様子
             With .Columns("Text")
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
                 .DefaultCellStyle.Font = New Font("ＭＳ ゴシック", 9)
-                .Width = 462
+                .Width = 469
                 .SortMode = DataGridViewColumnSortMode.NotSortable
             End With
         End With
+
+        dgvShtM(1, 0).Selected = True
 
     End Sub
 
@@ -128,7 +130,7 @@ Public Class SS生活の様子
 
         'スクロール等初期位置へ
         dgvShtM.FirstDisplayedScrollingRowIndex = 0
-        dgvShtM(0, 0).Selected = True
+        dgvShtM(1, 0).Selected = True
 
         'データ取得、表示
         Dim cn As New ADODB.Connection()

@@ -191,7 +191,7 @@ Public Class ユニット日誌
             .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
             .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
             .ColumnHeadersVisible = False
-            .RowTemplate.Height = 17
+            .RowTemplate.Height = 15
             .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
             .DefaultCellStyle.SelectionBackColor = Color.White
             .DefaultCellStyle.SelectionForeColor = Color.Black

@@ -208,12 +208,6 @@ Public Class 印刷条件
                 e.Graphics.DrawRectangle(New Pen(Color.Black, 2I), e.CellBounds.X + 1I, e.CellBounds.Y + 1I, e.CellBounds.Width - 3I, e.CellBounds.Height - 3I)
             End If
 
-            'Dim Pen As New Pen(Me.dgvUnit.GridColor)
-            'With e.CellBounds
-            '    .Offset(-1, -1)
-            '    e.Graphics.DrawLine(Pen, .Left, .Top, .Left, .Bottom)
-            'End With
-
             Dim pParts = e.PaintParts And (Not DataGridViewPaintParts.Background)
             e.Paint(e.ClipBounds, pParts)
             e.Handled = True
