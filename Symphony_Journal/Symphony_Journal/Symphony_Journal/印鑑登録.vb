@@ -524,6 +524,78 @@ Public Class 印鑑登録
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub btnPrintSealM_Click(sender As System.Object, e As System.EventArgs) Handles btnPrintSealM.Click
+        '行数
+        Dim rowCount As Integer = dgvSeal.Rows.Count
+
+        If rowCount = 0 Then
+            Return
+        End If
+
+        'エクセル貼り付け用の配列作成
+        Dim dataArray(rowCount - 1, 4) As String
+        Dim dt As DataTable = CType(dgvSeal.DataSource, DataTable)
+        Dim count As Integer = 0
+        For Each row As DataRow In dt.Rows
+            dataArray(count, 0) = count + 1
+            dataArray(count, 1) = Util.checkDBNullValue(row("Class"))
+            dataArray(count, 2) = Util.checkDBNullValue(row("Nam"))
+            dataArray(count, 3) = Util.checkDBNullValue(row("Pwd"))
+            dataArray(count, 4) = Util.checkDBNullValue(row("File"))
+            count += 1
+        Next
+
+        '現在日付、時刻
+        Dim nowTime As String = Now.ToString("yyyy/MM/dd HH:MM:ss")
+
+        'エクセル準備
+        Dim objExcel As Object = CreateObject("Excel.Application")
+        Dim objWorkBooks As Object = objExcel.Workbooks
+        Dim objWorkBook As Object = objWorkBooks.Open(TopForm.excelFilePass)
+        Dim oSheet As Object = objWorkBook.Worksheets("印影リスト")
+
+        '日付時刻
+        oSheet.range("B3").value = nowTime
+
+        '人数分枠を用意
+        Dim xlPasteRange As Excel.Range
+        For i As Integer = 0 To rowCount - 2
+            xlPasteRange = oSheet.Range("A" & (7 + i)) 'ペースト先
+            oSheet.rows("6:6").copy(xlPasteRange)
+        Next
+
+        'データ貼り付け
+        oSheet.range("B6", "F" & (5 + rowCount)).value = dataArray
+
+        '2枚目が有る場合
+        If rowCount >= 67 Then
+            '空行insertし、そこにヘッダー部分をコピペ
+            oSheet.rows("73:77").insert()
+            xlPasteRange = oSheet.Range("A73") 'ペースト先
+            oSheet.rows("1:5").copy(xlPasteRange)
+
+            '改ページ
+            oSheet.HpageBreaks.add(oSheet.Range("A73"))
+        End If
+
+        '変更保存確認ダイアログ非表示
+        objExcel.DisplayAlerts = False
+
+        '印刷
+        If TopForm.rbtnPrintout.Checked = True Then
+            oSheet.PrintOut()
+        ElseIf TopForm.rbtnPreview.Checked = True Then
+            objExcel.Visible = True
+            oSheet.PrintPreview(1)
+        End If
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
 
     End Sub
 End Class

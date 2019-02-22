@@ -162,7 +162,7 @@ Partial Class 印鑑登録
         Me.dgvSeal.Location = New System.Drawing.Point(20, 173)
         Me.dgvSeal.Name = "dgvSeal"
         Me.dgvSeal.RowTemplate.Height = 21
-        Me.dgvSeal.Size = New System.Drawing.Size(474, 421)
+        Me.dgvSeal.Size = New System.Drawing.Size(474, 422)
         Me.dgvSeal.TabIndex = 13
         '
         'sealPicBox
