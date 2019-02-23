@@ -236,6 +236,13 @@ Public Class 印刷条件
             End If
         Next
         errorLabel.Visible = False
+
+        'iniファイルの値更新
+        Util.putIniString("System", "Sign1", sign1Box.Text, TopForm.iniFilePath)
+        Util.putIniString("System", "Sign2", sign2Box.Text, TopForm.iniFilePath)
+        Util.putIniString("System", "Sign3", sign3Box.Text, TopForm.iniFilePath)
+        Util.putIniString("System", "Sign4", sign4Box.Text, TopForm.iniFilePath)
+        Util.putIniString("System", "Sign5", sign5Box.Text, TopForm.iniFilePath)
         
         Dim targetUnit As String = unitLabel.Text '対象のユニット名
         Dim targetContent As Integer = If(rbtnDiary.Checked, 0, 1) '印刷対象内容(0:日誌, 1:便観察)
