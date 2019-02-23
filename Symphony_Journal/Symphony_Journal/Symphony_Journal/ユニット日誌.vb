@@ -240,7 +240,7 @@ Public Class ユニット日誌
             End With
             With .Columns("Text")
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
-                .Width = 486
+                .Width = 456
             End With
         End With
 
