@@ -66,6 +66,9 @@ Public Class ユニット日誌
 
         '現在日付を初期値に
         YmdBox.setADStr(Today.ToString("yyyy/MM/dd"))
+
+        '初期選択
+        unitListBox.SelectedIndex = 0
     End Sub
 
     ''' <summary>
