@@ -980,6 +980,13 @@ Symphony_Journal
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
+</member><member name="M:Symphony_Journal.印鑑登録.sealNameBox_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+	<summary>
+ 印影ﾌｧｲﾙ名ボックスKeyDownイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
 </member><member name="M:Symphony_Journal.SSDataGridView.ExDataGridView_CellPainting(System.Object,System.Windows.Forms.DataGridViewCellPaintingEventArgs)">
 	<summary>
  CellPaintingイベント

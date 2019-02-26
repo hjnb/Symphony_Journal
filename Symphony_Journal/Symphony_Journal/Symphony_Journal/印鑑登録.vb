@@ -598,4 +598,23 @@ Public Class 印鑑登録
         objExcel = Nothing
 
     End Sub
+
+    ''' <summary>
+    ''' 印影ﾌｧｲﾙ名ボックスKeyDownイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    Private Sub sealNameBox_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles sealNameBox.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            'ファイルが存在する場合、画像を表示させる
+            Dim fileName As String = sealNameBox.Text
+            Dim sealFilePath As String = TopForm.sealBoxDirPath & "\" & fileName & ".wmf" '印影ファイルパス
+            If System.IO.File.Exists(sealFilePath) Then
+                sealPicBox.ImageLocation = sealFilePath
+            Else
+                sealPicBox.ImageLocation = Nothing
+            End If
+        End If
+    End Sub
 End Class
