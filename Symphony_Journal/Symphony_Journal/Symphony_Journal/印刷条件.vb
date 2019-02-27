@@ -284,7 +284,7 @@ Public Class 印刷条件
 
         objExcel.Calculation = Excel.XlCalculation.xlCalculationManual
         objExcel.ScreenUpdating = False
-
+        
         '書き込み
         If targetContent = 0 Then
             oSheet = objWorkBook.Worksheets("ユニット日誌改")
@@ -303,9 +303,9 @@ Public Class 印刷条件
         objExcel.DisplayAlerts = False
 
         '印刷
-        If TopForm.rbtnPrintout.Checked = True Then
-            oSheet.printOut()
-        ElseIf TopForm.rbtnPreview.Checked = True Then
+        If rbtnPrint.Checked = True Then
+            oSheet.PrintOut()
+        ElseIf rbtnPreview.Checked = True Then
             objExcel.Visible = True
             oSheet.PrintPreview(1)
         End If
@@ -436,22 +436,32 @@ Public Class 印刷条件
                     dayData(gyo - 2, 3) = Util.checkDBNullValue(rs.Fields("Text").Value)
 
                     '該当セルの文字色設定
-                    oSheet.range("B" & (gyo - 2 + 14 + 50 * (pageCount - 1))).Font.ColorIndex = nClr
-                    oSheet.range("E" & (gyo - 2 + 14 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                    If nClr <> 1 Then
+                        oSheet.Range("B" & (gyo - 2 + 14 + 50 * (pageCount - 1))).Font.ColorIndex = nClr
+                    End If
+                    If tClr <> 1 Then
+                        oSheet.Range("E" & (gyo - 2 + 14 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                    End If
                 ElseIf 20 <= gyo AndAlso gyo <= 31 Then
                     '夜勤日誌データ作成
                     nightData(gyo - 20, 0) = Util.checkDBNullValue(rs.Fields("Nam").Value)
                     nightData(gyo - 20, 3) = Util.checkDBNullValue(rs.Fields("Text").Value)
 
                     '該当セルの文字色設定
-                    oSheet.range("B" & (gyo - 20 + 33 + 50 * (pageCount - 1))).Font.ColorIndex = nClr
-                    oSheet.range("E" & (gyo - 20 + 33 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                    If nClr <> 1 Then
+                        oSheet.Range("B" & (gyo - 20 + 33 + 50 * (pageCount - 1))).Font.ColorIndex = nClr
+                    End If
+                    If tClr <> 1 Then
+                        oSheet.Range("E" & (gyo - 20 + 33 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                    End If
                 ElseIf 32 <= gyo Then
                     '特記事項データ作成
                     spData(gyo - 32, 0) = Util.checkDBNullValue(rs.Fields("Text").Value)
 
                     '該当セルの文字色設定
-                    oSheet.range("E" & (gyo - 32 + 46 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                    If tClr <> 1 Then
+                        oSheet.Range("E" & (gyo - 32 + 46 + 50 * (pageCount - 1))).Font.ColorIndex = tClr
+                    End If
                 End If
             End If
             rs.MoveNext()
