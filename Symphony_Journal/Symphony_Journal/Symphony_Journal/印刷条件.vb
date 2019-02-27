@@ -277,10 +277,13 @@ Public Class 印刷条件
         End If
 
         'エクセル準備
-        Dim objExcel As Object = CreateObject("Excel.Application")
-        Dim objWorkBooks As Object = objExcel.Workbooks
-        Dim objWorkBook As Object = objWorkBooks.Open(TopForm.excelFilePass)
-        Dim oSheet As Object
+        Dim objExcel As Excel.Application = CreateObject("Excel.Application")
+        Dim objWorkBooks As Excel.Workbooks = objExcel.Workbooks
+        Dim objWorkBook As Excel.Workbook = objWorkBooks.Open(TopForm.excelFilePass)
+        Dim oSheet As Excel.Worksheet
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationManual
+        objExcel.ScreenUpdating = False
 
         '書き込み
         If targetContent = 0 Then
@@ -292,6 +295,9 @@ Public Class 印刷条件
         End If
         rs.Close()
         cnn.Close()
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationAutomatic
+        objExcel.ScreenUpdating = True
 
         '変更保存確認ダイアログ非表示
         objExcel.DisplayAlerts = False
@@ -318,18 +324,16 @@ Public Class 印刷条件
     ''' </summary>
     ''' <param name="oSheet"></param>
     ''' <remarks></remarks>
-    Private Sub writeUnitDiarySheet(oSheet As Object, rs As ADODB.Recordset)
+    Private Sub writeUnitDiarySheet(oSheet As Excel.Worksheet, rs As ADODB.Recordset)
         '共通の印影画像セット(施設長、相談員、専門員、合議)
-        Dim xlPictures As Excel.Pictures = DirectCast(oSheet.Pictures, Excel.Pictures)
+        Dim xlShapes As Excel.Shapes = DirectCast(oSheet.Shapes, Excel.Shapes)
         Dim columnStrArray() As String = {"J", "K", "L", "M", "N"}
         Dim fileNameArray() As String = {sign1Box.Text, sign2Box.Text, sign3Box.Text, sign4Box.Text, sign5Box.Text}
         For i As Integer = 0 To 4
-            Dim xlPicture As Excel.Picture
             Dim sealFilePath As String = TopForm.sealBoxDirPath & "\" & fileNameArray(i) & ".wmf"
             If System.IO.File.Exists(sealFilePath) Then
-                xlPicture = DirectCast(xlPictures.Insert(sealFilePath), Excel.Picture)
-                xlPicture.Left = DirectCast(oSheet.Cells(4, columnStrArray(i)), Excel.Range).Left + 10
-                xlPicture.Top = DirectCast(oSheet.Cells(4, columnStrArray(i)), Excel.Range).Top + 6
+                Dim cell As Excel.Range = DirectCast(oSheet.Cells(4, columnStrArray(i)), Excel.Range)
+                xlShapes.AddPicture(sealFilePath, False, True, cell.Left + 10, cell.Top + 6, 30, 30)
             End If
         Next
 
@@ -392,19 +396,16 @@ Public Class 印刷条件
                 Dim youbi As String = New DateTime(yyyy, MM, dd).ToString("ddd")
                 oSheet.range("B" & (6 + 50 * (pageCount - 1))).value = warekiKanji & " " & warekiNum & " 年 " & MM & " 月 " & dd & " 日 ( " & youbi & " )"
                 '日勤印影
-                Dim xlPicture As Excel.Picture
                 Dim daySealFilePath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("Sign6").Value) & ".wmf"
                 If System.IO.File.Exists(daySealFilePath) Then
-                    xlPicture = DirectCast(xlPictures.Insert(daySealFilePath), Excel.Picture)
-                    xlPicture.Left = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "O"), Excel.Range).Left + 10
-                    xlPicture.Top = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "O"), Excel.Range).Top + 6
+                    Dim cell As Excel.Range = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "O"), Excel.Range)
+                    xlShapes.AddPicture(daySealFilePath, False, True, cell.Left + 10, cell.Top + 6, 30, 30)
                 End If
                 '夜勤印影
                 Dim nightSealFilePath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("Sign7").Value) & ".wmf"
                 If System.IO.File.Exists(nightSealFilePath) Then
-                    xlPicture = DirectCast(xlPictures.Insert(nightSealFilePath), Excel.Picture)
-                    xlPicture.Left = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "P"), Excel.Range).Left + 10
-                    xlPicture.Top = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "P"), Excel.Range).Top + 6
+                    Dim cell As Excel.Range = DirectCast(oSheet.Cells(4 + 50 * (pageCount - 1), "P"), Excel.Range)
+                    xlShapes.AddPicture(nightSealFilePath, False, True, cell.Left + 10, cell.Top + 6, 30, 30)
                 End If
                 '入院者数　男
                 oSheet.range("D" & (8 + 50 * (pageCount - 1))).value = If(rs.Fields("Nyu1").Value = 0, "", rs.Fields("Nyu1").Value)
@@ -468,7 +469,7 @@ Public Class 印刷条件
     ''' <param name="oSheet"></param>
     ''' <param name="rs"></param>
     ''' <remarks></remarks>
-    Private Sub writeBenSheet(oSheet As Object, rs As ADODB.Recordset)
+    Private Sub writeBenSheet(oSheet As Excel.Worksheet, rs As ADODB.Recordset)
         '既存文字削除
         oSheet.range("D2").value = ""
         oSheet.range("C4").value = ""

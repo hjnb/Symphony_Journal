@@ -665,13 +665,13 @@ Symphony_Journal
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
-</member><member name="M:Symphony_Journal.印刷条件.writeUnitDiarySheet(System.Object,ADODB.Recordset)">
+</member><member name="M:Symphony_Journal.印刷条件.writeUnitDiarySheet(Microsoft.Office.Interop.Excel.Worksheet,ADODB.Recordset)">
 	<summary>
  ユニット日誌印刷書き込み
  </summary>
 	<param name="oSheet"></param>
 	<remarks></remarks>
-</member><member name="M:Symphony_Journal.印刷条件.writeBenSheet(System.Object,ADODB.Recordset)">
+</member><member name="M:Symphony_Journal.印刷条件.writeBenSheet(Microsoft.Office.Interop.Excel.Worksheet,ADODB.Recordset)">
 	<summary>
  便観察印刷書き込み
  </summary>

@@ -433,15 +433,18 @@ Public Class 入居者登録
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
-        Dim objExcel As Object
-        Dim objWorkBooks As Object
-        Dim objWorkBook As Object
-        Dim oSheet As Object
+        Dim objExcel As Excel.Application
+        Dim objWorkBooks As Excel.Workbooks
+        Dim objWorkBook As Excel.Workbook
+        Dim oSheet As Excel.Worksheet
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
         objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheet = objWorkBook.Worksheets("入居者")
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationManual
+        objExcel.ScreenUpdating = False
 
         '既存文字削除
         oSheet.range("E2").value = ""
@@ -496,6 +499,9 @@ Public Class 入居者登録
         For i As Integer = 0 To dataArrayList.Count - 1
             oSheet.range("B" & ((64 * i) + 4), "F" & ((64 * i) + 63)).value = dataArrayList(i)
         Next
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationAutomatic
+        objExcel.ScreenUpdating = True
 
         '変更保存確認ダイアログ非表示
         objExcel.DisplayAlerts = False

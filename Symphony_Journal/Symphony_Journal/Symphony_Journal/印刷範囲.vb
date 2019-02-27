@@ -69,10 +69,13 @@ Public Class 印刷範囲
         rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic)
 
         'エクセル準備
-        Dim objExcel As Object = CreateObject("Excel.Application")
-        Dim objWorkBooks As Object = objExcel.Workbooks
-        Dim objWorkBook As Object = objWorkBooks.Open(TopForm.excelFilePass)
-        Dim oSheet As Object = objWorkBook.Worksheets("支援経過改")
+        Dim objExcel As Excel.Application = CreateObject("Excel.Application")
+        Dim objWorkBooks As Excel.Workbooks = objExcel.Workbooks
+        Dim objWorkBook As Excel.Workbook = objWorkBooks.Open(TopForm.excelFilePass)
+        Dim oSheet As Excel.Worksheet = objWorkBook.Worksheets("支援経過改")
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationManual
+        objExcel.ScreenUpdating = False
 
         '件数に応じてページ準備
         oSheet.range("E4").value = residentName
@@ -115,6 +118,9 @@ Public Class 印刷範囲
         End While
         'データ貼り付け
         oSheet.range("B" & (7 + 62 * pageCount), "L" & (61 + 62 * pageCount)).value = dataArray
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationAutomatic
+        objExcel.ScreenUpdating = True
 
         '変更保存確認ダイアログ非表示
         objExcel.DisplayAlerts = False

@@ -431,15 +431,18 @@ Public Class 印鑑登録
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
-        Dim objExcel As Object
-        Dim objWorkBooks As Object
-        Dim objWorkBook As Object
-        Dim oSheet As Object
+        Dim objExcel As Excel.Application
+        Dim objWorkBooks As Excel.Workbooks
+        Dim objWorkBook As Excel.Workbook
+        Dim oSheet As Excel.Worksheet
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
         objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheet = objWorkBook.Worksheets("SealBox")
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationManual
+        objExcel.ScreenUpdating = False
 
         '日付
         Dim ymd As String = Util.convADStrToWarekiStr(Today.ToString("yyyy/MM/dd"))
@@ -464,8 +467,7 @@ Public Class 印鑑登録
         '書き込み
         Dim columnStrArray() As String = {"B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"}
         Dim arrayLength As Integer = columnStrArray.Length
-        Dim xlPictures As Excel.Pictures = DirectCast(oSheet.Pictures, Excel.Pictures)
-        Dim xlPicture As Excel.Picture
+        Dim xlShapes As Excel.Shapes = DirectCast(oSheet.Shapes, Excel.Shapes)
         Dim rowCount As Integer = 0
         Dim excelRowIndex As Integer = 3
         While Not rs.EOF
@@ -474,9 +476,8 @@ Public Class 印鑑登録
             '印影ファイルが存在する場合のみ表示
             Dim filePath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("File").Value) & ".wmf"
             If System.IO.File.Exists(filePath) Then
-                xlPicture = DirectCast(xlPictures.Insert(filePath), Excel.Picture)
-                xlPicture.Left = DirectCast(oSheet.Cells(excelRowIndex, columnStr), Excel.Range).Left + 10
-                xlPicture.Top = DirectCast(oSheet.Cells(excelRowIndex, columnStr), Excel.Range).Top + 6
+                Dim cell As Excel.Range = DirectCast(oSheet.Cells(excelRowIndex, columnStr), Excel.Range)
+                xlShapes.AddPicture(filePath, False, True, cell.Left + 10, cell.Top + 6, 30, 30)
             End If
             '氏名
             oSheet.range(columnStr & (excelRowIndex + 1)).value = Util.checkDBNullValue(rs.Fields("Nam").Value)
@@ -495,6 +496,9 @@ Public Class 印鑑登録
 
         rs.Close()
         cn.Close()
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationAutomatic
+        objExcel.ScreenUpdating = True
 
         '変更保存確認ダイアログ非表示
         objExcel.DisplayAlerts = False

@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports Microsoft.Office.Interop
 
 Public Class SS生活の様子
 
@@ -522,10 +523,13 @@ Public Class SS生活の様子
         End If
 
         'エクセル準備
-        Dim objExcel As Object = CreateObject("Excel.Application")
-        Dim objWorkBooks As Object = objExcel.Workbooks
-        Dim objWorkBook As Object = objWorkBooks.Open(TopForm.excelFilePass)
-        Dim oSheet As Object
+        Dim objExcel As Excel.Application = CreateObject("Excel.Application")
+        Dim objWorkBooks As Excel.Workbooks = objExcel.Workbooks
+        Dim objWorkBook As Excel.Workbook = objWorkBooks.Open(TopForm.excelFilePass)
+        Dim oSheet As Excel.Worksheet
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationManual
+        objExcel.ScreenUpdating = False
 
         If recordCount <= 35 Then
             oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5改")
@@ -553,6 +557,9 @@ Public Class SS生活の様子
             oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
             oSheet.range("C8", "C55").value = dataArray2 '内容
         End If
+
+        objExcel.Calculation = Excel.XlCalculation.xlCalculationAutomatic
+        objExcel.ScreenUpdating = True
 
         '変更保存確認ダイアログ非表示
         objExcel.DisplayAlerts = False
