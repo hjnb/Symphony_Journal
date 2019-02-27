@@ -52,6 +52,13 @@ Public Class ユニット日誌
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub ユニット日誌_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        'sealBoxフォルダ存在チェック
+        If Not System.IO.Directory.Exists(TopForm.sealBoxDirPath) Then
+            MsgBox(TopForm.sealBoxDirPath & "が存在しません。iniファイルにsealBoxの正しいパスを設定して下さい。")
+            Me.Close()
+            Exit Sub
+        End If
+
         'ユニットリスト初期値
         unitListBox.Items.AddRange(unitArray)
 

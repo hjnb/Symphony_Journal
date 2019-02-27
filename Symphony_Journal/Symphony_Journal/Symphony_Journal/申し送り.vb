@@ -17,7 +17,7 @@ Public Class 申し送り
     ''' <remarks></remarks>
     Private Sub 申し送り_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         If Not System.IO.File.Exists(TopForm.dbWorkFilePath) Then
-            MsgBox(TopForm.dbWorkFilePath & "が存在しません。ファイルを配置して下さい。")
+            MsgBox(TopForm.dbWorkFilePath & "が存在しません。iniファイルのDB2Dirに正しいパスを設定して下さい。")
             Me.Close()
             Exit Sub
         End If

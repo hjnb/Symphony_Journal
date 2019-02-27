@@ -24,6 +24,12 @@ Public Class 施設介護支援経過表
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub 施設介護支援経過表_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        If Not System.IO.File.Exists(TopForm.dbWorkFilePath) Then
+            MsgBox(TopForm.dbWorkFilePath & "が存在しません。iniファイルのDB2Dirに正しいパスを設定して下さい。")
+            Me.Close()
+            Exit Sub
+        End If
+
         Me.WindowState = FormWindowState.Maximized
         Me.MaximizeBox = False
 

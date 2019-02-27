@@ -47,6 +47,13 @@ Public Class 印鑑登録
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub 印鑑登録_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        'sealBoxフォルダ存在チェック
+        If Not System.IO.Directory.Exists(TopForm.sealBoxDirPath) Then
+            MsgBox(TopForm.sealBoxDirPath & "が存在しません。iniファイルにsealBoxの正しいパスを設定して下さい。")
+            Me.Close()
+            Exit Sub
+        End If
+
         '初期設定
         initTextBox()
         initDgvSeal()
