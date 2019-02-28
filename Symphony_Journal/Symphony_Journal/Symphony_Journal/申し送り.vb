@@ -378,7 +378,7 @@ Public Class 申し送り
         Dim emptyFlg As Boolean = True
         Dim lastInputRowIndex As Integer '最終入力行
         For i As Integer = dgvInput.Rows.Count - 1 To 0 Step -1
-            If dgvInput("Text", i).Value <> "" Then
+            If Util.checkDBNullValue(dgvInput("Text", i).Value) <> "" Then
                 lastInputRowIndex = i
                 emptyFlg = False
                 Exit For
