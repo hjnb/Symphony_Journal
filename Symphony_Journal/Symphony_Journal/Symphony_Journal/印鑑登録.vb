@@ -544,14 +544,13 @@ Public Class 印鑑登録
 
         'エクセル貼り付け用の配列作成
         Dim dataArray(rowCount - 1, 4) As String
-        Dim dt As DataTable = CType(dgvSeal.DataSource, DataTable)
         Dim count As Integer = 0
-        For Each row As DataRow In dt.Rows
+        For Each row As DataGridViewRow In dgvSeal.Rows
             dataArray(count, 0) = count + 1
-            dataArray(count, 1) = Util.checkDBNullValue(row("Class"))
-            dataArray(count, 2) = Util.checkDBNullValue(row("Nam"))
-            dataArray(count, 3) = Util.checkDBNullValue(row("Pwd"))
-            dataArray(count, 4) = Util.checkDBNullValue(row("File"))
+            dataArray(count, 1) = Util.checkDBNullValue(row.Cells("Class").Value)
+            dataArray(count, 2) = Util.checkDBNullValue(row.Cells("Nam").Value)
+            dataArray(count, 3) = Util.checkDBNullValue(row.Cells("Pwd").Value)
+            dataArray(count, 4) = Util.checkDBNullValue(row.Cells("File").Value)
             count += 1
         Next
 
