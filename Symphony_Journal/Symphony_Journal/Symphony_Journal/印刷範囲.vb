@@ -68,6 +68,11 @@ Public Class 印刷範囲
         Dim rs As New ADODB.Recordset
         rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic)
 
+        If rs.RecordCount <= 0 Then
+            MsgBox("該当データがありません。", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
         'エクセル準備
         Dim objExcel As Excel.Application = CreateObject("Excel.Application")
         Dim objWorkBooks As Excel.Workbooks = objExcel.Workbooks
@@ -79,7 +84,6 @@ Public Class 印刷範囲
 
         '件数に応じてページ準備
         oSheet.range("E4").value = residentName
-        oSheet.range("K4").value = Util.checkDBNullValue(rs.Fields("Tanto").Value)
         Dim recordCount As Integer = rs.RecordCount
         For i As Integer = 0 To (recordCount \ 55) - 1
             Dim xlPasteRange As Excel.Range = oSheet.Range("A" & (1 + 62 * (i + 1))) 'ペースト先
@@ -87,6 +91,7 @@ Public Class 印刷範囲
         Next
 
         'データ書き込み
+        Dim tanto As String = Util.checkDBNullValue(rs.Fields("Tanto").Value)
         Dim count As Integer = 0
         Dim pageCount As Integer = 0
         Dim ymdTemp As String = ""
@@ -95,11 +100,13 @@ Public Class 印刷範囲
             If count = 55 Then
                 'データ貼り付け
                 oSheet.range("B" & (7 + 62 * pageCount), "L" & (61 + 62 * pageCount)).value = dataArray
+                oSheet.Range("K" & (4 + 62 * pageCount)).Value = tanto
 
                 '配列内容クリア
                 Array.Clear(dataArray, 0, dataArray.Length)
 
                 '更新
+                tanto = Util.checkDBNullValue(rs.Fields("Tanto").Value)
                 pageCount += 1
                 count = 0
             End If
@@ -118,6 +125,7 @@ Public Class 印刷範囲
         End While
         'データ貼り付け
         oSheet.range("B" & (7 + 62 * pageCount), "L" & (61 + 62 * pageCount)).value = dataArray
+        oSheet.Range("K" & (4 + 62 * pageCount)).Value = tanto
 
         objExcel.Calculation = Excel.XlCalculation.xlCalculationAutomatic
         objExcel.ScreenUpdating = True
