@@ -87,7 +87,8 @@ Public Class 印刷範囲
         Dim recordCount As Integer = rs.RecordCount
         For i As Integer = 0 To (recordCount \ 55) - 1
             Dim xlPasteRange As Excel.Range = oSheet.Range("A" & (1 + 62 * (i + 1))) 'ペースト先
-            oSheet.rows("1:62").copy(xlPasteRange)
+            oSheet.Rows("1:62").copy(xlPasteRange)
+            oSheet.HPageBreaks.Add(oSheet.Range("A" & (1 + 62 * (i + 1)))) '改ページ
         Next
 
         'データ書き込み
