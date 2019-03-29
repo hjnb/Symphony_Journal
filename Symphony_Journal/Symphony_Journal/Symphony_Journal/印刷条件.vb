@@ -346,7 +346,8 @@ Public Class 印刷条件
             Dim unit As String = Util.checkDBNullValue(rs.Fields("Unit").Value)
             If (ymd <> ymdTemp) OrElse (unit <> unitTemp) Then
                 Dim xlPasteRange As Excel.Range = oSheet.Range("A" & (1 + 50 * count)) 'ペースト先
-                oSheet.rows("1:50").copy(xlPasteRange)
+                oSheet.Rows("1:50").copy(xlPasteRange)
+                oSheet.HPageBreaks.Add(oSheet.Range("A" & (1 + 50 * count))) '改ページ
                 count += 1
                 ymdTemp = ymd
                 unitTemp = unit
@@ -500,7 +501,8 @@ Public Class 印刷条件
 
                 '次のページ準備
                 Dim xlPasteRange As Excel.Range = oSheet.Range("A" & (1 + 47 * pageCount)) 'ペースト先
-                oSheet.rows("1:47").copy(xlPasteRange)
+                oSheet.Rows("1:47").copy(xlPasteRange)
+                oSheet.HPageBreaks.Add(oSheet.Range("A" & (1 + 47 * pageCount))) '改ページ
 
                 '配列内容クリア
                 Array.Clear(dataArray, 0, dataArray.Length)

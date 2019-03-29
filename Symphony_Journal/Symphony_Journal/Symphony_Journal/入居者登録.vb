@@ -466,7 +466,8 @@ Public Class 入居者登録
         If rCount > 60 Then
             For i As Integer = 0 To loopCount - 1
                 Dim xlPasteRange As Excel.Range = oSheet.Range("A" & (65 + (64 * i))) 'ペースト先
-                oSheet.rows("1:64").copy(xlPasteRange)
+                oSheet.Rows("1:64").copy(xlPasteRange)
+                oSheet.HPageBreaks.Add(oSheet.Range("A" & (65 + (64 * i)))) '改ページ
             Next
         End If
 
