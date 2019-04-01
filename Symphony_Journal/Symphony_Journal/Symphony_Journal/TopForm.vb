@@ -94,13 +94,13 @@
     End Sub
 
     Private Sub btnUnit_Click(sender As System.Object, e As System.EventArgs) Handles btnUnit.Click
-        '印鑑パスワードフォーム表示
-        Dim passForm As 印鑑パスワード = New 印鑑パスワード(DB_Journal)
-        If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
-            Return
-        End If
-
         If IsNothing(unitDiary) OrElse unitDiary.IsDisposed Then
+            '印鑑パスワードフォーム表示
+            Dim passForm As 印鑑パスワード = New 印鑑パスワード(DB_Journal)
+            If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+                Return
+            End If
+
             unitDiary = New ユニット日誌(passForm.getSealFileName(), passForm.getClassName())
             unitDiary.Owner = Me
             unitDiary.Show()
