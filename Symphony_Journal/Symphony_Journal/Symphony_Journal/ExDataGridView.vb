@@ -50,4 +50,17 @@
         End If
     End Sub
 
+    Public Overrides Function GetClipboardContent() As DataObject
+        '元のDataObjectを取得する
+        Dim oldData As DataObject = MyBase.GetClipboardContent()
+
+        '新しいDataObjectを作成する
+        Dim newData As New DataObject()
+
+        'テキスト形式のデータをセットする（UnicodeTextもセットされる）
+        newData.SetData(DataFormats.Text, oldData.GetData(DataFormats.Text))
+
+        Return newData
+    End Function
+
 End Class
