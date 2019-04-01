@@ -76,6 +76,9 @@ Public Class ユニット日誌
 
         '初期選択
         unitListBox.SelectedIndex = 0
+
+        '日付ボックス初期選択
+        YmdBox.setFocus(6)
     End Sub
 
     ''' <summary>

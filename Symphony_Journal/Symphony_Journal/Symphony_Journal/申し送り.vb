@@ -41,6 +41,9 @@ Public Class 申し送り
 
         'データ表示
         displayDgvRead()
+
+        '日付ボックスの初期選択
+        YmdBox.setFocus(6)
     End Sub
 
     ''' <summary>
