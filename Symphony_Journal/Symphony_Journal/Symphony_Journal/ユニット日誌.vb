@@ -199,7 +199,7 @@ Public Class ユニット日誌
             .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
             .AllowUserToDeleteRows = False '行削除禁止
             .BorderStyle = BorderStyle.None
-            .MultiSelect = False
+            .MultiSelect = True
             .RowHeadersVisible = False
             .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
             .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
@@ -215,6 +215,7 @@ Public Class ユニット日誌
             If canPaintFontColor Then
                 .ContextMenuStrip = Me.colorContextMenu
             End If
+            .ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText
         End With
 
         '列追加、空の行追加
