@@ -79,6 +79,9 @@ Public Class ユニット日誌
 
         '日付ボックス初期選択
         YmdBox.setFocus(6)
+
+        '日付ボックス上下ボタン長押し不可
+        YmdBox.canHoldDownButton = False
     End Sub
 
     ''' <summary>

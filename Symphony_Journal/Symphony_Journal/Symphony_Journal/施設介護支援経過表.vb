@@ -47,6 +47,9 @@ Public Class 施設介護支援経過表
 
         '現在日付をセット
         YmdBox.setADStr(Today.ToString("yyyy/MM/dd"))
+
+        '日付ボックス上下ボタン長押し不可
+        YmdBox.canHoldDownButton = False
     End Sub
 
     ''' <summary>

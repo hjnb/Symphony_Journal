@@ -44,6 +44,10 @@ Public Class 申し送り
 
         '日付ボックスの初期選択
         YmdBox.setFocus(6)
+
+        '日付ボックス、時間ボックス上下ボタン長押し不可
+        YmdBox.canHoldDownButton = False
+        HmBox.canHoldDownButton = False
     End Sub
 
     ''' <summary>
