@@ -99,6 +99,12 @@ hmBox
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
+</member><member name="M:hmBox.hmBox.setFocus(System.Int32)">
+	<summary>
+ 対象文字を選択状態にする
+ </summary>
+	<param name="targetIndex">選択対象文字インデックス</param>
+	<remarks></remarks>
 </member><member name="P:hmBox.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.

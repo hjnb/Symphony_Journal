@@ -92,7 +92,7 @@ Public Class 申し送り
     Private Sub writerListBox_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles writerListBox.SelectedValueChanged
         Dim nam As String = writerListBox.SelectedItem
         If nam <> "" Then
-            writerLabel.Text = nam
+            writerBox.Text = nam
         End If
     End Sub
 
@@ -345,7 +345,7 @@ Public Class 申し送り
             End While
             YmdBox.setWarekiStr(wareki)
             HmBox.setTime(hm.Substring(0, 2), hm.Substring(3, 2))
-            writerLabel.Text = writer
+            writerBox.Text = writer
 
             '
             dgvInput.FirstDisplayedScrollingRowIndex = 0
@@ -375,7 +375,7 @@ Public Class 申し送り
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
-        Dim writer As String = writerLabel.Text '記載者
+        Dim writer As String = writerBox.Text '記載者
         If writer = "" Then
             MsgBox("記載者を選択して下さい。", MsgBoxStyle.Exclamation)
             Return
