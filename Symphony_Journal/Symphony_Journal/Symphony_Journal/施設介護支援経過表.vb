@@ -151,7 +151,7 @@ Public Class 施設介護支援経過表
         Dim rowIndex As Integer = 0
         While Not rs.EOF
             If rowIndex = 0 Then
-                writerLabel.Text = Util.checkDBNullValue(rs.Fields("Kisai").Value)
+                writerBox.Text = Util.checkDBNullValue(rs.Fields("Kisai").Value)
                 tantoBox.Text = Util.checkDBNullValue(rs.Fields("Tanto").Value)
             End If
             dgvSkei("Text", rowIndex).Value = Util.checkDBNullValue(rs.Fields("Text").Value)
@@ -173,7 +173,7 @@ Public Class 施設介護支援経過表
         Next
 
         '記載者クリア
-        writerLabel.Text = ""
+        writerBox.Text = ""
     End Sub
 
     ''' <summary>
@@ -185,7 +185,7 @@ Public Class 施設介護支援経過表
     Private Sub writerListBox_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles writerListBox.SelectedValueChanged
         Dim nam As String = writerListBox.SelectedItem
         If nam <> "" Then
-            writerLabel.Text = nam
+            writerBox.Text = nam
         End If
     End Sub
 
@@ -227,8 +227,8 @@ Public Class 施設介護支援経過表
         Dim rs As New ADODB.Recordset
         rs.Open(sql, cn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockOptimistic)
         While Not rs.EOF
-            Dim wareki As String = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Ymd").Value))
-            resultList.Add(wareki)
+            Dim ymd As String = Util.checkDBNullValue(rs.Fields("Ymd").Value)
+            resultList.Add(ymd)
             rs.MoveNext()
         End While
         rs.Close()
@@ -248,7 +248,7 @@ Public Class 施設介護支援経過表
         residentListBox.Items.AddRange(getResidentList(selectedUnitName).ToArray())
         historyListBox.Items.Clear()
         namLabel.Text = ""
-        writerLabel.Text = ""
+        writerBox.Text = ""
         'dgvクリア
         For i As Integer = 0 To dgvSkei.Rows.Count - 1
             dgvSkei("Text", i).Value = ""
@@ -282,7 +282,7 @@ Public Class 施設介護支援経過表
     ''' <remarks></remarks>
     Private Sub historyListBox_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles historyListBox.SelectedValueChanged
         Dim residentName As String = residentListBox.Text
-        Dim ymd As String = Util.convWarekiStrToADStr(historyListBox.Text)
+        Dim ymd As String = historyListBox.Text
         If residentName <> "" AndAlso ymd <> "" Then
             YmdBox.setADStr(ymd)
         End If
@@ -430,7 +430,7 @@ Public Class 施設介護支援経過表
                 rs.Fields("Nam").Value = nam
                 rs.Fields("Ymd").Value = ymd
                 rs.Fields("Tanto").Value = tanto
-                rs.Fields("Kisai").Value = writerLabel.Text
+                rs.Fields("Kisai").Value = writerBox.Text
                 rs.Fields("Gyo").Value = i + 1
                 rs.Fields("Text").Value = text
             End If
@@ -503,8 +503,8 @@ Public Class 施設介護支援経過表
         End If
 
         '経過履歴の最古と最新の日付取得
-        Dim oldDate As String = Util.convWarekiStrToADStr(historyListBox.Items(historyListBox.Items.Count - 1))
-        Dim newDate As String = Util.convWarekiStrToADStr(historyListBox.Items(0))
+        Dim oldDate As String = historyListBox.Items(historyListBox.Items.Count - 1)
+        Dim newDate As String = historyListBox.Items(0)
 
         '印刷範囲フォーム表示
         Dim printForm As 印刷範囲 = New 印刷範囲(nam, oldDate, newDate)

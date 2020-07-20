@@ -114,7 +114,7 @@ Public Class 印刷範囲
             Dim ymd As String = Util.checkDBNullValue(rs.Fields("Ymd").Value)
             If ymd <> ymdTemp Then
                 '日付
-                dataArray(count, 0) = Util.convADStrToWarekiStr(ymd)
+                dataArray(count, 0) = ymd
                 ymdTemp = ymd
                 '記載者
                 dataArray(count, 10) = Util.checkDBNullValue(rs.Fields("Kisai").Value).Split("　")(0)

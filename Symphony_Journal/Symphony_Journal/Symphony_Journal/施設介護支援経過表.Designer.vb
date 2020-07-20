@@ -22,9 +22,8 @@ Partial Class 施設介護支援経過表
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.namLabel = New System.Windows.Forms.Label()
-        Me.YmdBox = New ymdBox.ymdBox()
         Me.btnRegist = New System.Windows.Forms.Button()
         Me.btnDelete = New System.Windows.Forms.Button()
         Me.btnPrint = New System.Windows.Forms.Button()
@@ -40,12 +39,13 @@ Partial Class 施設介護支援経過表
         Me.btnRowDelete = New System.Windows.Forms.Button()
         Me.btnClear = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.writerLabel = New System.Windows.Forms.Label()
         Me.writerListBox = New System.Windows.Forms.ListBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.writerBox = New System.Windows.Forms.TextBox()
+        Me.YmdBox = New ADBox2.ADBox2()
         CType(Me.dgvSkei, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -61,19 +61,6 @@ Partial Class 施設介護支援経過表
         Me.namLabel.Name = "namLabel"
         Me.namLabel.Size = New System.Drawing.Size(0, 19)
         Me.namLabel.TabIndex = 0
-        '
-        'YmdBox
-        '
-        Me.YmdBox.boxType = 8
-        Me.YmdBox.DateText = ""
-        Me.YmdBox.EraLabelText = "H31"
-        Me.YmdBox.EraText = ""
-        Me.YmdBox.Location = New System.Drawing.Point(171, 12)
-        Me.YmdBox.MonthLabelText = "02"
-        Me.YmdBox.MonthText = ""
-        Me.YmdBox.Name = "YmdBox"
-        Me.YmdBox.Size = New System.Drawing.Size(174, 46)
-        Me.YmdBox.TabIndex = 1
         '
         'btnRegist
         '
@@ -123,14 +110,14 @@ Partial Class 施設介護支援経過表
         'dgvSkei
         '
         Me.dgvSkei.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("ＭＳ ゴシック", 8.0!)
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvSkei.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("ＭＳ ゴシック", 8.0!)
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvSkei.DefaultCellStyle = DataGridViewCellStyle1
         Me.dgvSkei.Location = New System.Drawing.Point(171, 65)
         Me.dgvSkei.Name = "dgvSkei"
         Me.dgvSkei.RowTemplate.Height = 21
@@ -217,22 +204,13 @@ Partial Class 施設介護支援経過表
         '
         'GroupBox3
         '
-        Me.GroupBox3.Controls.Add(Me.writerLabel)
+        Me.GroupBox3.Controls.Add(Me.writerBox)
         Me.GroupBox3.Location = New System.Drawing.Point(818, 279)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(108, 44)
         Me.GroupBox3.TabIndex = 13
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "記載者"
-        '
-        'writerLabel
-        '
-        Me.writerLabel.AutoSize = True
-        Me.writerLabel.ForeColor = System.Drawing.Color.Blue
-        Me.writerLabel.Location = New System.Drawing.Point(17, 21)
-        Me.writerLabel.Name = "writerLabel"
-        Me.writerLabel.Size = New System.Drawing.Size(0, 12)
-        Me.writerLabel.TabIndex = 0
         '
         'writerListBox
         '
@@ -288,11 +266,32 @@ Partial Class 施設介護支援経過表
         Me.Label5.TabIndex = 18
         Me.Label5.Text = "40"
         '
+        'writerBox
+        '
+        Me.writerBox.ForeColor = System.Drawing.Color.Blue
+        Me.writerBox.Location = New System.Drawing.Point(4, 17)
+        Me.writerBox.Name = "writerBox"
+        Me.writerBox.Size = New System.Drawing.Size(100, 19)
+        Me.writerBox.TabIndex = 19
+        '
+        'YmdBox
+        '
+        Me.YmdBox.dateText = ""
+        Me.YmdBox.Location = New System.Drawing.Point(171, 10)
+        Me.YmdBox.Mode = 4
+        Me.YmdBox.monthText = ""
+        Me.YmdBox.Name = "YmdBox"
+        Me.YmdBox.Size = New System.Drawing.Size(181, 45)
+        Me.YmdBox.TabIndex = 1
+        Me.YmdBox.textReadOnly = False
+        Me.YmdBox.yearText = ""
+        '
         '施設介護支援経過表
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(963, 722)
+        Me.Controls.Add(Me.YmdBox)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
@@ -310,7 +309,6 @@ Partial Class 施設介護支援経過表
         Me.Controls.Add(Me.btnPrint)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnRegist)
-        Me.Controls.Add(Me.YmdBox)
         Me.Controls.Add(Me.namLabel)
         Me.Name = "施設介護支援経過表"
         Me.Text = "施設介護支援経過表"
@@ -324,7 +322,6 @@ Partial Class 施設介護支援経過表
 
     End Sub
     Friend WithEvents namLabel As System.Windows.Forms.Label
-    Friend WithEvents YmdBox As ymdBox.ymdBox
     Friend WithEvents btnRegist As System.Windows.Forms.Button
     Friend WithEvents btnDelete As System.Windows.Forms.Button
     Friend WithEvents btnPrint As System.Windows.Forms.Button
@@ -340,10 +337,11 @@ Partial Class 施設介護支援経過表
     Friend WithEvents btnRowDelete As System.Windows.Forms.Button
     Friend WithEvents btnClear As System.Windows.Forms.Button
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
-    Friend WithEvents writerLabel As System.Windows.Forms.Label
     Friend WithEvents writerListBox As System.Windows.Forms.ListBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents writerBox As System.Windows.Forms.TextBox
+    Friend WithEvents YmdBox As ADBox2.ADBox2
 End Class
