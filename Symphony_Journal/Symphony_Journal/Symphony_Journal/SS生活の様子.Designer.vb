@@ -26,19 +26,14 @@ Partial Class SS生活の様子
         Me.residentListBox = New System.Windows.Forms.ListBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel5 = New System.Windows.Forms.Panel()
-        Me.benYmdBox = New ymdBox.ymdBox()
         Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.bathYmdBox = New ymdBox.ymdBox()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.endYmdBox = New ymdBox.ymdBox()
-        Me.firstYmdBox = New ymdBox.ymdBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel6 = New System.Windows.Forms.Panel()
-        Me.dateYmdBox = New ymdBox.ymdBox()
         Me.tantoBox = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -52,6 +47,11 @@ Partial Class SS生活の様子
         Me.btnRowInsert = New System.Windows.Forms.Button()
         Me.btnRowDelete = New System.Windows.Forms.Button()
         Me.namLabel = New System.Windows.Forms.Label()
+        Me.firstYmdBox = New ADBox2.ADBox2()
+        Me.endYmdBox = New ADBox2.ADBox2()
+        Me.bathYmdBox = New ADBox2.ADBox2()
+        Me.benYmdBox = New ADBox2.ADBox2()
+        Me.dateYmdBox = New ADBox2.ADBox2()
         Me.dgvShtM = New Symphony_Journal.SSDataGridView(Me.components)
         Me.Panel1.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -95,19 +95,6 @@ Partial Class SS生活の様子
         Me.Panel5.Size = New System.Drawing.Size(86, 23)
         Me.Panel5.TabIndex = 23
         '
-        'benYmdBox
-        '
-        Me.benYmdBox.boxType = 9
-        Me.benYmdBox.DateText = ""
-        Me.benYmdBox.EraLabelText = "H31"
-        Me.benYmdBox.EraText = ""
-        Me.benYmdBox.Location = New System.Drawing.Point(-1, 2)
-        Me.benYmdBox.MonthLabelText = "02"
-        Me.benYmdBox.MonthText = ""
-        Me.benYmdBox.Name = "benYmdBox"
-        Me.benYmdBox.Size = New System.Drawing.Size(86, 20)
-        Me.benYmdBox.TabIndex = 17
-        '
         'Panel4
         '
         Me.Panel4.BackColor = System.Drawing.SystemColors.Window
@@ -117,25 +104,12 @@ Partial Class SS生活の様子
         Me.Panel4.Size = New System.Drawing.Size(86, 24)
         Me.Panel4.TabIndex = 22
         '
-        'bathYmdBox
-        '
-        Me.bathYmdBox.boxType = 9
-        Me.bathYmdBox.DateText = ""
-        Me.bathYmdBox.EraLabelText = "H31"
-        Me.bathYmdBox.EraText = ""
-        Me.bathYmdBox.Location = New System.Drawing.Point(-1, 2)
-        Me.bathYmdBox.MonthLabelText = "02"
-        Me.bathYmdBox.MonthText = ""
-        Me.bathYmdBox.Name = "bathYmdBox"
-        Me.bathYmdBox.Size = New System.Drawing.Size(86, 20)
-        Me.bathYmdBox.TabIndex = 16
-        '
         'Panel3
         '
         Me.Panel3.BackColor = System.Drawing.SystemColors.Window
-        Me.Panel3.Controls.Add(Me.Label7)
         Me.Panel3.Controls.Add(Me.endYmdBox)
         Me.Panel3.Controls.Add(Me.firstYmdBox)
+        Me.Panel3.Controls.Add(Me.Label7)
         Me.Panel3.Location = New System.Drawing.Point(90, 0)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(221, 24)
@@ -149,32 +123,6 @@ Partial Class SS生活の様子
         Me.Label7.Size = New System.Drawing.Size(17, 12)
         Me.Label7.TabIndex = 21
         Me.Label7.Text = "～"
-        '
-        'endYmdBox
-        '
-        Me.endYmdBox.boxType = 9
-        Me.endYmdBox.DateText = ""
-        Me.endYmdBox.EraLabelText = "H31"
-        Me.endYmdBox.EraText = ""
-        Me.endYmdBox.Location = New System.Drawing.Point(118, 1)
-        Me.endYmdBox.MonthLabelText = "02"
-        Me.endYmdBox.MonthText = ""
-        Me.endYmdBox.Name = "endYmdBox"
-        Me.endYmdBox.Size = New System.Drawing.Size(86, 20)
-        Me.endYmdBox.TabIndex = 15
-        '
-        'firstYmdBox
-        '
-        Me.firstYmdBox.boxType = 9
-        Me.firstYmdBox.DateText = ""
-        Me.firstYmdBox.EraLabelText = "H31"
-        Me.firstYmdBox.EraText = ""
-        Me.firstYmdBox.Location = New System.Drawing.Point(-1, 1)
-        Me.firstYmdBox.MonthLabelText = "02"
-        Me.firstYmdBox.MonthText = ""
-        Me.firstYmdBox.Name = "firstYmdBox"
-        Me.firstYmdBox.Size = New System.Drawing.Size(86, 20)
-        Me.firstYmdBox.TabIndex = 14
         '
         'Label4
         '
@@ -223,19 +171,6 @@ Partial Class SS生活の様子
         Me.Panel6.Name = "Panel6"
         Me.Panel6.Size = New System.Drawing.Size(129, 24)
         Me.Panel6.TabIndex = 22
-        '
-        'dateYmdBox
-        '
-        Me.dateYmdBox.boxType = 9
-        Me.dateYmdBox.DateText = ""
-        Me.dateYmdBox.EraLabelText = "H31"
-        Me.dateYmdBox.EraText = ""
-        Me.dateYmdBox.Location = New System.Drawing.Point(-1, 1)
-        Me.dateYmdBox.MonthLabelText = "02"
-        Me.dateYmdBox.MonthText = ""
-        Me.dateYmdBox.Name = "dateYmdBox"
-        Me.dateYmdBox.Size = New System.Drawing.Size(86, 20)
-        Me.dateYmdBox.TabIndex = 16
         '
         'tantoBox
         '
@@ -326,7 +261,7 @@ Partial Class SS生活の様子
         Me.historyListBox.ItemHeight = 12
         Me.historyListBox.Location = New System.Drawing.Point(764, 77)
         Me.historyListBox.Name = "historyListBox"
-        Me.historyListBox.Size = New System.Drawing.Size(151, 460)
+        Me.historyListBox.Size = New System.Drawing.Size(160, 460)
         Me.historyListBox.TabIndex = 10
         '
         'btnRowInsert
@@ -357,6 +292,66 @@ Partial Class SS生活の様子
         Me.namLabel.Size = New System.Drawing.Size(0, 19)
         Me.namLabel.TabIndex = 13
         '
+        'firstYmdBox
+        '
+        Me.firstYmdBox.dateText = ""
+        Me.firstYmdBox.Location = New System.Drawing.Point(2, 1)
+        Me.firstYmdBox.Mode = 6
+        Me.firstYmdBox.monthText = ""
+        Me.firstYmdBox.Name = "firstYmdBox"
+        Me.firstYmdBox.Size = New System.Drawing.Size(81, 22)
+        Me.firstYmdBox.TabIndex = 14
+        Me.firstYmdBox.textReadOnly = False
+        Me.firstYmdBox.yearText = ""
+        '
+        'endYmdBox
+        '
+        Me.endYmdBox.dateText = ""
+        Me.endYmdBox.Location = New System.Drawing.Point(122, 1)
+        Me.endYmdBox.Mode = 6
+        Me.endYmdBox.monthText = ""
+        Me.endYmdBox.Name = "endYmdBox"
+        Me.endYmdBox.Size = New System.Drawing.Size(81, 22)
+        Me.endYmdBox.TabIndex = 15
+        Me.endYmdBox.textReadOnly = False
+        Me.endYmdBox.yearText = ""
+        '
+        'bathYmdBox
+        '
+        Me.bathYmdBox.dateText = ""
+        Me.bathYmdBox.Location = New System.Drawing.Point(2, 1)
+        Me.bathYmdBox.Mode = 6
+        Me.bathYmdBox.monthText = ""
+        Me.bathYmdBox.Name = "bathYmdBox"
+        Me.bathYmdBox.Size = New System.Drawing.Size(81, 22)
+        Me.bathYmdBox.TabIndex = 16
+        Me.bathYmdBox.textReadOnly = False
+        Me.bathYmdBox.yearText = ""
+        '
+        'benYmdBox
+        '
+        Me.benYmdBox.dateText = ""
+        Me.benYmdBox.Location = New System.Drawing.Point(2, 1)
+        Me.benYmdBox.Mode = 6
+        Me.benYmdBox.monthText = ""
+        Me.benYmdBox.Name = "benYmdBox"
+        Me.benYmdBox.Size = New System.Drawing.Size(81, 22)
+        Me.benYmdBox.TabIndex = 17
+        Me.benYmdBox.textReadOnly = False
+        Me.benYmdBox.yearText = ""
+        '
+        'dateYmdBox
+        '
+        Me.dateYmdBox.dateText = ""
+        Me.dateYmdBox.Location = New System.Drawing.Point(2, 1)
+        Me.dateYmdBox.Mode = 6
+        Me.dateYmdBox.monthText = ""
+        Me.dateYmdBox.Name = "dateYmdBox"
+        Me.dateYmdBox.Size = New System.Drawing.Size(81, 22)
+        Me.dateYmdBox.TabIndex = 16
+        Me.dateYmdBox.textReadOnly = False
+        Me.dateYmdBox.yearText = ""
+        '
         'dgvShtM
         '
         Me.dgvShtM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -370,7 +365,7 @@ Partial Class SS生活の様子
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(953, 706)
+        Me.ClientSize = New System.Drawing.Size(935, 706)
         Me.Controls.Add(Me.dgvShtM)
         Me.Controls.Add(Me.namLabel)
         Me.Controls.Add(Me.btnRowDelete)
@@ -414,16 +409,11 @@ Partial Class SS生活の様子
     Friend WithEvents btnRowInsert As System.Windows.Forms.Button
     Friend WithEvents btnRowDelete As System.Windows.Forms.Button
     Friend WithEvents namLabel As System.Windows.Forms.Label
-    Friend WithEvents benYmdBox As ymdBox.ymdBox
-    Friend WithEvents bathYmdBox As ymdBox.ymdBox
-    Friend WithEvents endYmdBox As ymdBox.ymdBox
-    Friend WithEvents firstYmdBox As ymdBox.ymdBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents tantoBox As System.Windows.Forms.TextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents dateYmdBox As ymdBox.ymdBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents dgvShtM As Symphony_Journal.SSDataGridView
     Friend WithEvents Label7 As System.Windows.Forms.Label
@@ -431,4 +421,9 @@ Partial Class SS生活の様子
     Friend WithEvents Panel4 As System.Windows.Forms.Panel
     Friend WithEvents Panel5 As System.Windows.Forms.Panel
     Friend WithEvents Panel6 As System.Windows.Forms.Panel
+    Friend WithEvents firstYmdBox As ADBox2.ADBox2
+    Friend WithEvents endYmdBox As ADBox2.ADBox2
+    Friend WithEvents bathYmdBox As ADBox2.ADBox2
+    Friend WithEvents benYmdBox As ADBox2.ADBox2
+    Friend WithEvents dateYmdBox As ADBox2.ADBox2
 End Class

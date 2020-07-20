@@ -191,7 +191,7 @@ Public Class SS生活の様子
         Dim rs As New ADODB.Recordset
         rs.Open(sql, cn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockOptimistic)
         While Not rs.EOF
-            Dim listItem As String = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("First").Value)) & "～" & Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("End").Value))
+            Dim listItem As String = Util.checkDBNullValue(rs.Fields("First").Value) & "～" & Util.checkDBNullValue(rs.Fields("End").Value)
             resultList.Add(listItem)
             rs.MoveNext()
         End While
@@ -224,8 +224,8 @@ Public Class SS生活の様子
     Private Sub historyListBox_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles historyListBox.SelectedValueChanged
         Dim selectedText As String = historyListBox.Text
         If selectedText <> "" Then
-            Dim firstDate As String = Util.convWarekiStrToADStr(selectedText.Split("～")(0))
-            Dim endDate As String = Util.convWarekiStrToADStr(selectedText.Split("～")(1))
+            Dim firstDate As String = selectedText.Split("～")(0)
+            Dim endDate As String = selectedText.Split("～")(1)
             displayDgvShtM(namLabel.Text, firstDate, endDate)
         End If
     End Sub
@@ -246,6 +246,17 @@ Public Class SS生活の様子
         Dim monthNum As String = CInt(warekiStr.Substring(4, 2))
         Dim dateNum As String = CInt(warekiStr.Substring(7, 2))
         Return kanji & " " & eraNum & " 年 " & monthNum & " 月 " & dateNum & " 日 "
+    End Function
+
+    Private Function formatDateADStr(adStr As String) As String
+        If adStr = "" Then
+            Return ""
+        End If
+
+        Dim eraNum As String = CInt(adStr.Split("/")(0))
+        Dim monthNum As String = CInt(adStr.Split("/")(1))
+        Dim dateNum As String = CInt(adStr.Split("/")(2))
+        Return eraNum & " 年 " & monthNum & " 月 " & dateNum & " 日 "
     End Function
 
     ''' <summary>
@@ -353,8 +364,8 @@ Public Class SS生活の様子
         Dim cmd As New ADODB.Command()
         cmd.ActiveConnection = cnn
         If Not IsNothing(historyListBox.SelectedItem) Then
-            Dim firstD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(0))
-            Dim endD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(1))
+            Dim firstD As String = historyListBox.Text.Split("～")(0)
+            Dim endD As String = historyListBox.Text.Split("～")(1)
             cmd.CommandText = "delete from ShtM where Nam='" & residentName & "' and First='" & firstD & "' and End='" & endD & "'"
             cmd.Execute()
         End If
@@ -404,11 +415,9 @@ Public Class SS生活の様子
         cnn.Close()
 
         '再表示
-        Dim firstWareki As String = Util.convADStrToWarekiStr(firstDate)
-        Dim endWareki As String = Util.convADStrToWarekiStr(endDate)
         historyListBox.Items.Clear()
         historyListBox.Items.AddRange(getHistoryList(residentName).ToArray())
-        historyListBox.SelectedItem = firstWareki & "～" & endWareki
+        historyListBox.SelectedItem = firstDate & "～" & endDate
 
     End Sub
 
@@ -422,8 +431,8 @@ Public Class SS生活の様子
         Dim result As DialogResult = MessageBox.Show("該当期間の記録を抹消しますか", "削除", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = Windows.Forms.DialogResult.Yes Then
             If namLabel.Text <> "" AndAlso Not IsNothing(historyListBox.SelectedItem) Then
-                Dim firstD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(0))
-                Dim endD As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(1))
+                Dim firstD As String = historyListBox.Text.Split("～")(0)
+                Dim endD As String = historyListBox.Text.Split("～")(1)
                 Dim cnn As New ADODB.Connection
                 cnn.Open(TopForm.DB_Journal)
                 Dim cmd As New ADODB.Command()
@@ -470,8 +479,8 @@ Public Class SS生活の様子
         End If
 
         'データ取得
-        Dim firstDate As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(0))
-        Dim endDate As String = Util.convWarekiStrToADStr(historyListBox.Text.Split("～")(1))
+        Dim firstDate As String = historyListBox.Text.Split("～")(0)
+        Dim endDate As String = historyListBox.Text.Split("～")(1)
         Dim cn As New ADODB.Connection()
         cn.Open(TopForm.DB_Journal)
         Dim sql As String = "select Gyo, [First], [End], Bath, Ben, Date, Tanto, Text from ShtM where Nam='" & residentName & "' And [First]='" & firstDate & "' And [End]='" & endDate & "' order by Gyo"
@@ -491,9 +500,9 @@ Public Class SS生活の様子
             While Not rs.EOF
                 Dim gyo As Integer = rs.Fields("Gyo").Value
                 If gyo = 1 Then
-                    bathDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Bath").Value))
-                    benDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Ben").Value))
-                    writeDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Date").Value))
+                    bathDate = Util.checkDBNullValue(rs.Fields("Bath").Value)
+                    benDate = Util.checkDBNullValue(rs.Fields("Ben").Value)
+                    writeDate = Util.checkDBNullValue(rs.Fields("Date").Value)
                     tanto = Util.checkDBNullValue(rs.Fields("Tanto").Value)
                 End If
                 dataArray1(gyo - 1, 0) = Util.checkDBNullValue(rs.Fields("Text").Value)
@@ -505,9 +514,9 @@ Public Class SS生活の様子
                 Dim gyo As Integer = rs.Fields("Gyo").Value
                 '共通部分
                 If gyo = 1 Then
-                    bathDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Bath").Value))
-                    benDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Ben").Value))
-                    writeDate = Util.convADStrToWarekiStr(Util.checkDBNullValue(rs.Fields("Date").Value))
+                    bathDate = Util.checkDBNullValue(rs.Fields("Bath").Value)
+                    benDate = Util.checkDBNullValue(rs.Fields("Ben").Value)
+                    writeDate = Util.checkDBNullValue(rs.Fields("Date").Value)
                     tanto = Util.checkDBNullValue(rs.Fields("Tanto").Value)
                 End If
 
@@ -534,27 +543,27 @@ Public Class SS生活の様子
         If recordCount <= 35 Then
             oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5改")
             oSheet.range("C4").value = residentName '氏名
-            oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
-            oSheet.range("C8").value = formatDateStr(bathDate) '最終入浴日
-            oSheet.range("G8").value = formatDateStr(benDate) '最終排便日
-            oSheet.range("C10").value = formatDateStr(writeDate) '記載日
+            oSheet.Range("C6").Value = formatDateADStr(firstDate) & "～" & formatDateADStr(endDate) '利用期間
+            oSheet.Range("C8").Value = formatDateADStr(bathDate) '最終入浴日
+            oSheet.Range("G8").Value = formatDateADStr(benDate) '最終排便日
+            oSheet.Range("C10").Value = formatDateADStr(writeDate) '記載日
             oSheet.range("G10").value = tanto '記載者
             oSheet.range("C13", "C47").value = dataArray1 '内容
         Else
             '1枚目
             oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-21改")
             oSheet.range("C4").value = residentName '氏名
-            oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
-            oSheet.range("C8").value = formatDateStr(bathDate) '最終入浴日
-            oSheet.range("G8").value = formatDateStr(benDate) '最終排便日
-            oSheet.range("C10").value = formatDateStr(writeDate) '記載日
+            oSheet.Range("C6").Value = formatDateADStr(firstDate) & "～" & formatDateADStr(endDate) '利用期間
+            oSheet.range("C8").value = formatDateADStr(bathDate) '最終入浴日
+            oSheet.range("G8").value = formatDateADStr(benDate) '最終排便日
+            oSheet.range("C10").value = formatDateADStr(writeDate) '記載日
             oSheet.range("G10").value = tanto '記載者
             oSheet.range("C13", "C47").value = dataArray1 '内容
 
             '2枚目
             oSheet = objWorkBook.Worksheets("ｼｮｰﾄｽﾃｲ5-22改")
             oSheet.range("C4").value = residentName '氏名
-            oSheet.range("C6").value = formatDateStr(Util.convADStrToWarekiStr(firstDate)) & "～" & formatDateStr(Util.convADStrToWarekiStr(endDate)) '利用期間
+            oSheet.Range("C6").Value = formatDateADStr(firstDate) & "～" & formatDateADStr(endDate) '利用期間
             oSheet.range("C8", "C55").value = dataArray2 '内容
         End If
 
