@@ -43,7 +43,7 @@ Public Class 申し送り
         displayDgvRead()
 
         '日付ボックスの初期選択
-        YmdBox.setFocus(6)
+        YmdBox.setFocus(7)
 
         '日付ボックス、時間ボックス上下ボタン長押し不可
         YmdBox.canHoldDownButton = False
@@ -191,9 +191,9 @@ Public Class 申し送り
         cnn.Close()
 
         '西暦を和暦に変換
-        For Each row As DataRow In ds.Tables("Rprt").Rows
-            row("Ymd") = Util.convADStrToWarekiStr(row("Ymd"))
-        Next
+        'For Each row As DataRow In ds.Tables("Rprt").Rows
+        '    row("Ymd") = Util.convADStrToWarekiStr(row("Ymd"))
+        'Next
 
         '表示
         dgvRead.DataSource = ds.Tables("Rprt")
@@ -328,7 +328,7 @@ Public Class 申し送り
                 readRowIndex -= 1
                 hm = Util.checkDBNullValue(dgvRead("Hm", readRowIndex).FormattedValue)
             End While
-            Dim wareki As String = Util.checkDBNullValue(dgvRead("Ymd", readRowIndex).Value)
+            Dim ymd As String = Util.checkDBNullValue(dgvRead("Ymd", readRowIndex).Value)
             Dim writer As String = Util.checkDBNullValue(dgvRead("Tanto", readRowIndex).Value)
 
             '内容クリア
@@ -338,12 +338,12 @@ Public Class 申し送り
 
             '値セット
             Dim inputRowIndex As Integer
-            While (wareki = Util.checkDBNullValue(dgvRead("Ymd", readRowIndex).Value)) AndAlso (hm = Util.checkDBNullValue(dgvRead("Hm", readRowIndex).Value))
+            While (ymd = Util.checkDBNullValue(dgvRead("Ymd", readRowIndex).Value)) AndAlso (hm = Util.checkDBNullValue(dgvRead("Hm", readRowIndex).Value))
                 dgvInput("Text", inputRowIndex).Value = Util.checkDBNullValue(dgvRead("Text", readRowIndex).Value)
                 inputRowIndex += 1
                 readRowIndex += 1
             End While
-            YmdBox.setWarekiStr(wareki)
+            YmdBox.setADStr(ymd)
             HmBox.setTime(hm.Substring(0, 2), hm.Substring(3, 2))
             writerBox.Text = writer
 

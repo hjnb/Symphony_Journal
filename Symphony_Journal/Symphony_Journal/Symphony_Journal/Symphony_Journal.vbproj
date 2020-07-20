@@ -49,6 +49,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ADBox2">
+      <HintPath>\\primergytx100s1\Hakojun\事務\さかもと\ADBox2\ADBox2.dll</HintPath>
+    </Reference>
     <Reference Include="hmBox">
       <HintPath>..\..\..\..\..\..\Documents\Visual Studio 2010\Projects\hmBox\hmBox\bin\Release\hmBox.dll</HintPath>
     </Reference>
