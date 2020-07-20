@@ -209,12 +209,11 @@ Symphony_Journal
 	<param name="sender"></param>
 	<param name="e"></param>
 	<remarks></remarks>
-</member><member name="M:Symphony_Journal.便観察.#ctor(System.String,System.String,System.String,System.String,System.Int32,System.Int32)">
+</member><member name="M:Symphony_Journal.便観察.#ctor(System.String,System.String,System.String,System.Int32,System.Int32)">
 	<summary>
  コンストラクタ
  </summary>
 	<param name="unitName">ユニット名</param>
-	<param name="warekiStr">和暦</param>
 	<remarks></remarks>
 </member><member name="M:Symphony_Journal.便観察.便観察_Load(System.Object,System.EventArgs)">
 	<summary>

@@ -25,7 +25,6 @@ Partial Class ユニット日誌
         Me.components = New System.ComponentModel.Container()
         Me.unitListBox = New System.Windows.Forms.ListBox()
         Me.residentListBox = New System.Windows.Forms.ListBox()
-        Me.YmdBox = New ymdBox.ymdBox()
         Me.btnRegist = New System.Windows.Forms.Button()
         Me.btnObserve = New System.Windows.Forms.Button()
         Me.btnPrint = New System.Windows.Forms.Button()
@@ -63,6 +62,7 @@ Partial Class ユニット日誌
         Me.paintBlue = New System.Windows.Forms.ToolStripMenuItem()
         Me.paintRed = New System.Windows.Forms.ToolStripMenuItem()
         Me.dgvUnitDiary = New Symphony_Journal.ExDataGridView(Me.components)
+        Me.YmdBox = New ADBox2.ADBox2()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -92,19 +92,6 @@ Partial Class ユニット日誌
         Me.residentListBox.Name = "residentListBox"
         Me.residentListBox.Size = New System.Drawing.Size(91, 208)
         Me.residentListBox.TabIndex = 1
-        '
-        'YmdBox
-        '
-        Me.YmdBox.boxType = 8
-        Me.YmdBox.DateText = ""
-        Me.YmdBox.EraLabelText = "H31"
-        Me.YmdBox.EraText = ""
-        Me.YmdBox.Location = New System.Drawing.Point(134, 8)
-        Me.YmdBox.MonthLabelText = "02"
-        Me.YmdBox.MonthText = ""
-        Me.YmdBox.Name = "YmdBox"
-        Me.YmdBox.Size = New System.Drawing.Size(174, 46)
-        Me.YmdBox.TabIndex = 18
         '
         'btnRegist
         '
@@ -423,11 +410,24 @@ Partial Class ユニット日誌
         Me.dgvUnitDiary.Size = New System.Drawing.Size(558, 530)
         Me.dgvUnitDiary.TabIndex = 32
         '
+        'YmdBox
+        '
+        Me.YmdBox.dateText = ""
+        Me.YmdBox.Location = New System.Drawing.Point(134, 8)
+        Me.YmdBox.Mode = 4
+        Me.YmdBox.monthText = ""
+        Me.YmdBox.Name = "YmdBox"
+        Me.YmdBox.Size = New System.Drawing.Size(181, 45)
+        Me.YmdBox.TabIndex = 18
+        Me.YmdBox.textReadOnly = False
+        Me.YmdBox.yearText = ""
+        '
         'ユニット日誌
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(775, 720)
+        Me.Controls.Add(Me.YmdBox)
         Me.Controls.Add(Me.dgvUnitDiary)
         Me.Controls.Add(Me.nightWorkPic)
         Me.Controls.Add(Me.dayWorkPic)
@@ -458,7 +458,6 @@ Partial Class ユニット日誌
         Me.Controls.Add(Me.btnPrint)
         Me.Controls.Add(Me.btnObserve)
         Me.Controls.Add(Me.btnRegist)
-        Me.Controls.Add(Me.YmdBox)
         Me.Controls.Add(Me.residentListBox)
         Me.Controls.Add(Me.unitListBox)
         Me.Name = "ユニット日誌"
@@ -479,7 +478,6 @@ Partial Class ユニット日誌
     End Sub
     Friend WithEvents unitListBox As System.Windows.Forms.ListBox
     Friend WithEvents residentListBox As System.Windows.Forms.ListBox
-    Friend WithEvents YmdBox As ymdBox.ymdBox
     Friend WithEvents btnRegist As System.Windows.Forms.Button
     Friend WithEvents btnObserve As System.Windows.Forms.Button
     Friend WithEvents btnPrint As System.Windows.Forms.Button
@@ -517,4 +515,5 @@ Partial Class ユニット日誌
     Friend WithEvents paintBlack As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents paintBlue As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents paintRed As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents YmdBox As ADBox2.ADBox2
 End Class

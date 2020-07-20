@@ -25,9 +25,7 @@ Partial Class 印刷条件
         Me.dgvUnit = New System.Windows.Forms.DataGridView()
         Me.rbtnDiary = New System.Windows.Forms.RadioButton()
         Me.rbtnObservation = New System.Windows.Forms.RadioButton()
-        Me.startYmdBox = New ymdBox.ymdBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.endYmdBox = New ymdBox.ymdBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -45,6 +43,8 @@ Partial Class 印刷条件
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.unitLabel = New System.Windows.Forms.Label()
         Me.errorLabel = New System.Windows.Forms.Label()
+        Me.startYmdBox = New ADBox2.ADBox2()
+        Me.endYmdBox = New ADBox2.ADBox2()
         CType(Me.dgvUnit, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -81,40 +81,14 @@ Partial Class 印刷条件
         Me.rbtnObservation.Text = "便観察"
         Me.rbtnObservation.UseVisualStyleBackColor = True
         '
-        'startYmdBox
-        '
-        Me.startYmdBox.boxType = 2
-        Me.startYmdBox.DateText = ""
-        Me.startYmdBox.EraLabelText = "H31"
-        Me.startYmdBox.EraText = ""
-        Me.startYmdBox.Location = New System.Drawing.Point(17, 122)
-        Me.startYmdBox.MonthLabelText = "02"
-        Me.startYmdBox.MonthText = ""
-        Me.startYmdBox.Name = "startYmdBox"
-        Me.startYmdBox.Size = New System.Drawing.Size(110, 34)
-        Me.startYmdBox.TabIndex = 30
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(137, 133)
+        Me.Label1.Location = New System.Drawing.Point(145, 133)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(17, 12)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "～"
-        '
-        'endYmdBox
-        '
-        Me.endYmdBox.boxType = 2
-        Me.endYmdBox.DateText = ""
-        Me.endYmdBox.EraLabelText = "H31"
-        Me.endYmdBox.EraText = ""
-        Me.endYmdBox.Location = New System.Drawing.Point(161, 122)
-        Me.endYmdBox.MonthLabelText = "02"
-        Me.endYmdBox.MonthText = ""
-        Me.endYmdBox.Name = "endYmdBox"
-        Me.endYmdBox.Size = New System.Drawing.Size(110, 34)
-        Me.endYmdBox.TabIndex = 31
         '
         'Label2
         '
@@ -220,7 +194,7 @@ Partial Class 印刷条件
         '
         'btnExcute
         '
-        Me.btnExcute.Location = New System.Drawing.Point(196, 343)
+        Me.btnExcute.Location = New System.Drawing.Point(207, 343)
         Me.btnExcute.Name = "btnExcute"
         Me.btnExcute.Size = New System.Drawing.Size(75, 34)
         Me.btnExcute.TabIndex = 32
@@ -266,11 +240,37 @@ Partial Class 印刷条件
         Me.errorLabel.Text = "印影ファイル未登録"
         Me.errorLabel.Visible = False
         '
+        'startYmdBox
+        '
+        Me.startYmdBox.dateText = ""
+        Me.startYmdBox.Location = New System.Drawing.Point(17, 122)
+        Me.startYmdBox.Mode = 1
+        Me.startYmdBox.monthText = ""
+        Me.startYmdBox.Name = "startYmdBox"
+        Me.startYmdBox.Size = New System.Drawing.Size(125, 32)
+        Me.startYmdBox.TabIndex = 30
+        Me.startYmdBox.textReadOnly = False
+        Me.startYmdBox.yearText = ""
+        '
+        'endYmdBox
+        '
+        Me.endYmdBox.dateText = ""
+        Me.endYmdBox.Location = New System.Drawing.Point(167, 122)
+        Me.endYmdBox.Mode = 1
+        Me.endYmdBox.monthText = ""
+        Me.endYmdBox.Name = "endYmdBox"
+        Me.endYmdBox.Size = New System.Drawing.Size(125, 32)
+        Me.endYmdBox.TabIndex = 31
+        Me.endYmdBox.textReadOnly = False
+        Me.endYmdBox.yearText = ""
+        '
         '印刷条件
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(285, 392)
+        Me.ClientSize = New System.Drawing.Size(299, 392)
+        Me.Controls.Add(Me.endYmdBox)
+        Me.Controls.Add(Me.startYmdBox)
         Me.Controls.Add(Me.errorLabel)
         Me.Controls.Add(Me.unitLabel)
         Me.Controls.Add(Me.Panel2)
@@ -286,9 +286,7 @@ Partial Class 印刷条件
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.endYmdBox)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.startYmdBox)
         Me.Controls.Add(Me.dgvUnit)
         Me.Name = "印刷条件"
         Me.Text = "印刷条件"
@@ -304,9 +302,7 @@ Partial Class 印刷条件
     Friend WithEvents dgvUnit As System.Windows.Forms.DataGridView
     Friend WithEvents rbtnDiary As System.Windows.Forms.RadioButton
     Friend WithEvents rbtnObservation As System.Windows.Forms.RadioButton
-    Friend WithEvents startYmdBox As ymdBox.ymdBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents endYmdBox As ymdBox.ymdBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
@@ -324,4 +320,6 @@ Partial Class 印刷条件
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents unitLabel As System.Windows.Forms.Label
     Friend WithEvents errorLabel As System.Windows.Forms.Label
+    Friend WithEvents startYmdBox As ADBox2.ADBox2
+    Friend WithEvents endYmdBox As ADBox2.ADBox2
 End Class

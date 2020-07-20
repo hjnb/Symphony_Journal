@@ -388,14 +388,11 @@ Public Class 印刷条件
                 'ユニット名
                 oSheet.range("B" & (3 + 50 * (pageCount - 1))).value = unit & "のいえ"
                 '日付
-                Dim wareki As String = Util.convADStrToWarekiStr(ymd)
-                Dim warekiKanji As String = Util.getKanji(wareki)
-                Dim warekiNum As Integer = CInt(wareki.Substring(1, 2))
                 Dim yyyy As Integer = CInt(ymd.Substring(0, 4))
                 Dim MM As Integer = CInt(ymd.Substring(5, 2))
                 Dim dd As Integer = CInt(ymd.Substring(8, 2))
                 Dim youbi As String = New DateTime(yyyy, MM, dd).ToString("ddd")
-                oSheet.range("B" & (6 + 50 * (pageCount - 1))).value = warekiKanji & " " & warekiNum & " 年 " & MM & " 月 " & dd & " 日 ( " & youbi & " )"
+                oSheet.Range("B" & (6 + 50 * (pageCount - 1))).Value = yyyy & " 年 " & MM & " 月 " & dd & " 日 ( " & youbi & " )"
                 '日勤印影
                 Dim daySealFilePath As String = TopForm.sealBoxDirPath & "\" & Util.checkDBNullValue(rs.Fields("Sign6").Value) & ".wmf"
                 If System.IO.File.Exists(daySealFilePath) Then
@@ -492,7 +489,7 @@ Public Class 印刷条件
         Dim ymdTemp As String = Util.checkDBNullValue(rs.Fields("Ymd").Value)
         Dim dataArray(31, 1) As String
         Dim pageCount As Integer = 1
-        dataArray(0, 1) = Util.convADStrToWarekiStr(ymdTemp)
+        dataArray(0, 1) = ymdTemp
         While Not rs.EOF
             Dim ymd As String = Util.checkDBNullValue(rs.Fields("Ymd").Value)
             If ymd <> ymdTemp Then
@@ -510,7 +507,7 @@ Public Class 印刷条件
                 '更新
                 ymdTemp = ymd
                 pageCount += 1
-                dataArray(0, 1) = Util.convADStrToWarekiStr(ymdTemp)
+                dataArray(0, 1) = ymdTemp
             End If
             Dim unitName As String = Util.checkDBNullValue(rs.Fields("Unit").Value)
             Dim gyo As Integer = rs.Fields("Gyo").Value - 1

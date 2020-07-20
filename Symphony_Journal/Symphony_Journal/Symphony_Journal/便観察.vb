@@ -8,9 +8,6 @@ Public Class 便観察
     '日付(西暦)
     Private adStr As String
 
-    '日付(和暦)
-    Private warekiStr As String
-
     '曜日
     Private dayOfWeek As String
 
@@ -24,9 +21,8 @@ Public Class 便観察
     ''' コンストラクタ
     ''' </summary>
     ''' <param name="unitName">ユニット名</param>
-    ''' <param name="warekiStr">和暦</param>
     ''' <remarks></remarks>
-    Public Sub New(unitName As String, adStr As String, warekiStr As String, dayOfWeek As String, parentX As Integer, parentY As Integer)
+    Public Sub New(unitName As String, adStr As String, dayOfWeek As String, parentX As Integer, parentY As Integer)
         InitializeComponent()
 
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
@@ -36,7 +32,6 @@ Public Class 便観察
 
         Me.unitName = unitName
         Me.adStr = adStr
-        Me.warekiStr = warekiStr
         Me.dayOfWeek = dayOfWeek
     End Sub
 
@@ -49,7 +44,7 @@ Public Class 便観察
     Private Sub 便観察_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'ラベル設定
         unitLabel.Text = unitName & unitLabel.Text
-        dateLabel.Text = warekiStr & "(" & dayOfWeek & ")"
+        dateLabel.Text = adStr & "(" & dayOfWeek & ")"
 
         'dgv初期設定
         initDgvBen()
